@@ -14,7 +14,7 @@ class Constants(BaseConstants):
     num_rounds = 1 # 2 needed for attention check questions
 
     fixed_pay = cu(5)
-    avg_pay = cu(5)
+    avg_pay = cu(10)
 
     num_attention_checks = 5
     num_final_questions = 10
@@ -259,6 +259,14 @@ class Player(BasePlayer):
                                     )
 
 # PAGES
+class Welcome(Page):
+    form_model = 'player'
+    form_fields = ['starting_time']
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == 1
+
 class MyPage(Page):
     @staticmethod
     def vars_for_template(player: Player):
@@ -278,6 +286,7 @@ class Results(Page):
 
 
 page_sequence = [
+    Welcome,
     MyPage,
     ResultsWaitPage,
     Results
