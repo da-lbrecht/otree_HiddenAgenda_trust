@@ -18,6 +18,8 @@ class Constants(BaseConstants):
 
     num_attention_checks = 5
     num_final_questions = 10
+    num_interaction_formats = 4
+    num_evaluations = 10
 
     # Objective true probabilities
     round_1_prob = 0.1
@@ -43,6 +45,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     # Process variables
     starting_time = models.LongStringField(doc="Time at which Informed Consent is given and experiment starts")
+    begintrial_time = models.LongStringField(doc="Time at which trial round is started")
 
     # Response variables for attention checks
     attention_check_1 = models.FloatField(initial=999,
@@ -267,6 +270,59 @@ class Welcome(Page):
     def is_displayed(player: Player):
         return player.round_number == 1
 
+class TaskIntro(Page):
+    form_model = 'player'
+    form_fields = ['begintrial_time']
+
+    @staticmethod
+    def is_displayed(player: Player):
+        if (
+                player.round_number == 1
+                and player.failed_attention_check == False
+        ):
+            return True
+
+    @staticmethod
+    def live_method(player: Player, data):
+        if (
+            data["information_type"] == "answer" and
+            player.attention_check_tries == 1
+        ):
+            player.attention_check_1 = data["answer_q1"]
+            player.attention_check_2 = data["answer_q2"]
+            player.attention_check_3 = data["answer_q3"]
+            player.attention_check_4 = data["answer_q4"]
+            player.attention_check_5 = data["answer_q5"]
+            player.attention_check_6 = data["answer_q6"]
+
+        if (
+                data["answer_q1"] == 2 and
+                data["answer_q2"] == 3 and
+                data["answer_q3"] == 1 and
+                data["answer_q4"] == 1 and
+                data["answer_q5"] == 3 and
+                data["answer_q6"] == 2
+        ):
+            return{
+                player.id_in_group: {"information_type": "no_error", "no_error": "Yeah!"},
+            }
+        else:
+            player.failed_attention_check = True
+            player.attention_check_tries = player.attention_check_tries + 1
+            incorrect_answers = np.array([
+                                data["answer_q1"] != 2,
+                                data["answer_q2"] != 3,
+                                data["answer_q3"] != 1,
+                                data["answer_q4"] != 1,
+                                data["answer_q5"] != 3,
+                                data["answer_q6"] != 2,
+                                ], dtype=bool)
+            # incorrect_answers.np.astype(int)
+            questions = ' and '.join(np.array(['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'])[incorrect_answers])
+            return{
+                player.id_in_group: {"information_type": "error", "error": questions},
+            }
+
 class MyPage(Page):
     @staticmethod
     def vars_for_template(player: Player):
@@ -287,6 +343,7 @@ class Results(Page):
 
 page_sequence = [
     Welcome,
+    TaskIntro,
     MyPage,
     ResultsWaitPage,
     Results
