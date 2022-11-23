@@ -4,7 +4,6 @@ This is oTree based software for the economic experiment of "Study II - Decision
 described in the preregistration of the project 
 "Hidden agendas in small group judgment aggregation" --> https://osf.io/cv4md/
 
-# Getting started
 ## Downloading the code
 Open up a terminal in the folder where you want to save this project and run
 `git clone https://github.com/dalbrechtNL/otree_HiddenAgenda_trust.git`
