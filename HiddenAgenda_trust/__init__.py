@@ -92,170 +92,171 @@ class Player(BasePlayer):
                                                 doc="Number of attempts needed to pass attention check questions")
 
     # Response variables for elicitation of trust in estimates
-        # For estimates from face-to-face treatment
-        ftf_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. ftf estimate")
-        ftf_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. ftf estimate")
-        ftf_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. ftf estimate")
-        ftf_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. ftf estimate")
-        ftf_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. ftf estimate")
-        ftf_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. ftf estimate")
-        ftf_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. ftf estimate")
-        ftf_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. ftf estimate")
-        ftf_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. ftf estimate")
-        ftf_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. ftf estimate")
-        ftf_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. ftf estimate")
-        ftf_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. ftf estimate")
-        ftf_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. ftf estimate")
-        ftf_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. ftf estimate")
-        ftf_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. ftf estimate")
-        ftf_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. ftf estimate")
-        ftf_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. ftf estimate")
-        ftf_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. ftf estimate")
-        ftf_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. ftf estimate")
-        ftf_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. ftf estimate")
+    # For estimates from face-to-face treatment
+    ftf_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. ftf estimate")
+    ftf_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. ftf estimate")
+    ftf_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. ftf estimate")
+    ftf_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. ftf estimate")
+    ftf_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. ftf estimate")
+    ftf_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. ftf estimate")
+    ftf_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. ftf estimate")
+    ftf_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. ftf estimate")
+    ftf_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. ftf estimate")
+    ftf_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. ftf estimate")
+    ftf_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. ftf estimate")
+    ftf_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. ftf estimate")
+    ftf_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. ftf estimate")
+    ftf_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. ftf estimate")
+    ftf_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. ftf estimate")
+    ftf_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. ftf estimate")
+    ftf_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. ftf estimate")
+    ftf_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. ftf estimate")
+    ftf_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. ftf estimate")
+    ftf_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. ftf estimate")
 
 
-        # For estimates from face-to-face treatment with hidden agendas
-        ftfha_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. ftfha estimate")
-        ftfha_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. ftfha estimate")
-        ftfha_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. ftfha estimate")
-        ftfha_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. ftfha estimate")
-        ftfha_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. ftfha estimate")
-        ftfha_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. ftfha estimate")
-        ftfha_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. ftfha estimate")
-        ftfha_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. ftfha estimate")
-        ftfha_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. ftfha estimate")
-        ftfha_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. ftfha estimate")
-        ftfha_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. ftfha estimate")
-        ftfha_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. ftfha estimate")
-        ftfha_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. ftfha estimate")
-        ftfha_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. ftfha estimate")
-        ftfha_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. ftfha estimate")
-        ftfha_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. ftfha estimate")
-        ftfha_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. ftfha estimate")
-        ftfha_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. ftfha estimate")
-        ftfha_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. ftfha estimate")
-        ftfha_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. ftfha estimate")
+    # For estimates from face-to-face treatment with hidden agendas
+    ftfha_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. ftfha estimate")
+    ftfha_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. ftfha estimate")
+    ftfha_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. ftfha estimate")
+    ftfha_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. ftfha estimate")
+    ftfha_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. ftfha estimate")
+    ftfha_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. ftfha estimate")
+    ftfha_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. ftfha estimate")
+    ftfha_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. ftfha estimate")
+    ftfha_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. ftfha estimate")
+    ftfha_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. ftfha estimate")
+    ftfha_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. ftfha estimate")
+    ftfha_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. ftfha estimate")
+    ftfha_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. ftfha estimate")
+    ftfha_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. ftfha estimate")
+    ftfha_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. ftfha estimate")
+    ftfha_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. ftfha estimate")
+    ftfha_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. ftfha estimate")
+    ftfha_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. ftfha estimate")
+    ftfha_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. ftfha estimate")
+    ftfha_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. ftfha estimate")
 
 
-        # For estimates from delphi treatment
-        delphi_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. delphi estimate")
-        delphi_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. delphi estimate")
-        delphi_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. delphi estimate")
-        delphi_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. delphi estimate")
-        delphi_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. delphi estimate")
-        delphi_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. delphi estimate")
-        delphi_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. delphi estimate")
-        delphi_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. delphi estimate")
-        delphi_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. delphi estimate")
-        delphi_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. delphi estimate")
-        delphi_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. delphi estimate")
-        delphi_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. delphi estimate")
-        delphi_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. delphi estimate")
-        delphi_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. delphi estimate")
-        delphi_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. delphi estimate")
-        delphi_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. delphi estimate")
-        delphi_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. delphi estimate")
-        delphi_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. delphi estimate")
-        delphi_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. delphi estimate")
-        delphi_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. delphi estimate")
+    # For estimates from delphi treatment
+    delphi_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. delphi estimate")
+    delphi_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. delphi estimate")
+    delphi_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. delphi estimate")
+    delphi_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. delphi estimate")
+    delphi_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. delphi estimate")
+    delphi_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. delphi estimate")
+    delphi_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. delphi estimate")
+    delphi_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. delphi estimate")
+    delphi_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. delphi estimate")
+    delphi_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. delphi estimate")
+    delphi_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. delphi estimate")
+    delphi_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. delphi estimate")
+    delphi_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. delphi estimate")
+    delphi_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. delphi estimate")
+    delphi_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. delphi estimate")
+    delphi_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. delphi estimate")
+    delphi_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. delphi estimate")
+    delphi_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. delphi estimate")
+    delphi_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. delphi estimate")
+    delphi_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. delphi estimate")
 
-        # For estimates from delphi treatment with hidden agendas
-        delphiha_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. delphiha estimate")
-        delphiha_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. delphiha estimate")
-        delphiha_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. delphiha estimate")
-        delphiha_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. delphiha estimate")
-        delphiha_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. delphiha estimate")
-        delphiha_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. delphiha estimate")
-        delphiha_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. delphiha estimate")
-        delphiha_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. delphiha estimate")
-        delphiha_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. delphiha estimate")
-        delphiha_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. delphiha estimate")
-        delphiha_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. delphiha estimate")
-        delphiha_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. delphiha estimate")
-        delphiha_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. delphiha estimate")
-        delphiha_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. delphiha estimate")
-        delphiha_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. delphiha estimate")
-        delphiha_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. delphiha estimate")
-        delphiha_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. delphiha estimate")
-        delphiha_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. delphiha estimate")
-        delphiha_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. delphiha estimate")
-        delphiha_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. delphiha estimate")
+    # For estimates from delphi treatment with hidden agendas
+    delphiha_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. delphiha estimate")
+    delphiha_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. delphiha estimate")
+    delphiha_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. delphiha estimate")
+    delphiha_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. delphiha estimate")
+    delphiha_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. delphiha estimate")
+    delphiha_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. delphiha estimate")
+    delphiha_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. delphiha estimate")
+    delphiha_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. delphiha estimate")
+    delphiha_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. delphiha estimate")
+    delphiha_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. delphiha estimate")
+    delphiha_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. delphiha estimate")
+    delphiha_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. delphiha estimate")
+    delphiha_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. delphiha estimate")
+    delphiha_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. delphiha estimate")
+    delphiha_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. delphiha estimate")
+    delphiha_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. delphiha estimate")
+    delphiha_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. delphiha estimate")
+    delphiha_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. delphiha estimate")
+    delphiha_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. delphiha estimate")
+    delphiha_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. delphiha estimate")
 
     # Response Variables for Questionnaire
-        gender = models.IntegerField(label="<b>Which gender do you identify with?</b>",
-                                   choices=[
-                                       [1, 'female'],
-                                       [2, 'male'],
-                                       [3, 'other'],
-                                   ],
-                                    doc = "Questionnaire: Which gender do you identify with? "
-                                          "(1: female, "
-                                          "2: male"
-                                          "3: other"
-                                    )
-        education = models.IntegerField(label="<b>If you think back to your time since starting primary school, how many"
-                                              " years have you been following a formal education (school, vocational"
-                                              " training, university,etc.) until today?</b>",
-                                        min=0,
-                                        max=100,
-                                        doc="If you think back to your time since starting primary school, how many"
-                                              " years have you been following a formal education (school, vocational"
-                                              " training, university,etc.) until today?")
-        field_of_studies = models.IntegerField(label="<b> What describes your current/most recent field of study"
-                                                     " best?</b>",
-                                                choices=[
-                                                    [1, 'Business and/or Economics'],
-                                                    [2, 'Social Sciences'],
-                                                    [3, 'Natural Sciences'],
-                                                    [4, 'Arts'],
-                                                    [5, 'Other'],
-                                                    [6, 'I did/do not follow any studies']
-                                                    ],
-                                               doc="Questionnaire: What describes your current/most recent field of study "
-                                                   "best?, (1: Business and/or Economics; 2: Social Sciences; 3: Natural"
-                                                   "Sciences; 4: Arts; 5: Other; 6: I did/do not follow any studies)")
+    gender = models.IntegerField(label="<b>Which gender do you identify with?</b>",
+                               choices=[
+                                   [1, 'female'],
+                                   [2, 'male'],
+                                   [3, 'other'],
+                               ],
+                                doc = "Questionnaire: Which gender do you identify with? "
+                                      "(1: female, "
+                                      "2: male"
+                                      "3: other"
+                                )
+    education = models.IntegerField(label="<b>If you think back to your time since starting primary school, how many"
+                                          " years have you been following a formal education (school, vocational"
+                                          " training, university,etc.) until today?</b>",
+                                    min=0,
+                                    max=100,
+                                    doc="If you think back to your time since starting primary school, how many"
+                                          " years have you been following a formal education (school, vocational"
+                                          " training, university,etc.) until today?")
+    field_of_studies = models.IntegerField(label="<b> What describes your current/most recent field of study"
+                                                 " best?</b>",
+                                            choices=[
+                                                [1, 'Business and/or Economics'],
+                                                [2, 'Social Sciences'],
+                                                [3, 'Natural Sciences'],
+                                                [4, 'Arts'],
+                                                [5, 'Other'],
+                                                [6, 'I did/do not follow any studies']
+                                                ],
+                                           doc="Questionnaire: What describes your current/most recent field of study "
+                                               "best?, (1: Business and/or Economics; 2: Social Sciences; 3: Natural"
+                                               "Sciences; 4: Arts; 5: Other; 6: I did/do not follow any studies)")
 
-        years_of_working = models.IntegerField(label="<b> Do you have professional working experience? If so, for how long?"
-                                                     "</b>",
-                                                choices=[
-                                                    [0, 'No, I do not have professional working experience'],
-                                                    [6, 'less than 1 year'],
-                                                    [1, '1 up to 2 years'],
-                                                    [2, '2 up to 3 years'],
-                                                    [3, '3 up to 4 years'],
-                                                    [4, '4 up to 5 years'],
-                                                    [5, '5 years or more'],
-                                                    ],
-                                               doc="Questionnaire: Do you have professional working experience? If so, for"
-                                                   " how long? (0: No I do not have professional working experience;"
-                                                   "1: 1 year; 2: 2 years; 3: 3 years; 4: 4 years; 5: 5 years or more; "
-                                                   "6: less than 1 year)")
-        # Honesty module
-        honesty_A = models.IntegerField(doc="If I want something from a person I dislike, I will act very nicely toward"
-                                             " that person in order to get it. (1: strongly disagree; 2;3;4; 5: strongly "
-                                            "agree)"
-                                       )
-        honesty_B = models.IntegerField(doc="If I knew that I could never get caught, I would be willing to steal a million"
-                                            " euro. (1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                       )
-        honesty_C = models.IntegerField(doc="I wouldn't use flattery to get a raise or promotion at work, even if I thought"
-                                            " it would succeed. (1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                       )
-        honesty_D = models.IntegerField(doc="I would be tempted to buy stolen property if I were financially tight."
-                                            "(1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                       )
-        honesty_E = models.IntegerField(doc="If I want something from someone, I will laugh at that person's worst jokes."
-                                            "(1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                       )
-        honesty_F = models.IntegerField(doc="I would never accept a bribe, even if it were very large."
-                                            "(1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                       )
-        honesty_G = models.IntegerField(doc="I wouldn't pretend to like someone just to get that person to do favors for "
-                                            "me. (1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                       )
-        honesty_H = models.IntegerField(doc="I’d be tempted to use counterfeit money, if I were sure I could get away with"
-                                            " it.(1: strongly disagree; 2;3;4; 5: strongly agree)"
+    years_of_working = models.IntegerField(label="<b> Do you have professional working experience? If so, for how long?"
+                                                 "</b>",
+                                            choices=[
+                                                [0, 'No, I do not have professional working experience'],
+                                                [6, 'less than 1 year'],
+                                                [1, '1 up to 2 years'],
+                                                [2, '2 up to 3 years'],
+                                                [3, '3 up to 4 years'],
+                                                [4, '4 up to 5 years'],
+                                                [5, '5 years or more'],
+                                                ],
+                                           doc="Questionnaire: Do you have professional working experience? If so, for"
+                                               " how long? (0: No I do not have professional working experience;"
+                                               "1: 1 year; 2: 2 years; 3: 3 years; 4: 4 years; 5: 5 years or more; "
+                                               "6: less than 1 year)")
+    # Honesty module
+    honesty_A = models.IntegerField(doc="If I want something from a person I dislike, I will act very nicely toward"
+                                         " that person in order to get it. (1: strongly disagree; 2;3;4; 5: strongly "
+                                        "agree)"
+                                   )
+    honesty_B = models.IntegerField(doc="If I knew that I could never get caught, I would be willing to steal a million"
+                                        " euro. (1: strongly disagree; 2;3;4; 5: strongly agree)"
+                                   )
+    honesty_C = models.IntegerField(doc="I wouldn't use flattery to get a raise or promotion at work, even if I thought"
+                                        " it would succeed. (1: strongly disagree; 2;3;4; 5: strongly agree)"
+                                   )
+    honesty_D = models.IntegerField(doc="I would be tempted to buy stolen property if I were financially tight."
+                                        "(1: strongly disagree; 2;3;4; 5: strongly agree)"
+                                   )
+    honesty_E = models.IntegerField(doc="If I want something from someone, I will laugh at that person's worst jokes."
+                                        "(1: strongly disagree; 2;3;4; 5: strongly agree)"
+                                   )
+    honesty_F = models.IntegerField(doc="I would never accept a bribe, even if it were very large."
+                                        "(1: strongly disagree; 2;3;4; 5: strongly agree)"
+                                   )
+    honesty_G = models.IntegerField(doc="I wouldn't pretend to like someone just to get that person to do favors for "
+                                        "me. (1: strongly disagree; 2;3;4; 5: strongly agree)"
+                                   )
+    honesty_H = models.IntegerField(doc="I’d be tempted to use counterfeit money, if I were sure I could get away with"
+                                        " it.(1: strongly disagree; 2;3;4; 5: strongly agree)"
+                                    )
 
 # PAGES
 class MyPage(Page):
