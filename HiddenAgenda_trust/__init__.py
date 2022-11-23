@@ -13,8 +13,8 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 1 # 2 needed for attention check questions
 
-    fixed_pay = cu(5)
-    avg_pay = cu(10)
+    fixed_pay = cu(10)
+    avg_pay = cu(15)
 
     num_attention_checks = 5
     num_final_questions = 10
