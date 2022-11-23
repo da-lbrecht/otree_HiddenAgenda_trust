@@ -1,0 +1,26 @@
+{% block title %}
+    Add Numbers
+{% endblock %}
+
+{% block content %}
+    <div id="main">
+        What is {{ number_1 }} + {{ number_2 }}? <br>
+        <input id="result_input"> </input> <br>
+        <button type="button" onclick="check_result()">Submit Results</button>
+    </div>
+
+
+{% endblock %}
+{% block scripts %}
+<script>
+    function check_result() {
+        entered_result = document.getElementById("result_input").value;
+        actual_result = {{ number_1|json }} + {{ number_2|json }};
+        if (entered_result == actual_result){
+            document.getElementById("main").innerHTML = "Your result was correct";
+        } else {
+            document.getElementById("main").innerHTML = "Your result was wrong";
+        }
+    }
+</script>
+{% endblock %}
