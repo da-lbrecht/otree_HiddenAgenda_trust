@@ -1,0 +1,140 @@
+
+{% block styles %}
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap-4/css/bootstrap.css' %}" rel="stylesheet">
+
+<!--<style>
+    video {
+        height: 100vh;
+        width: 100%;
+        object-fit: cover; // use "cover" to avoid distortion
+        position: absolute;
+    }
+</style>-->
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'global/js/basics.js' %}"></script>
+    <script src="{% static 'global/js/navbuttons.js' %}"></script>
+    <script src="{% static 'bootstrap-4/js/bootstrap.bundle.js' %}"></script>
+
+    <script>
+
+    {% if player.round_number == 1 %} // control which initial info each player sees
+        document.getElementById("ftf_header").style.display = "block";
+    {% elif player.round_number == 2 %}
+        document.getElementById("ftfha_header").style.display = "block";
+    {% elif player.round_number == 3 %}
+        document.getElementById("delphi_header").style.display = "block";
+    {% elif player.round_number == 4 %}
+        document.getElementById("delphiha_header").style.display = "block";
+    {% endif %}
+
+    function saveTime() {
+        document.getElementById("end_of_round_input").value = new Date().getTime();
+    }
+
+    </script>
+
+{% endblock %}
+
+
+{% block title %}
+    <table class="table">
+        <tr>
+            <td style="width:70%;border-color:transparent">Trial Round</td>
+            <td style="width:30%;border-color:transparent;text-align: right;">
+                <img src="{% static 'img/um_logo.jpg' %}" style="width:30%;">
+            </td>
+        </tr>
+    </table>
+{% endblock %}
+
+
+
+{% block content %}
+
+<body>
+    <!-- Header <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist"> -->
+
+    <div class="card">
+        <div class="card-header">
+        <nav  role="navigation">
+
+             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                <li class="nav-item" >
+                    <a class="nav-link back-and-forth active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1"> Task </a>
+                </li>
+            </ul>
+
+        </nav>
+        </div>
+
+        <!-- Instructions -->
+
+        <div class="tab-content" id="myTabContent">
+
+            <!-- Part 1: WHATEVER FIRST TAB HERE -->
+            <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftf_header" style="display: none">
+                    <p class="h4">Evaluate judgements from face-to-face groups</p>
+                </div>
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftfha_header" style="display: none">
+                    <p class="h4">Evaluate judgements from face-to-face groups with hidden agendas</p>
+                </div>
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphi_header" style="display: none">
+                    <p class="h4">Evaluate judgements from Delphi groups</p>
+                </div>
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphiha_header" style="display: none">
+                    <p class="h4">Evaluate judgements from Delphi groups with hidden agendas</p>
+                </div>
+
+                <div class="card-body">
+
+                    <div>
+
+                        <p>
+                            Please choose a lower and upper bound.
+                        </p>
+
+<!--                        <p>
+                            If you have any further questions regarding the experiment, now would be a good point in
+                            time to ask them. Please give a sign to the experimenter if you want to ask something.
+                            If you feel well-informed, please click the blue button to continue. You will then start
+                            with the first out of {{ Constants.num_rounds }} rounds of the experiment.
+                            All these {{ Constants.num_rounds }} rounds count towards your
+                            earnings in the experiment as outlined in the introductory video.
+                        </p>-->
+
+                    </div>
+
+
+                    <!-- on Card Navigation  Arrows -->
+
+                    <!-- greyed out left arrow on first page -->
+                    <div class="row justify-content-md-center mt-5">
+
+                        <div class="col col-lg-2" id="next_button" style="display: block">
+                            <button class="btn btn-primary btn-large" onclick="saveTime()">
+                                Continue
+                            </button>
+                        </div>
+
+                        <input id="end_of_round_input" name="end_of_round" type="hidden" value=""/>
+                        {{ formfield_errors 'end_of_round' }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+{% endblock %}

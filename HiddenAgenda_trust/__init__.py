@@ -11,7 +11,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'hiddenagenda_decisions'
     players_per_group = None
-    num_rounds = 1 # 2 needed for attention check questions
+    num_rounds = 8 # rounds 1-4 for trial, and 5-8 for actual evaluation in FTF, FTF+HA, Delphi and Delphi+HA each
 
     fixed_pay = cu(10)
     avg_pay = cu(15)
@@ -45,7 +45,14 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     # Process variables
     starting_time = models.LongStringField(doc="Time at which Informed Consent is given and experiment starts")
-    begintrial_time = models.LongStringField(doc="Time at which trial round is started")
+    begintrial_time = models.LongStringField(doc="Time at which the whole trial started")
+
+    end_of_trial = models.StringField(initial=999,
+                                      doc="Time at which the whole trial period was completed")
+    start_of_round = models.StringField(initial=999,
+                                        doc="Starting time of a task round")
+    end_of_round = models.StringField(initial=999,
+                                        doc="Ending time of a task round")
 
     # Response variables for attention checks
     attention_check_1 = models.FloatField(initial=999,
@@ -95,95 +102,26 @@ class Player(BasePlayer):
                                                 doc="Number of attempts needed to pass attention check questions")
 
     # Response variables for elicitation of trust in estimates
-    # For estimates from face-to-face treatment
-    ftf_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. ftf estimate")
-    ftf_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. ftf estimate")
-    ftf_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. ftf estimate")
-    ftf_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. ftf estimate")
-    ftf_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. ftf estimate")
-    ftf_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. ftf estimate")
-    ftf_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. ftf estimate")
-    ftf_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. ftf estimate")
-    ftf_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. ftf estimate")
-    ftf_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. ftf estimate")
-    ftf_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. ftf estimate")
-    ftf_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. ftf estimate")
-    ftf_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. ftf estimate")
-    ftf_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. ftf estimate")
-    ftf_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. ftf estimate")
-    ftf_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. ftf estimate")
-    ftf_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. ftf estimate")
-    ftf_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. ftf estimate")
-    ftf_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. ftf estimate")
-    ftf_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. ftf estimate")
-
-
-    # For estimates from face-to-face treatment with hidden agendas
-    ftfha_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. ftfha estimate")
-    ftfha_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. ftfha estimate")
-    ftfha_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. ftfha estimate")
-    ftfha_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. ftfha estimate")
-    ftfha_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. ftfha estimate")
-    ftfha_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. ftfha estimate")
-    ftfha_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. ftfha estimate")
-    ftfha_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. ftfha estimate")
-    ftfha_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. ftfha estimate")
-    ftfha_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. ftfha estimate")
-    ftfha_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. ftfha estimate")
-    ftfha_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. ftfha estimate")
-    ftfha_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. ftfha estimate")
-    ftfha_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. ftfha estimate")
-    ftfha_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. ftfha estimate")
-    ftfha_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. ftfha estimate")
-    ftfha_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. ftfha estimate")
-    ftfha_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. ftfha estimate")
-    ftfha_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. ftfha estimate")
-    ftfha_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. ftfha estimate")
-
-
-    # For estimates from delphi treatment
-    delphi_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. delphi estimate")
-    delphi_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. delphi estimate")
-    delphi_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. delphi estimate")
-    delphi_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. delphi estimate")
-    delphi_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. delphi estimate")
-    delphi_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. delphi estimate")
-    delphi_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. delphi estimate")
-    delphi_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. delphi estimate")
-    delphi_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. delphi estimate")
-    delphi_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. delphi estimate")
-    delphi_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. delphi estimate")
-    delphi_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. delphi estimate")
-    delphi_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. delphi estimate")
-    delphi_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. delphi estimate")
-    delphi_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. delphi estimate")
-    delphi_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. delphi estimate")
-    delphi_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. delphi estimate")
-    delphi_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. delphi estimate")
-    delphi_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. delphi estimate")
-    delphi_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. delphi estimate")
-
-    # For estimates from delphi treatment with hidden agendas
-    delphiha_round_1_lower = models.FloatField(doc="Lower bound of confidence interval on round 1. delphiha estimate")
-    delphiha_round_1_upper = models.FloatField(doc="Lower upper of confidence interval on round 1. delphiha estimate")
-    delphiha_round_2_lower = models.FloatField(doc="Lower bound of confidence interval on round 2. delphiha estimate")
-    delphiha_round_2_upper = models.FloatField(doc="Lower upper of confidence interval on round 2. delphiha estimate")
-    delphiha_round_3_lower = models.FloatField(doc="Lower bound of confidence interval on round 3. delphiha estimate")
-    delphiha_round_3_upper = models.FloatField(doc="Lower upper of confidence interval on round 3. delphiha estimate")
-    delphiha_round_4_lower = models.FloatField(doc="Lower bound of confidence interval on round 4. delphiha estimate")
-    delphiha_round_4_upper = models.FloatField(doc="Lower upper of confidence interval on round 4. delphiha estimate")
-    delphiha_round_5_lower = models.FloatField(doc="Lower bound of confidence interval on round 5. delphiha estimate")
-    delphiha_round_5_upper = models.FloatField(doc="Lower upper of confidence interval on round 5. delphiha estimate")
-    delphiha_round_6_lower = models.FloatField(doc="Lower bound of confidence interval on round 6. delphiha estimate")
-    delphiha_round_6_upper = models.FloatField(doc="Lower upper of confidence interval on round 6. delphiha estimate")
-    delphiha_round_7_lower = models.FloatField(doc="Lower bound of confidence interval on round 7. delphiha estimate")
-    delphiha_round_7_upper = models.FloatField(doc="Lower upper of confidence interval on round 7. delphiha estimate")
-    delphiha_round_8_lower = models.FloatField(doc="Lower bound of confidence interval on round 8. delphiha estimate")
-    delphiha_round_8_upper = models.FloatField(doc="Lower upper of confidence interval on round 8. delphiha estimate")
-    delphiha_round_9_lower = models.FloatField(doc="Lower bound of confidence interval on round 9. delphiha estimate")
-    delphiha_round_9_upper = models.FloatField(doc="Lower upper of confidence interval on round 9. delphiha estimate")
-    delphiha_round_10_lower = models.FloatField(doc="Lower bound of confidence interval on round 10. delphiha estimate")
-    delphiha_round_10_upper = models.FloatField(doc="Lower upper of confidence interval on round 10. delphiha estimate")
+    estimate_1_lower = models.FloatField(doc="Lower bound of confidence interval on 1. task round in estimation study")
+    estimate_1_upper = models.FloatField(doc="Lower upper of confidence interval on 1. task round in estimation study")
+    estimate_2_lower = models.FloatField(doc="Lower bound of confidence interval on 2. task round in estimation study")
+    estimate_2_upper = models.FloatField(doc="Lower upper of confidence interval on 2. task round in estimation study")
+    estimate_3_lower = models.FloatField(doc="Lower bound of confidence interval on 3. task round in estimation study")
+    estimate_3_upper = models.FloatField(doc="Lower upper of confidence interval on 3. task round in estimation study")
+    estimate_4_lower = models.FloatField(doc="Lower bound of confidence interval on 4. task round in estimation study")
+    estimate_4_upper = models.FloatField(doc="Lower upper of confidence interval on 4. task round in estimation study")
+    estimate_5_lower = models.FloatField(doc="Lower bound of confidence interval on 5. task round in estimation study")
+    estimate_5_upper = models.FloatField(doc="Lower upper of confidence interval on 5. task round in estimation study")
+    estimate_6_lower = models.FloatField(doc="Lower bound of confidence interval on 6. task round in estimation study")
+    estimate_6_upper = models.FloatField(doc="Lower upper of confidence interval on 6. task round in estimation study")
+    estimate_7_lower = models.FloatField(doc="Lower bound of confidence interval on 7. task round in estimation study")
+    estimate_7_upper = models.FloatField(doc="Lower upper of confidence interval on 7. task round in estimation study")
+    estimate_8_lower = models.FloatField(doc="Lower bound of confidence interval on 8. task round in estimation study")
+    estimate_8_upper = models.FloatField(doc="Lower upper of confidence interval on 8. task round in estimation study")
+    estimate_9_lower = models.FloatField(doc="Lower bound of confidence interval on 9. task round in estimation study")
+    estimate_9_upper = models.FloatField(doc="Lower upper of confidence interval on 9. task round in estimation study")
+    estimate_10_lower = models.FloatField(doc="Lower bound of confidence interval on 10. task round in estimation study")
+    estimate_10_upper = models.FloatField(doc="Lower upper of confidence interval on 10. task round in estimation study")
 
     # Response Variables for Questionnaire
     gender = models.IntegerField(label="<b>Which gender do you identify with?</b>",
@@ -323,28 +261,38 @@ class TaskIntro(Page):
                 player.id_in_group: {"information_type": "error", "error": questions},
             }
 
-class MyPage(Page):
+class Task_Trial(Page):
+    form_model = 'player'
+    form_fields = ['end_of_round']
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number <= 4
+
     @staticmethod
     def vars_for_template(player: Player):
-        number_1 = random.randint(1,100)
-        number_2 = random.randint(1,100)
-        return{
-            "number_1": number_1,
-            "number_2": number_2,
-        }
+        return {"round_number": player.round_number}
 
-class ResultsWaitPage(WaitPage):
-    pass
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if player.round_number == 4:
+            player.end_of_trial = player.end_of_round
+        else:
+            pass
+
 
 
 class Results(Page):
-    pass
+    form_model = 'player'
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == 8
 
 
 page_sequence = [
-    Welcome,
-    TaskIntro,
-    MyPage,
-    ResultsWaitPage,
+    #Welcome,
+    #TaskIntro,
+    Task_Trial,
     Results
 ]
