@@ -2,6 +2,9 @@
 {% block styles %}
     <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
     <link href="{% static 'bootstrap-4/css/bootstrap.css' %}" rel="stylesheet">
+    <!-- wRunner CSS (creating dual handle range sliders) -->
+    <link href="{% static 'wrunner/css/wrunner-default-theme.css' %}" rel="stylesheet">
+
 
 <!--<style>
     video {
@@ -18,9 +21,12 @@
     <script src="{% static 'global/js/basics.js' %}"></script>
     <script src="{% static 'global/js/navbuttons.js' %}"></script>
     <script src="{% static 'bootstrap-4/js/bootstrap.bundle.js' %}"></script>
+    <!-- wRunner JS (creating dual handle range sliders) -->
+    <script src="{% static 'wrunner/js/wrunner-native.js' %}"></script>
 
     <script>
 
+    <!-- Activate header indicating underlying interaction format of judgments -->
     {% if player.round_number == 1 %} // control which initial info each player sees
         document.getElementById("ftf_header").style.display = "block";
     {% elif player.round_number == 2 %}
@@ -31,10 +37,18 @@
         document.getElementById("delphiha_header").style.display = "block";
     {% endif %}
 
+    <!-- Function to save time at end of screen -->
     function saveTime() {
         document.getElementById("end_of_round_input").value = new Date().getTime();
     }
 
+    <!-- call wRunner plugin with configuration options for the dual handle slider -->
+    var setting = {
+        roots: document.querySelector('.ftf_trial_slider'),
+        type: 'range',
+        step: 1,
+        }
+    var slider = wRunner(setting);
     </script>
 
 {% endblock %}
@@ -54,6 +68,9 @@
 
 
 {% block content %}
+
+
+
 
 <body>
     <!-- Header <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist"> -->
@@ -112,6 +129,8 @@
                         </p>-->
 
                     </div>
+
+                    <div class=".ftf_trial_slider"></div>
 
 
                     <!-- on Card Navigation  Arrows -->
