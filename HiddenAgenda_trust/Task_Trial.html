@@ -101,12 +101,16 @@
     <!-- Activate header indicating underlying interaction format of judgments -->
     {% if player.round_number == 1 %} // control which initial info each player sees
         document.getElementById("ftf_header").style.display = "block";
+        document.getElementById("ftf_part1-tab").style.display = "block";
     {% elif player.round_number == 2 %}
         document.getElementById("ftfha_header").style.display = "block";
+        document.getElementById("ftfha_part1-tab").style.display = "block";
     {% elif player.round_number == 3 %}
         document.getElementById("delphi_header").style.display = "block";
+        document.getElementById("delphi_part1-tab").style.display = "block";
     {% elif player.round_number == 4 %}
         document.getElementById("delphiha_header").style.display = "block";
+        document.getElementById("delphiha_part1-tab").style.display = "block";
     {% endif %}
 
     <!-- Function to save time at end of screen -->
@@ -234,7 +238,19 @@
 
              <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                 <li class="nav-item" >
-                    <a class="nav-link back-and-forth active" id="part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1"> Task </a>
+                    <a class="nav-link back-and-forth active" id="ftf_part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" style="display: none"> Judgments from FTF groups </a>
+                </li>
+
+                 <li class="nav-item" >
+                    <a class="nav-link back-and-forth active" id="ftfha_part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" style="display: none"> Judgments from FTF groups with hidden agendas </a>
+                </li>
+
+                 <li class="nav-item" >
+                    <a class="nav-link back-and-forth active" id="delphi_part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" style="display: none"> Judgments from Delphi groups </a>
+                </li>
+
+                 <li class="nav-item" >
+                    <a class="nav-link back-and-forth active" id="delphiha_part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" style="display: none"> Judgments from Delphi groups with hidden agendas </a>
                 </li>
             </ul>
 
