@@ -36,7 +36,7 @@ class Constants(BaseConstants):
     round_10_prob = 0.9
 
     # Group judgments for trial round
-    group_judgments = [0.3, 0.4, 0.5, 0.6]
+    group_judgments = [20, 40, 60, 80]
 
 
 class Subsession(BaseSubsession):
@@ -305,10 +305,12 @@ class Task_Trial(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        group_judgment = f'"{Constants.group_judgments[player.round_displayed-1]}"'
         if player.round_number <= 4:
             return {"round_number": player.round_number,
                     "round_displayed": player.round_displayed,
-                    "group_judgment": Constants.group_judgments[player.round_displayed-1]}
+                    "group_judgment": group_judgment,
+                    }
         else:
             pass
 
