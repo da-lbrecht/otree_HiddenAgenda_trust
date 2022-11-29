@@ -117,9 +117,13 @@
         document.getElementById("judgment").value = {{ group_judgment }};
     {% endif %}
 
-    <!-- Function to save time at end of screen -->
-    function saveTime() {
+    <!-- Function to save time and other results at end of screen -->
+    function saveResults() {
         document.getElementById("end_of_round_input").value = new Date().getTime();
+        var judgmentLower_input = document.getElementById("fromSlider").value;
+        document.getElementById("judgmentLower").value = judgmentLower_input;
+        var judgmentUpper_input = document.getElementById("toSlider").value;
+        document.getElementById("judgmentUpper").value = judgmentUpper_input;
     }
 
     <!-- Function to make dual handle range sliders work -->
@@ -303,6 +307,9 @@
                                 <input id="judgment" type="range" value="" disabled = true/>
                                 <input id="fromSlider" type="range" value="0" min="0" max="100"/>
                                 <input id="toSlider" type="range" value="100" min="0" max="100"/>
+<!--                                Hidden input fields to store data in otree formfields-->
+                                <input type="hidden" name="judgmentLower" id="judgmentLower" />
+                                <input type="hidden" name="judgmentUpper" id="judgmentUpper" />
                             </div>
                             <div class="form_control">
                                 <div class="form_control_container">
@@ -336,7 +343,7 @@
                     <div class="row justify-content-md-center mt-5">
 
                         <div class="col col-lg-2" id="next_button" style="display: block">
-                            <button class="btn btn-primary btn-large" onclick="saveTime()">
+                            <button class="btn btn-primary btn-large" onclick="saveResults()">
                                 Continue
                             </button>
                         </div>

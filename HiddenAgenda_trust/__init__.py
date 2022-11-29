@@ -37,6 +37,7 @@ class Constants(BaseConstants):
 
     # Group judgments for trial round
     group_judgments = [20, 40, 60, 80]
+    judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
 
 
 class Subsession(BaseSubsession):
@@ -110,32 +111,11 @@ class Player(BasePlayer):
                                                 doc="Number of attempts needed to pass attention check questions")
 
     # Response variables for elicitation of trust in estimates
-    fromSlider = models.FloatField(doc="Lower bound of confidence interval on judgment from estimation study")
-    judgment_lowerbound = models.FloatField(doc="Lower bound of confidence interval on judgment from estimation study")
-    judgment_upperbound = models.FloatField(doc="Upper bound of confidence interval on judgment from estimation study")
-
-    estimate_1_lower = models.FloatField(doc="Lower bound of confidence interval on 1. task round in estimation study")
-    estimate_1_upper = models.FloatField(doc="Lower upper of confidence interval on 1. task round in estimation study")
-    estimate_2_lower = models.FloatField(doc="Lower bound of confidence interval on 2. task round in estimation study")
-    estimate_2_upper = models.FloatField(doc="Lower upper of confidence interval on 2. task round in estimation study")
-    estimate_3_lower = models.FloatField(doc="Lower bound of confidence interval on 3. task round in estimation study")
-    estimate_3_upper = models.FloatField(doc="Lower upper of confidence interval on 3. task round in estimation study")
-    estimate_4_lower = models.FloatField(doc="Lower bound of confidence interval on 4. task round in estimation study")
-    estimate_4_upper = models.FloatField(doc="Lower upper of confidence interval on 4. task round in estimation study")
-    estimate_5_lower = models.FloatField(doc="Lower bound of confidence interval on 5. task round in estimation study")
-    estimate_5_upper = models.FloatField(doc="Lower upper of confidence interval on 5. task round in estimation study")
-    estimate_6_lower = models.FloatField(doc="Lower bound of confidence interval on 6. task round in estimation study")
-    estimate_6_upper = models.FloatField(doc="Lower upper of confidence interval on 6. task round in estimation study")
-    estimate_7_lower = models.FloatField(doc="Lower bound of confidence interval on 7. task round in estimation study")
-    estimate_7_upper = models.FloatField(doc="Lower upper of confidence interval on 7. task round in estimation study")
-    estimate_8_lower = models.FloatField(doc="Lower bound of confidence interval on 8. task round in estimation study")
-    estimate_8_upper = models.FloatField(doc="Lower upper of confidence interval on 8. task round in estimation study")
-    estimate_9_lower = models.FloatField(doc="Lower bound of confidence interval on 9. task round in estimation study")
-    estimate_9_upper = models.FloatField(doc="Lower upper of confidence interval on 9. task round in estimation study")
-    estimate_10_lower = models.FloatField(
-        doc="Lower bound of confidence interval on 10. task round in estimation study")
-    estimate_10_upper = models.FloatField(
-        doc="Lower upper of confidence interval on 10. task round in estimation study")
+    trialRound = models.BooleanField(doc="1/True if round was a trial, without consequences for payment")
+    judgmentOrigin = models.StringField(doc="Description of treatment of estimation study, from which group judgment"
+                                            "originates")
+    judgmentLower = models.FloatField(doc="Lower bound of confidence interval on judgment from estimation study")
+    judgmentUpper = models.FloatField(doc="Upper bound of confidence interval on judgment from estimation study")
 
     # Response Variables for Questionnaire
     gender = models.IntegerField(label="<b>Which gender do you identify with?</b>",
@@ -245,7 +225,9 @@ class Welcome(Page):
 
 class TaskIntro(Page):
     form_model = 'player'
-    form_fields = ['begintrial_time']
+    form_fields = [
+        'begintrial_time',
+                   ]
 
     @staticmethod
     def is_displayed(player: Player):
@@ -300,32 +282,33 @@ class TaskIntro(Page):
 class Task_Trial(Page):
     form_model = 'player'
     form_fields = [
-        'end_of_round'
+        'end_of_round',
+        'judgmentLower',
+        'judgmentUpper'
     ]
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number <= 4
+        return player.round_number <= Constants.num_trial_rounds
 
     @staticmethod
     def vars_for_template(player: Player):
         group_judgment = f'"{Constants.group_judgments[player.round_displayed-1]}"'
-        if player.round_number <= 4:
+        if player.round_number <= Constants.num_trial_rounds:
             return {"round_number": player.round_number,
                     "round_displayed": player.round_displayed,
                     "group_judgment": group_judgment,
-                    "group_judgment_ll": group_judgment_ll,
-                    "group_judgment_ul": group_judgment_ul,
                     }
         else:
             pass
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        if player.round_number == 4:
+        if player.round_number <= Constants.num_trial_rounds:
+            player.trialRound = True
+            player.judgmentOrigin = Constants.judgment_origins[player.round_displayed-1]
+        if player.round_number == Constants.num_trial_rounds:
             player.end_of_trial = player.end_of_round
-        else:
-            pass
 
 
 class Results(Page):
