@@ -103,26 +103,18 @@
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgment").min = {{ group_judgment_ll }};
-        document.getElementById("judgment").max = {{ group_judgment_ul }};
     {% elif player.round_number == 2 %}
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgment").min = {{ group_judgment_ll }};
-        document.getElementById("judgment").max = {{ group_judgment_ul }};
     {% elif player.round_number == 3 %}
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgment").min = {{ group_judgment_ll }};
-        document.getElementById("judgment").max = {{ group_judgment_ul }};
     {% elif player.round_number == 4 %}
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgment").min = {{ group_judgment_ll }};
-        document.getElementById("judgment").max = {{ group_judgment_ul }};
     {% endif %}
 
     <!-- Function to save time at end of screen -->
@@ -308,7 +300,7 @@
 
                         <div class="range_container">
                             <div class="sliders_control">
-                                <input id="judgment" type="range" value="50" min="0" max="100"/>
+                                <input id="judgment" type="range" value="" disabled = true/>
                                 <input id="fromSlider" type="range" value="0" min="0" max="100"/>
                                 <input id="toSlider" type="range" value="100" min="0" max="100"/>
                             </div>

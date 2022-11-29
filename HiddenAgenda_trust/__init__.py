@@ -110,6 +110,10 @@ class Player(BasePlayer):
                                                 doc="Number of attempts needed to pass attention check questions")
 
     # Response variables for elicitation of trust in estimates
+    fromSlider = models.FloatField(doc="Lower bound of confidence interval on judgment from estimation study")
+    judgment_lowerbound = models.FloatField(doc="Lower bound of confidence interval on judgment from estimation study")
+    judgment_upperbound = models.FloatField(doc="Upper bound of confidence interval on judgment from estimation study")
+
     estimate_1_lower = models.FloatField(doc="Lower bound of confidence interval on 1. task round in estimation study")
     estimate_1_upper = models.FloatField(doc="Lower upper of confidence interval on 1. task round in estimation study")
     estimate_2_lower = models.FloatField(doc="Lower bound of confidence interval on 2. task round in estimation study")
@@ -306,8 +310,6 @@ class Task_Trial(Page):
     @staticmethod
     def vars_for_template(player: Player):
         group_judgment = f'"{Constants.group_judgments[player.round_displayed-1]}"'
-        group_judgment_ll = f'"{ max(Constants.group_judgments[player.round_displayed-1]-1,0) }"'
-        group_judgment_ul = f'"{ min(Constants.group_judgments[player.round_displayed-1]+1,100) }"'
         if player.round_number <= 4:
             return {"round_number": player.round_number,
                     "round_displayed": player.round_displayed,
