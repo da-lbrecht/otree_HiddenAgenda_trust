@@ -21,8 +21,18 @@
       position: relative;
       display: flex;
       justify-content: space-between;
+      text-align: center;
       font-size: 24px;
       color: #635a5a;
+    }
+
+    .judgment_info {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      font-size: 24px;
+      color: #011c3c;
     }
 
     input[type=range]::-webkit-slider-thumb {
@@ -103,18 +113,22 @@
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
+        document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% elif player.round_number == 2 %}
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
+        document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% elif player.round_number == 3 %}
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
+        document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% elif player.round_number == 4 %}
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
+        document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% endif %}
 
     <!-- Function to save time and other results at end of screen -->
@@ -296,13 +310,14 @@
                             Please choose a lower and upper bound of your preferred range.
                         </p>
 
-                        <p>
-                            Round = {{ round_number }} <br>
-                            Round displayed = {{ round_displayed }} <br>
-                            Group Judgment = {{ group_judgment }}
-                        </p>
-
                         <div class="range_container">
+                            <div class="judgment_info">
+                                <div class="judgment_info_container">
+                                        group judgment <br>
+                                    <input class="form_control_container__time__input" type="number" id="judgmentInput"
+                                           value="0" style="margin-bottom:18pt;"/>
+                                </div>
+                            </div>
                             <div class="sliders_control">
                                 <input id="judgment" type="range" value="" disabled = true/>
                                 <input id="fromSlider" type="range" value="0" min="0" max="100"/>
@@ -317,7 +332,8 @@
                                     <input class="form_control_container__time__input" type="number" id="fromInput" value="0" min="0" max="100"/>
                                 </div>
                                 <div class="form_control_container">
-                                    <div class="form_control_container__time">upper bound</div>
+                                    <div class="form_control_container__time">
+                                        upper bound</div>
                                     <input class="form_control_container__time__input" type="number" id="toInput" value="100" min="0" max="100"/>
                                 </div>
                             </div>
