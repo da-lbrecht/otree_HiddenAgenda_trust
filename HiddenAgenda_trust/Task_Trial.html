@@ -35,7 +35,7 @@
       color: #011c3c;
     }
 
-    input[type=range]::-webkit-slider-thumb {
+    [id$="Slider"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       pointer-events: all;
       width: 24px;
@@ -45,6 +45,28 @@
       box-shadow: 0 0 0 1px #C6C6C6;
       cursor: pointer;
     }
+
+    [id="judgment"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      width: 12px;
+      height: 12px;
+      background-color: #011c3c;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #011c3c;
+      cursor: pointer;
+    }
+
+/*    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #C6C6C6;
+      cursor: pointer;
+    }*/
 
     input[type=range]::-moz-range-thumb {
       -webkit-appearance: none;
@@ -74,7 +96,8 @@
       border: none;
     }
 
-    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+    }
     input[type=number]::-webkit-outer-spin-button {
        opacity: 1;
     }
@@ -319,7 +342,17 @@
                                 </div>
                             </div>
                             <div class="sliders_control">
-                                <input id="judgment" type="range" value="" disabled = true/>
+                                <input id="judgment" type="range" value="" disabled = "true"
+                                style="::-webkit-slider-thumb {
+                                  -webkit-appearance: none;
+                                  pointer-events: all;
+                                  width: 12px;
+                                  height: 12px;
+                                  background-color: #b21313;
+                                  border-radius: 50%;
+                                  box-shadow: 0 0 0 1px #9d1e1e;
+                                  cursor: pointer;
+                                };" />
                                 <input id="fromSlider" type="range" value="0" min="0" max="100"/>
                                 <input id="toSlider" type="range" value="100" min="0" max="100"/>
 <!--                                Hidden input fields to store data in otree formfields-->
