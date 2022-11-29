@@ -306,8 +306,8 @@ class Task_Trial(Page):
     @staticmethod
     def vars_for_template(player: Player):
         group_judgment = f'"{Constants.group_judgments[player.round_displayed-1]}"'
-        group_judgment_ll = f'"{ min(Constants.group_judgments[player.round_displayed-1]-1,0) }"'
-        group_judgment_ul = f'"{ max(Constants.group_judgments[player.round_displayed-1]-1,100) }"'
+        group_judgment_ll = f'"{ max(Constants.group_judgments[player.round_displayed-1]-1,0) }"'
+        group_judgment_ul = f'"{ min(Constants.group_judgments[player.round_displayed-1]+1,100) }"'
         if player.round_number <= 4:
             return {"round_number": player.round_number,
                     "round_displayed": player.round_displayed,
