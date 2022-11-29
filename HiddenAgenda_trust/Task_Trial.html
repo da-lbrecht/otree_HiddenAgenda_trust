@@ -38,12 +38,12 @@
     [id$="Slider"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       pointer-events: all;
-      width: 24px;
       height: 24px;
+      width: 10px;
+      border-radius: 22px;
       background-color: #fff;
-      border-radius: 50%;
-      box-shadow: 0 0 0 1px #C6C6C6;
-      cursor: pointer;
+      box-shadow: 0 0 0 1px #25daa5;
+      cursor: grab;
     }
 
     [id="judgment"]::-webkit-slider-thumb {
@@ -54,7 +54,7 @@
       background-color: #011c3c;
       border-radius: 50%;
       box-shadow: 0 0 0 1px #011c3c;
-      cursor: pointer;
+      cursor: none;
     }
 
 /*    input[type=range]::-webkit-slider-thumb {
@@ -68,7 +68,7 @@
       cursor: pointer;
     }*/
 
-    input[type=range]::-moz-range-thumb {
+/*    input[type=range]::-moz-range-thumb {
       -webkit-appearance: none;
       pointer-events: all;
       width: 24px;
@@ -77,7 +77,7 @@
       border-radius: 50%;
       box-shadow: 0 0 0 1px #C6C6C6;
       cursor: pointer;
-    }
+    }*/
 
     input[type=range]::-webkit-slider-thumb:hover {
       background: #f7f7f7;
@@ -408,7 +408,7 @@
                         <br>
                         <br>
                         <p style="color:royalblue;">
-                            You may use the handles on the slider to indicate your preferred range.
+                            You may use the handles on the slider below to indicate your preferred range.
                         </p>
 
                         <div class="range_container">
