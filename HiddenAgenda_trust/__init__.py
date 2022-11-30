@@ -21,7 +21,7 @@ class Constants(BaseConstants):
     num_attention_checks = 5
     num_final_questions = 10
     num_interaction_formats = 4
-    num_evaluations = 2
+    num_evaluations = 2  # number of evaluated judgments per interaction format
 
     # Objective true probabilities
     round_1_prob = 0.1
@@ -205,23 +205,24 @@ class Player(BasePlayer):
 # Randomization of task round display
 def creating_session(subsession: Subsession):
     if subsession.round_number == 1:
-        list_of_trial_round_ids = [1, 2, 3, 4]
-        list_of_ftf_round_ids = [5, 6]
-        list_of_ftf_ha_round_ids = [7, 8]
-        list_of_delphi_round_ids = [9, 10]
-        list_of_delphi_ha_round_ids = [11, 12]
-        list_of_actual_round_ids = [list_of_ftf_round_ids, list_of_ftf_ha_round_ids, list_of_delphi_round_ids,
-                                    list_of_delphi_ha_round_ids]
-        list_of_round_ids = list(range(1, 12))
-        # list_of_trial_round_ids = list(range(1, Constants.num_trial_rounds + 1))
-        # list_of_actual_round_ids = list(range(Constants.num_trial_rounds + 1, Constants.num_actual_rounds + 2))
-        # list_of_round_ids = list(range(1, Constants.num_trial_rounds + 1))
+        list_of_trial_round_ids = list(range(1, Constants.num_trial_rounds + 1))
+        list_of_ftf_round_ids = list(range(Constants.num_trial_rounds + 1, Constants.num_trial_rounds +
+                                           Constants.num_evaluations + 1))
+        list_of_ftf_ha_round_ids = list(range(Constants.num_trial_rounds + 1*Constants.num_evaluations + 1,
+                                              Constants.num_trial_rounds + 2*Constants.num_evaluations + 1))
+        list_of_delphi_round_ids = list(range(Constants.num_trial_rounds + 2*Constants.num_evaluations + 1,
+                                              Constants.num_trial_rounds + 3*Constants.num_evaluations + 1))
+        list_of_delphi_ha_round_ids = list(range(Constants.num_trial_rounds + 3*Constants.num_evaluations + 1,
+                                              Constants.num_trial_rounds + 4*Constants.num_evaluations + 1))
+
+        list_of_round_ids = list(range(1, Constants.num_trial_rounds + 4*Constants.num_evaluations + 1))
+
         subsession_trial_temp_list = list_of_trial_round_ids
         subsession_ftf_temp_list = list_of_ftf_round_ids
         subsession_ftf_ha_temp_list = list_of_ftf_ha_round_ids
         subsession_delphi_temp_list = list_of_delphi_round_ids
         subsession_delphi_ha_temp_list = list_of_delphi_ha_round_ids
-        subsession_formats_temp_list = [0, 1, 2, 3]
+        subsession_formats_temp_list = list(range(0, Constants.num_interaction_formats))
         # Randomizing
         random.shuffle(subsession_trial_temp_list)
         random.shuffle(subsession_ftf_temp_list)
