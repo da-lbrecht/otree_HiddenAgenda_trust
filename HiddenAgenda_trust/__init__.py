@@ -294,13 +294,20 @@ class Task_Trial(Page):
     @staticmethod
     def vars_for_template(player: Player):
         group_judgment = f'"{Constants.group_judgments[player.round_displayed-1]}"'
-        if player.round_number <= Constants.num_trial_rounds:
-            return {"round_number": player.round_number,
-                    "round_displayed": player.round_displayed,
-                    "group_judgment": group_judgment,
-                    }
-        else:
-            pass
+        first_description_round = Constants.num_trial_rounds + 1
+        second_description_round = Constants.num_trial_rounds + 1 + 1*(Constants.num_actual_rounds/4)
+        third_description_round = Constants.num_trial_rounds + 1 + 2*(Constants.num_actual_rounds/4)
+        fourth_description_round = Constants.num_trial_rounds + 1 + 3*(Constants.num_actual_rounds/4)
+        return {"round_number": player.round_number,
+                "round_displayed": player.round_displayed,
+                "group_judgment": group_judgment,
+                "num_trial_rounds": Constants.num_trial_rounds,
+                "first_description_round":  first_description_round,
+                "second_description_round": second_description_round,
+                "third_description_round": third_description_round,
+                "fourth_description_round": fourth_description_round,
+                }
+
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):

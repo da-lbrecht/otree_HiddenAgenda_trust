@@ -9,7 +9,7 @@
       display: flex;
       flex-direction: column;
       width: 80%;
-      margin: 10% auto;
+      margin: 6% auto;
     }
 
     .sliders_control {
@@ -132,25 +132,25 @@
     <script>
 
     <!-- Activate header indicating underlying interaction format of judgments -->
-    {% if player.round_number == 1 %} // control which initial info each player sees
+    {% if player.round_displayed == 1 %} // control which initial info each player sees
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
         document.getElementById("judgmentInput").value = {{ group_judgment }};
-    {% elif player.round_number == 2 %}
+    {% elif player.round_displayed == 2 %}
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
         document.getElementById("judgmentInput").value = {{ group_judgment }};
-    {% elif player.round_number == 3 %}
+    {% elif player.round_displayed == 3 %}
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
         document.getElementById("judgmentInput").value = {{ group_judgment }};
-    {% elif player.round_number == 4 %}
+    {% elif player.round_displayed == 4 %}
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
@@ -314,23 +314,23 @@
             <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
 
                 <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftf_header"
-                     style="display: none; color:royalblue;">
-                    <p class="h4">Please evaluate one judgment from face-to-face group as a trial</p>
+                     style="display: none; color:#0a78f5;">
+                    <p class="h4">As a trial, please evaluate one judgment from face-to-face groups</p>
                 </div>
 
                 <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftfha_header" s
-                      style="display: none; color:royalblue;">
-                    <p class="h4">Please evaluate one judgment from face-to-face groups with hidden agendas as a trial</p>
+                      style="display: none; color:#0a78f5;">
+                    <p class="h4">As a trial, please evaluate one judgment from face-to-face groups with hidden agendas</p>
                 </div>
 
                 <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphi_header"
-                      style="display: none; color:royalblue;">
-                    <p class="h4">Please evaluate one judgment from Delphi groups as a trial</p>
+                      style="display: none; color:#0a78f5;">
+                    <p class="h4">As a trial, please evaluate one judgment from Delphi groups as a trial</p>
                 </div>
 
                 <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphiha_header"
-                      style="display: none; color:royalblue;">
-                    <p class="h4">Please evaluate one judgment  from Delphi groups with hidden agendas as a trial</p>
+                      style="display: none; color:#0a78f5;">
+                    <p class="h4">As a trial, please evaluate one judgment  from Delphi groups with hidden agendas</p>
                 </div>
 
                 <div class="card-body">
@@ -407,8 +407,9 @@
                     <div>
                         <br>
                         <br>
-                        <p style="color:royalblue;">
-                            You may use the handles on the slider below to indicate your preferred range.
+                        <p style="color:#0a78f5;">
+                            Please use the handles on the slider below to indicate the range you think the true value
+                            falls into.
                         </p>
 
                         <div class="range_container">
