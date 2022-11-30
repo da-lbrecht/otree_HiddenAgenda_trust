@@ -39,6 +39,9 @@ class Constants(BaseConstants):
     trial_judgments = [20, 40, 60, 80]
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
     actual_judgments = [11, 22, 33, 44, 55, 66, 77, 88]
+    actual_judgments_counter = list(range(1,num_trial_rounds + 1)) + \
+                               list(range(1,num_evaluations + 1)) + list(range(1,num_evaluations + 1)) + \
+                               list(range(1,num_evaluations + 1)) + list(range(1,num_evaluations + 1))
     actual_judgment_origins = ['ftf' for i in range(num_evaluations)] + ['ftf_ha' for i in range(num_evaluations)] + \
                               ['delphi' for i in range(num_evaluations)] + ['delphi_ha' for i in range(num_evaluations)]
     group_judgments = trial_judgments + actual_judgments
@@ -347,6 +350,7 @@ class Task(Page):
         second_description_round = Constants.num_trial_rounds + 1 + 1 * (Constants.num_actual_rounds / 4)
         third_description_round = Constants.num_trial_rounds + 1 + 2 * (Constants.num_actual_rounds / 4)
         fourth_description_round = Constants.num_trial_rounds + 1 + 3 * (Constants.num_actual_rounds / 4)
+        judgment_counter = Constants.actual_judgments_counter[player.round_number - 1]
         return {"round_number": player.round_number,
                 "round_displayed": player.round_displayed,
                 "group_judgment": group_judgment,
@@ -358,6 +362,8 @@ class Task(Page):
                 "fourth_description_round": fourth_description_round,
                 "judgments": Constants.group_judgments,
                 "judgment_origins": Constants.judgment_origins,
+                "judgment_counter": judgment_counter,
+                "num_evaluations": Constants.num_evaluations,
                 }
 
     @staticmethod
