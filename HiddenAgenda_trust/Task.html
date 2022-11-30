@@ -136,35 +136,43 @@
         document.getElementById("judgment").value = {{ group_judgment }};
         document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% if player.round_displayed == 1 %} // control which initial info each player sees
+        document.getElementById("header_trial").style.display = "block";
         document.getElementById("ftf_header_trial").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
     {% elif player.round_displayed == 2 %}
+        document.getElementById("header_trial").style.display = "block";
         document.getElementById("ftfha_header_trial").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
     {% elif player.round_displayed == 3 %}
+        document.getElementById("header_trial").style.display = "block";
         document.getElementById("delphi_header_trial").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
     {% elif player.round_displayed == 4 %}
+        document.getElementById("header_trial").style.display = "block";
         document.getElementById("delphiha_header_trial").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
     // Actual Rounds
     {% elif player.round_displayed >= 5 && player.round_displayed <= 6 %}
+        document.getElementById("header").style.display = "block";
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
     {% elif player.round_displayed >= 7 && player.round_displayed <= 8 %}
+        document.getElementById("header").style.display = "block";
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
     {% elif player.round_displayed >= 9 && player.round_displayed <= 10 %}
+        document.getElementById("header").style.display = "block";
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
     {% elif player.round_displayed >= 11 && player.round_displayed <= 12 %}
+        document.getElementById("header").style.display = "block";
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
@@ -273,9 +281,18 @@
 
 
 {% block title %}
-    <table class="table">
+    <table class="table" id="header_trial" style="display: none">
         <tr>
-            <td style="width:70%;border-color:transparent">Trial Round</td>
+            <td style="width:70%;border-color:transparent">Trial Phase</td>
+            <td style="width:30%;border-color:transparent;text-align: right;">
+                <img src="{% static 'img/um_logo.jpg' %}" style="width:30%;">
+            </td>
+        </tr>
+    </table>
+
+    <table class="table" id="header" style="display: none">
+        <tr>
+            <td style="width:70%;border-color:transparent">Evaluation Phase</td>
             <td style="width:30%;border-color:transparent;text-align: right;">
                 <img src="{% static 'img/um_logo.jpg' %}" style="width:30%;">
             </td>
