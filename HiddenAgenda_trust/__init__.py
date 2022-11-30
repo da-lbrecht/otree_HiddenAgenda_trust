@@ -38,7 +38,7 @@ class Constants(BaseConstants):
     # Group judgments for trial round
     trial_judgments = [20, 40, 60, 80]
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
-    actual_judgments = [11, 33, 50, 57, 80, 66, 20, 45]
+    actual_judgments = [11, 22, 33, 44, 55, 66, 77, 88]
     actual_judgment_origins = ['ftf' for i in range(num_evaluations)] + ['ftf_ha' for i in range(num_evaluations)] + \
                               ['delphi' for i in range(num_evaluations)] + ['delphi_ha' for i in range(num_evaluations)]
     group_judgments = trial_judgments + actual_judgments
@@ -205,16 +205,39 @@ class Player(BasePlayer):
 # Randomization of task round display
 def creating_session(subsession: Subsession):
     if subsession.round_number == 1:
-        list_of_trial_round_ids = list(range(1, Constants.num_trial_rounds + 1))
-        list_of_actual_round_ids = list(range(Constants.num_trial_rounds + 1, Constants.num_actual_rounds + 2))
-        list_of_round_ids = list(range(1, Constants.num_trial_rounds + 1))
+        list_of_trial_round_ids = [1, 2, 3, 4]
+        list_of_ftf_round_ids = [5, 6]
+        list_of_ftf_ha_round_ids = [7, 8]
+        list_of_delphi_round_ids = [9, 10]
+        list_of_delphi_ha_round_ids = [11, 12]
+        list_of_actual_round_ids = [list_of_ftf_round_ids, list_of_ftf_ha_round_ids, list_of_delphi_round_ids,
+                                    list_of_delphi_ha_round_ids]
+        list_of_round_ids = list(range(1, 12))
+        # list_of_trial_round_ids = list(range(1, Constants.num_trial_rounds + 1))
+        # list_of_actual_round_ids = list(range(Constants.num_trial_rounds + 1, Constants.num_actual_rounds + 2))
+        # list_of_round_ids = list(range(1, Constants.num_trial_rounds + 1))
         subsession_trial_temp_list = list_of_trial_round_ids
-        subsession_actual_temp_list = list_of_actual_round_ids
+        subsession_ftf_temp_list = list_of_ftf_round_ids
+        subsession_ftf_ha_temp_list = list_of_ftf_ha_round_ids
+        subsession_delphi_temp_list = list_of_delphi_round_ids
+        subsession_delphi_ha_temp_list = list_of_delphi_ha_round_ids
+        subsession_formats_temp_list = [0, 1, 2, 3]
         # Randomizing
         random.shuffle(subsession_trial_temp_list)
-        random.shuffle(subsession_actual_temp_list)
+        random.shuffle(subsession_ftf_temp_list)
+        random.shuffle(subsession_ftf_ha_temp_list)
+        random.shuffle(subsession_delphi_temp_list)
+        random.shuffle(subsession_delphi_ha_temp_list)
+        random.shuffle(subsession_formats_temp_list)
+        # Stack lists together
+        subsession_actual_temp_list = [subsession_ftf_temp_list, subsession_ftf_ha_temp_list,
+                                       subsession_delphi_temp_list, subsession_delphi_ha_temp_list]
         for player in subsession.get_players():
-            temp_list = subsession_trial_temp_list + subsession_actual_temp_list
+            temp_list = subsession_trial_temp_list + subsession_actual_temp_list[subsession_formats_temp_list[0]] + \
+            subsession_actual_temp_list[subsession_formats_temp_list[1]] + \
+            subsession_actual_temp_list[subsession_formats_temp_list[2]] +  \
+            subsession_actual_temp_list[subsession_formats_temp_list[3]]
+
             for i in list_of_round_ids:
                 player.in_round(i).round_displayed = temp_list[i - 1]
 
@@ -233,7 +256,7 @@ class TaskIntro(Page):
     form_model = 'player'
     form_fields = [
         'begintrial_time',
-                   ]
+    ]
 
     @staticmethod
     def is_displayed(player: Player):
@@ -310,18 +333,18 @@ class Task(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        group_judgment = f'"{Constants.group_judgments[player.round_displayed-1]}"'
-        judgment_origin = Constants.judgment_origins[player.round_displayed-1]
+        group_judgment = f'"{Constants.group_judgments[player.round_displayed - 1]}"'
+        judgment_origin = Constants.judgment_origins[player.round_displayed - 1]
         first_description_round = Constants.num_trial_rounds + 1
-        second_description_round = Constants.num_trial_rounds + 1 + 1*(Constants.num_actual_rounds/4)
-        third_description_round = Constants.num_trial_rounds + 1 + 2*(Constants.num_actual_rounds/4)
-        fourth_description_round = Constants.num_trial_rounds + 1 + 3*(Constants.num_actual_rounds/4)
+        second_description_round = Constants.num_trial_rounds + 1 + 1 * (Constants.num_actual_rounds / 4)
+        third_description_round = Constants.num_trial_rounds + 1 + 2 * (Constants.num_actual_rounds / 4)
+        fourth_description_round = Constants.num_trial_rounds + 1 + 3 * (Constants.num_actual_rounds / 4)
         return {"round_number": player.round_number,
                 "round_displayed": player.round_displayed,
                 "group_judgment": group_judgment,
                 "judgment_origin": judgment_origin,
                 "num_trial_rounds": Constants.num_trial_rounds,
-                "first_description_round":  first_description_round,
+                "first_description_round": first_description_round,
                 "second_description_round": second_description_round,
                 "third_description_round": third_description_round,
                 "fourth_description_round": fourth_description_round,
@@ -329,12 +352,11 @@ class Task(Page):
                 "judgment_origins": Constants.judgment_origins,
                 }
 
-
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         if player.round_number <= Constants.num_trial_rounds:
             player.trialRound = True
-            player.judgmentOrigin = Constants.judgment_origins[player.round_displayed-1]
+            player.judgmentOrigin = Constants.judgment_origins[player.round_displayed - 1]
         if player.round_number == Constants.num_trial_rounds:
             player.end_of_trial = player.end_of_round
 
@@ -352,5 +374,5 @@ page_sequence = [
     # TaskIntro,
     TrialCompleted,
     Task,
-    #Results
+    # Results
 ]

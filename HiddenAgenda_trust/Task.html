@@ -132,8 +132,9 @@
     <script>
 
     <!-- Activate header indicating underlying interaction format of judgments -->
+    // Trial Rounds
     {% if player.round_displayed == 1 %} // control which initial info each player sees
-        document.getElementById("ftf_header").style.display = "block";
+        document.getElementById("ftf_header_trial").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
@@ -154,6 +155,13 @@
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
+        document.getElementById("judgment").value = {{ group_judgment }};
+        document.getElementById("judgmentInput").value = {{ group_judgment }};
+    // Actual Rounds
+    {% elif player.round_displayed >= 5 && player.round_displayed <= 6 %}
+        document.getElementById("ftf_header").style.display = "block";
+        document.getElementById("ftf_part1-tab").style.display = "block";
+        document.getElementById("ftf_description").style.display = "block";
         document.getElementById("judgment").value = {{ group_judgment }};
         document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% endif %}
@@ -313,9 +321,14 @@
             <!-- Part 1: WHATEVER FIRST TAB HERE -->
             <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
 
-                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftf_header"
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftf_header_trial"
                      style="display: none; color:#0a78f5;">
                     <p class="h4">As a trial, please evaluate one judgment from face-to-face groups</p>
+                </div>
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftf_header"
+                     style="display: none; color:#0a78f5;">
+                    <p class="h4">Please evaluate judgment 1 out of 10 from face-to-face groups</p>
                 </div>
 
                 <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftfha_header" s
