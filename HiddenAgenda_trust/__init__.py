@@ -332,6 +332,13 @@ class Task(Page):
     ]
 
     @staticmethod
+    def is_displayed(player: Player):
+        if (
+                player.round_number <= Constants.num_rounds
+        ):
+            return True
+
+    @staticmethod
     def vars_for_template(player: Player):
         group_judgment = f'"{Constants.group_judgments[player.round_displayed - 1]}"'
         judgment_origin = Constants.judgment_origins[player.round_displayed - 1]

@@ -133,37 +133,41 @@
 
     <!-- Activate header indicating underlying interaction format of judgments -->
     // Trial Rounds
+        document.getElementById("judgment").value = {{ group_judgment }};
+        document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% if player.round_displayed == 1 %} // control which initial info each player sees
         document.getElementById("ftf_header_trial").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
-        document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% elif player.round_displayed == 2 %}
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
-        document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% elif player.round_displayed == 3 %}
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
-        document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgmentInput").value = {{ group_judgment }};
     {% elif player.round_displayed == 4 %}
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
-        document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgmentInput").value = {{ group_judgment }};
     // Actual Rounds
     {% elif player.round_displayed >= 5 && player.round_displayed <= 6 %}
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
-        document.getElementById("judgment").value = {{ group_judgment }};
-        document.getElementById("judgmentInput").value = {{ group_judgment }};
+    {% elif player.round_displayed >= 7 && player.round_displayed <= 8 %}
+        document.getElementById("ftfha_header").style.display = "block";
+        document.getElementById("ftfha_part1-tab").style.display = "block";
+        document.getElementById("ftfha_description").style.display = "block";
+    {% elif player.round_displayed >= 9 && player.round_displayed <= 10 %}
+        document.getElementById("delphi_header").style.display = "block";
+        document.getElementById("delphi_part1-tab").style.display = "block";
+        document.getElementById("delphi_description").style.display = "block";
+    {% elif player.round_displayed >= 11 && player.round_displayed <= 12 %}
+        document.getElementById("delphiha_header").style.display = "block";
+        document.getElementById("delphiha_part1-tab").style.display = "block";
+        document.getElementById("delphiha_description").style.display = "block";
     {% endif %}
 
     <!-- Function to save time and other results at end of screen -->
@@ -331,19 +335,34 @@
                     <p class="h4">Please evaluate judgment 1 out of 10 from face-to-face groups</p>
                 </div>
 
-                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftfha_header" s
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftfha_header_trial" s
                       style="display: none; color:#0a78f5;">
                     <p class="h4">As a trial, please evaluate one judgment from face-to-face groups with hidden agendas</p>
                 </div>
 
-                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphi_header"
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftfha_header"
+                     style="display: none; color:#0a78f5;">
+                    <p class="h4">Please evaluate judgment 1 out of 10 from face-to-face groups with hidden agendas</p>
+                </div>
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphi_header_trial"
                       style="display: none; color:#0a78f5;">
                     <p class="h4">As a trial, please evaluate one judgment from Delphi groups as a trial</p>
                 </div>
 
-                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphiha_header"
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphi_header"
+                     style="display: none; color:#0a78f5;">
+                    <p class="h4">Please evaluate judgment 1 out of 10 from delphi groups</p>
+                </div>
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphiha_header_trial"
                       style="display: none; color:#0a78f5;">
                     <p class="h4">As a trial, please evaluate one judgment  from Delphi groups with hidden agendas</p>
+                </div>
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="delphiha_header"
+                     style="display: none; color:#0a78f5;">
+                    <p class="h4">Please evaluate judgment 1 out of 10 from delphi groups with hidden agendas</p>
                 </div>
 
                 <div class="card-body">
