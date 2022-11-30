@@ -62,6 +62,7 @@ class Player(BasePlayer):
 
     round_displayed = models.IntegerField(doc="Randomized round displayed to participants, ranging from 1 to "
                                               "num_rounds")
+    password = models.StringField(doc="Password needed to continue to actual rounds of task")
 
     # Response variables for attention checks
     attention_check_1 = models.FloatField(initial=999,
@@ -279,7 +280,22 @@ class TaskIntro(Page):
             }
 
 
-class Task_Trial(Page):
+class TrialCompleted(Page):
+    form_model = 'player'
+    form_fields = ['password']
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == (Constants.num_trial_rounds + 1)
+
+    @staticmethod
+    def error_message(player, values):
+        print('values is', values)
+        if values['password'] != '1984':
+            return 'Password incorrect'
+
+
+class Task(Page):
     form_model = 'player'
     form_fields = [
         'end_of_round',
@@ -329,6 +345,7 @@ class Results(Page):
 page_sequence = [
     # Welcome,
     # TaskIntro,
-    Task_Trial,
+    TrialCompleted,
+    Task,
     Results
 ]

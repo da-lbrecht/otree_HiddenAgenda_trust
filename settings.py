@@ -5,7 +5,7 @@ SESSION_CONFIGS = [
         name='HiddenAgenda_trust',
         display_name="Hidden Agenda Trust App",
         app_sequence=['HiddenAgenda_trust'],
-        num_demo_participants=3,
+        num_demo_participants=2,
     ),
 ]
 
