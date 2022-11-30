@@ -12,8 +12,8 @@ class Constants(BaseConstants):
     name_in_url = 'hiddenagenda_decisions'
     players_per_group = None
     num_trial_rounds = 4  # 1 round, i.e. judgment for trial evaluation from FTF, FTF+HA, Delphi and Delphi+HA each
-    num_actual_rounds = 40  # 10 rounds, i.e. judgment for actual evaluation form FTF, FTF+HA, Delphi and Delphi+HA each
-    num_rounds = 4 + 40
+    num_actual_rounds = 8  # 10 rounds, i.e. judgment for actual evaluation form FTF, FTF+HA, Delphi and Delphi+HA each
+    num_rounds = 4 + 8
 
     fixed_pay = cu(10)
     avg_pay = cu(15)
@@ -21,7 +21,7 @@ class Constants(BaseConstants):
     num_attention_checks = 5
     num_final_questions = 10
     num_interaction_formats = 4
-    num_evaluations = 10
+    num_evaluations = 2
 
     # Objective true probabilities
     round_1_prob = 0.1
@@ -36,8 +36,12 @@ class Constants(BaseConstants):
     round_10_prob = 0.9
 
     # Group judgments for trial round
-    group_judgments = [20, 40, 60, 80]
-    judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
+    trial_judgments = [20, 40, 60, 80]
+    trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
+    actual_judgments = [11, 33, 50, 57, 80, 66, 20, 45]
+    actual_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
+    group_judgments = trial_judgments + actual_judgments
+    judgment_origins = trial_judgment_origins + actual_judgment_origins
 
 
 class Subsession(BaseSubsession):
