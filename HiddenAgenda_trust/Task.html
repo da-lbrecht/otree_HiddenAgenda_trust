@@ -156,22 +156,22 @@
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
     // Actual Rounds
-    {% elif player.round_displayed >= 5 && player.round_displayed <= 6 %}
+    {% elif player.round_displayed >= first_ftf_round && player.round_displayed <= last_ftf_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
-    {% elif player.round_displayed >= 7 && player.round_displayed <= 8 %}
+    {% elif player.round_displayed >= first_ftfha_round && player.round_displayed <= last_ftfha_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
-    {% elif player.round_displayed >= 9 && player.round_displayed <= 10 %}
+    {% elif player.round_displayed >= first_delphi_round && player.round_displayed <= last_delphi_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
-    {% elif player.round_displayed >= 11 && player.round_displayed <= 12 %}
+    {% elif player.round_displayed >= first_delphiha_round && player.round_displayed <= last_delphiha_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";

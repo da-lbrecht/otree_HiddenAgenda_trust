@@ -346,24 +346,32 @@ class Task(Page):
     def vars_for_template(player: Player):
         group_judgment = f'"{Constants.group_judgments[player.round_displayed - 1]}"'
         judgment_origin = Constants.judgment_origins[player.round_displayed - 1]
-        first_description_round = Constants.num_trial_rounds + 1
-        second_description_round = Constants.num_trial_rounds + 1 + 1 * (Constants.num_actual_rounds / 4)
-        third_description_round = Constants.num_trial_rounds + 1 + 2 * (Constants.num_actual_rounds / 4)
-        fourth_description_round = Constants.num_trial_rounds + 1 + 3 * (Constants.num_actual_rounds / 4)
+        first_ftf_round = Constants.num_trial_rounds + 1
+        last_ftf_round = Constants.num_trial_rounds + Constants.num_evaluations
+        first_ftfha_round = Constants.num_trial_rounds + Constants.num_evaluations + 1
+        last_ftfha_round = Constants.num_trial_rounds + 2*Constants.num_evaluations
+        first_delphi_round = Constants.num_trial_rounds + 2*Constants.num_evaluations + 1
+        last_delphi_round = Constants.num_trial_rounds + 3*Constants.num_evaluations
+        first_delphiha_round = Constants.num_trial_rounds + 3*Constants.num_evaluations + 1
+        last_delphiha_round = Constants.num_trial_rounds + 4*Constants.num_evaluations
         judgment_counter = Constants.actual_judgments_counter[player.round_number - 1]
         return {"round_number": player.round_number,
                 "round_displayed": player.round_displayed,
                 "group_judgment": group_judgment,
                 "judgment_origin": judgment_origin,
                 "num_trial_rounds": Constants.num_trial_rounds,
-                "first_description_round": first_description_round,
-                "second_description_round": second_description_round,
-                "third_description_round": third_description_round,
-                "fourth_description_round": fourth_description_round,
                 "judgments": Constants.group_judgments,
                 "judgment_origins": Constants.judgment_origins,
                 "judgment_counter": judgment_counter,
                 "num_evaluations": Constants.num_evaluations,
+                "first_ftf_round": first_ftf_round,
+                "last_ftf_round": last_ftf_round,
+                "first_ftfha_round": first_ftfha_round,
+                "last_ftfha_round": last_ftfha_round,
+                "first_delphi_round": first_delphi_round,
+                "last_delphi_round": last_delphi_round,
+                "first_delphiha_round": first_delphiha_round,
+                "last_delphiha_round": last_delphiha_round,
                 }
 
     @staticmethod
