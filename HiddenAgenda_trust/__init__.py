@@ -39,7 +39,8 @@ class Constants(BaseConstants):
     trial_judgments = [20, 40, 60, 80]
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
     actual_judgments = [11, 33, 50, 57, 80, 66, 20, 45]
-    actual_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
+    actual_judgment_origins = ['ftf' for i in range(num_evaluations)] + ['ftf_ha' for i in range(num_evaluations)] + \
+                              ['delphi' for i in range(num_evaluations)] + ['delphi_ha' for i in range(num_evaluations)]
     group_judgments = trial_judgments + actual_judgments
     judgment_origins = trial_judgment_origins + actual_judgment_origins
 
@@ -308,12 +309,9 @@ class Task(Page):
     ]
 
     @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number <= Constants.num_trial_rounds
-
-    @staticmethod
     def vars_for_template(player: Player):
         group_judgment = f'"{Constants.group_judgments[player.round_displayed-1]}"'
+        judgment_origin = Constants.judgment_origins[player.round_displayed-1]
         first_description_round = Constants.num_trial_rounds + 1
         second_description_round = Constants.num_trial_rounds + 1 + 1*(Constants.num_actual_rounds/4)
         third_description_round = Constants.num_trial_rounds + 1 + 2*(Constants.num_actual_rounds/4)
@@ -321,11 +319,14 @@ class Task(Page):
         return {"round_number": player.round_number,
                 "round_displayed": player.round_displayed,
                 "group_judgment": group_judgment,
+                "judgment_origin": judgment_origin,
                 "num_trial_rounds": Constants.num_trial_rounds,
                 "first_description_round":  first_description_round,
                 "second_description_round": second_description_round,
                 "third_description_round": third_description_round,
                 "fourth_description_round": fourth_description_round,
+                "judgments": Constants.group_judgments,
+                "judgment_origins": Constants.judgment_origins,
                 }
 
 
@@ -351,5 +352,5 @@ page_sequence = [
     # TaskIntro,
     TrialCompleted,
     Task,
-    Results
+    #Results
 ]
