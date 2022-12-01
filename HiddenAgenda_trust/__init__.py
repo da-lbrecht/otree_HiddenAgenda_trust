@@ -430,9 +430,9 @@ class Results(Page):
 
 page_sequence = [
     # Welcome,
-    # TaskIntro,
+    TaskIntro,
     TrialCompleted,
     NewInteraction,
     Task,
-    Results
+    #Results
 ]

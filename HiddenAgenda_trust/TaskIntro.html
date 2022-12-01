@@ -157,10 +157,6 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link back-and-forth" id="part2-tab" data-toggle="tab" href="#part2" role="tab" aria-controls="part2"> Your bonus </a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link back-and-forth" id="part3-tab" data-toggle="tab" href="#part3" role="tab" aria-controls="part3"> Got it? </a>
                 </li>
 
@@ -176,29 +172,33 @@
             <!-- Part 1: WHATEVER FIRST TAB HERE -->
             <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
                 <div class="card-header bg-white border-bottom-0 sticky-top mt-3">
-                    <p class="h4">Here is some general info you need to know about the task.</p>
+                    <p class="h4">Please watch the video explaining all you need to know for this experiment</p>
                 </div>
                 <div class="card-body">
 
                     <div>
                         <p>
-                            You will start the experiment by working on a task. There is a video below, to walk you
-                            through this task step by step. On the next screen you will find another video, introducing
-                            the details on how you may earn a bonus based on your solutions to the task. After watching
-                            both videos you have to answer some questions on the task and the bonus to make sure we
+                            Your <b>main task is to evaluate judgments</b> made by groups of four people in a previous
+                            experiment. The video below, introduces you to what happened in that previous experiment.
+                            Additionally, you will be told how your evaluations contribute to the bonus you may earn
+                            through this experiment.
+                            <br>
+                            After watching you have to answer some questions on the task and the bonus to make sure we
                             explained everything well, and you are ready to start the task.
                         </p>
 
                         <p>
-                            As a next step you will have one <b>trial round</b>, working on a shortened version of the
-                            task. This trial round is solely dedicated to give a better understanding of the task.
+                            As a next step you will have a <b>trial round</b>, working on a shortened version of the
+                            task. This trial round is solely dedicated to give a better understanding of the task. It
+                            will not contribute to your bonus. After this trial round you will have the chance to ask
+                            any question that might have remained unanswered.
                         </p>
 
-                        <video controls preload="auto" controlslist="nodownload" <!--width="900" height="506"--> >
+<!--                        <video controls preload="auto" controlslist="nodownload" &lt;!&ndash;width="900" height="506"&ndash;&gt; >
 
                             <source src="https://www.dropbox.com/s/s20rthf7q0xs4gv/taskintro.mp4?raw=1" type="video/mp4">
 
-                        </video>
+                        </video>-->
 
 
                     </div>
@@ -230,64 +230,6 @@
             </div>
 
 
-            <!-- Part 2: WHATEVER SECOND TAB HERE  -->
-            <div class="tab-pane" id="part2" role="tabpanel" aria-labelledby="part2-tab">
-                <div class="card-header bg-white border-bottom-0 mt-3 sticky-top">
-                    <p class="h4">How can you interact with your group?</p>
-                </div>
-
-                <div class="card-body">
-                    <div>
-
-                        <p>
-                            In the video below you learn how your solutions to the task affect your bonus payment at the
-                            end of the experiment.
-
-                            Note, after the trial round you will get to know how much bonus you would have
-                            hypothetically earned, but the trial round is not yet relevant for your payoff. <b>Later you
-                            will conduct the same task for {{ Constants.num_evaluations }} group judgments per each of
-                            the {{ Constants.num_interaction_formats}} sources of estimates.</b>. Your evaluation of
-                            all these group judgments contributes to your final bonus.
-
-                        </p>
-
-                        <video controls preload="auto" controlslist="nodownload" <!--width="900" height="506"--> >
-
-                            <source src="https://www.dropbox.com/s/bdys6iuszh50fqr/interaction_delphi.mp4?raw=1" type="video/mp4">
-
-                        </video>
-
-                    </div>
-
-
-
-
-
-                    <!-- on Card Navigation  Arrows -->
-                    <div class="row justify-content-md-center mt-5">
-                        <div class="col col-lg-2">
-                            <p onclick="topFunction()" class="prevtab text-center" data-toggle="tooltip" data-placement="top" title="Back">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#076bff" class="bi bi-arrow-left-circle" viewBox="0 0 16 16" style="cursor: pointer">
-                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-                                </svg>
-                            </p>
-                        </div>
-
-                        <div class="col col-lg-2">
-                            <p onclick="topFunction()" class="nexttab text-center" data-toggle="tooltip" data-placement="top" title="Next">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#076bff" class="bi bi-arrow-right-circle" viewBox="0 0 16 16" style="cursor: pointer">
-                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"/>
-                                </svg>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
             <!-- Part 3: WHATEVER FINAL TAB HERE -->
             <div class="tab-pane" id="part3" role="tabpanel" aria-labelledby="part3-tab">
                 <div class="card-header bg-white border-bottom-0 mt-3 sticky-top">
@@ -307,15 +249,17 @@
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_1_radio_option_1"
                                    name="attention_check_1_radio" value="1">
-                            <label for="attention_check_1_radio_option_1">5</label>
-                              <span style="display:inline-block; width: 3%;"></span>
+                            <label for="attention_check_1_radio_option_1">A</label>
+                              <br>
+                              <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_1_radio_option_2"
                                    name="attention_check_1_radio" value="2">
-                            <label for="attention_check_1_radio_option_2">{{ Constants.num_rounds }}</label>
-                              <span style="display:inline-block; width: 3%;"></span>
+                            <label for="attention_check_1_radio_option_2">B</label>
+                              <br>
+                              <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_1_radio_option_3"
                                    name="attention_check_1_radio" value="3">
-                            <label for="attention_check_1_radio_option_3">15</label>
+                            <label for="attention_check_1_radio_option_3">C</label>
                           </div>
                         </form>
                         <div id="attention_check_1_input" style="display: none"></div>
@@ -326,15 +270,17 @@
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_2_radio_option_1"
                                    name="attention_check_2_radio" value="1">
-                            <label for="attention_check_2_radio_option_1">One randomly selected round</label>
-                              <span style="display:inline-block; width: 3%;"></span>
+                            <label for="attention_check_2_radio_option_1">A</label>
+                              <br>
+                              <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_2_radio_option_2"
                                    name="attention_check_2_radio" value="2">
-                            <label for="attention_check_2_radio_option_2">Only the last round</label>
-                              <span style="display:inline-block; width: 3%;"></span>
+                            <label for="attention_check_2_radio_option_2">B</label>
+                              <br>
+                              <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_2_radio_option_3"
                                    name="attention_check_2_radio" value="3">
-                            <label for="attention_check_2_radio_option_3">All rounds after the trial round</label>
+                            <label for="attention_check_2_radio_option_3">C</label>
                           </div>
                         </form>
                         <div id="attention_check_2_input" style="display: none"></div>
@@ -346,20 +292,17 @@
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_3_radio_option_1"
                                    name="attention_check_3_radio" value="1">
-                            <label for="attention_check_3_radio_option_1">The chance that the ladybird reaches the
-                                target area </label>
+                            <label for="attention_check_3_radio_option_1">A</label>
                               <br>
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_3_radio_option_2"
                                    name="attention_check_3_radio" value="2">
-                            <label for="attention_check_3_radio_option_2">The chance that the ladybird does not reach
-                                the target area </label>
+                            <label for="attention_check_3_radio_option_2">B</label>
                               <br>
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_3_radio_option_3"
                                    name="attention_check_3_radio" value="3">
-                            <label for="attention_check_3_radio_option_3">The chance that the ladybird ends up at level
-                                0 after ten steps
+                            <label for="attention_check_3_radio_option_3">C
                             </label>
                           </div>
                         </form>
@@ -372,20 +315,17 @@
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_4_radio_option_1"
                                    name="attention_check_4_radio" value="1">
-                            <label for="attention_check_4_radio_option_1">First estimates and corresponding reasoning
-                            of all group members, without knowing which belongs to whom </label>
+                            <label for="attention_check_4_radio_option_1">A</label>
                               <br>
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_4_radio_option_2"
                                    name="attention_check_4_radio" value="2">
-                            <label for="attention_check_4_radio_option_2">All estimates and corresponding reasonings
-                            made by the other group members</label>
+                            <label for="attention_check_4_radio_option_2">B</label>
                               <br>
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_4_radio_option_3"
                                    name="attention_check_4_radio" value="3">
-                            <label for="attention_check_4_radio_option_3">Only the reasoning of all group members,
-                                without knowing which belongs to whom
+                            <label for="attention_check_4_radio_option_3">C
                             </label>
                           </div>
                         </form>
@@ -398,21 +338,17 @@
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_5_radio_option_1"
                                    name="attention_check_5_radio" value="1">
-                            <label for="attention_check_5_radio_option_1">The precise chance of reaching the target
-                                area </label>
+                            <label for="attention_check_5_radio_option_1">A</label>
                               <br>
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_5_radio_option_2"
                                    name="attention_check_5_radio" value="2">
-                            <label for="attention_check_5_radio_option_2">The precise chance that it moves one level up
-                                in the first step</label>
+                            <label for="attention_check_5_radio_option_2">B</label>
                               <br>
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_5_radio_option_3"
                                    name="attention_check_5_radio" value="3">
-                            <label for="attention_check_5_radio_option_3">That the chance that it moves one level up
-                                is the same in each step in a given round
-                            </label>
+                            <label for="attention_check_5_radio_option_3">C</label>
                           </div>
                         </form>
                         <div id="attention_check_5_input" style="display: none"></div>
@@ -423,20 +359,17 @@
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_6_radio_option_1"
                                    name="attention_check_6_radio" value="1">
-                            <label for="attention_check_6_radio_option_1">Only on the accuracy of my own estimates
-                            </label>
+                            <label for="attention_check_6_radio_option_1">A</label>
                               <br>
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_6_radio_option_2"
                                    name="attention_check_6_radio" value="2">
-                            <label for="attention_check_6_radio_option_2">Only on the accuracy of the joint group
-                                estimate</label>
+                            <label for="attention_check_6_radio_option_2">B</label>
                               <br>
                               <span style="display:inline-block; width: 2%;"></span>
                             <input type="radio" id="attention_check_6_radio_option_3"
                                    name="attention_check_6_radio" value="3">
-                            <label for="attention_check_6_radio_option_3">Only on the time needed for solving the task
-                            </label>
+                            <label for="attention_check_6_radio_option_3">C</label>
                           </div>
                         </form>
                         <div id="attention_check_6_input" style="display: none"></div>
