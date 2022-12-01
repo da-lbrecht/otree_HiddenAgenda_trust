@@ -283,6 +283,7 @@
     <!-- Function to make dual handle range sliders work -->
     function controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
         const [from, to] = getParsed(fromInput, toInput);
+        document.getElementById("next_button").style.display = "block";
         fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
         if (from > to) {
             fromSlider.value = to;
@@ -294,6 +295,7 @@
 
     function controlToInput(toSlider, fromInput, toInput, controlSlider) {
         const [from, to] = getParsed(fromInput, toInput);
+        document.getElementById("next_button").style.display = "block";
         fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
         setToggleAccessible(toInput);
         if (from <= to) {
@@ -306,6 +308,7 @@
 
     function controlFromSlider(fromSlider, toSlider, fromInput) {
       const [from, to] = getParsed(fromSlider, toSlider);
+      document.getElementById("next_button").style.display = "block";
       fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
       if (from > to) {
         fromSlider.value = to;
@@ -317,6 +320,7 @@
 
     function controlToSlider(fromSlider, toSlider, toInput) {
       const [from, to] = getParsed(fromSlider, toSlider);
+      document.getElementById("next_button").style.display = "block";
       fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
       setToggleAccessible(toSlider);
       if (from <= to) {
@@ -631,7 +635,7 @@
                     <!-- greyed out left arrow on first page -->
                     <div class="row justify-content-md-center mt-5">
 
-                        <div class="col col-lg-2" id="next_button" style="display: block">
+                        <div class="col col-lg-2" id="next_button" style="display: none">
                             <button class="btn btn-primary btn-large" onclick="saveResults()">
                                 Continue
                             </button>
