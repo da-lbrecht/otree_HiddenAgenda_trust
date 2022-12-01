@@ -168,21 +168,42 @@
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description_header").style.display = "block";
         document.getElementById("ftf_readmoreDiv").style.display = "block";
-    {% elif player.round_displayed >= first_ftfha_round && player.round_displayed <= last_ftfha_round %}
+    {% elif player.round_displayed == first_ftfha_round && player.round_displayed <= last_ftfha_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
+        document.getElementById("ftfha_description_header").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
-    {% elif player.round_displayed >= first_delphi_round && player.round_displayed <= last_delphi_round %}
+    {% elif player.round_displayed > first_ftfha_round && player.round_displayed <= last_ftfha_round %}
+        document.getElementById("header").style.display = "block";
+        document.getElementById("ftfha_header").style.display = "block";
+        document.getElementById("ftfha_part1-tab").style.display = "block";
+        document.getElementById("ftfha_description_header").style.display = "block";
+        document.getElementById("ftfha_readmoreDiv").style.display = "block";
+    {% elif player.round_displayed == first_delphi_round && player.round_displayed <= last_delphi_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
+        document.getElementById("delphi_description_header").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
+    {% elif player.round_displayed > first_delphi_round && player.round_displayed <= last_delphi_round %}
+        document.getElementById("header").style.display = "block";
+        document.getElementById("delphi_header").style.display = "block";
+        document.getElementById("delphi_part1-tab").style.display = "block";
+        document.getElementById("delphi_description_header").style.display = "block";
+        document.getElementById("delphi_readmoreDiv").style.display = "block";
     {% elif player.round_displayed >= first_delphiha_round && player.round_displayed <= last_delphiha_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
+        document.getElementById("delphiha_description_header").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
+    {% elif player.round_displayed >= first_delphiha_round && player.round_displayed <= last_delphiha_round %}
+        document.getElementById("header").style.display = "block";
+        document.getElementById("delphiha_header").style.display = "block";
+        document.getElementById("delphiha_part1-tab").style.display = "block";
+        document.getElementById("delphiha_description_header").style.display = "block";
+        document.getElementById("delphiha_readmoreDiv").style.display = "block";
     {% endif %}
 
     <!-- Function to save time and other results at end of screen -->
@@ -194,11 +215,59 @@
         document.getElementById("judgmentUpper").value = judgmentUpper_input;
     }
 
-    <!-- Function to see more/less of group interaction description -->
+    <!-- Functions to see more/less of group interaction description -->
     function ftf_readmore() {
       var dots = document.getElementById("ftf_dots");
       var moreText = document.getElementById("ftf_description");
       var btnText = document.getElementById("ftf_readmoreBtn");
+
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "See details again";
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Hide details";
+        moreText.style.display = "inline";
+      }
+    }
+
+    function ftfha_readmore() {
+      var dots = document.getElementById("ftfha_dots");
+      var moreText = document.getElementById("ftfha_description");
+      var btnText = document.getElementById("ftfha_readmoreBtn");
+
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "See details again";
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Hide details";
+        moreText.style.display = "inline";
+      }
+    }
+
+    function delphi_readmore() {
+      var dots = document.getElementById("delphi_dots");
+      var moreText = document.getElementById("delphi_description");
+      var btnText = document.getElementById("delphi_readmoreBtn");
+
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "See details again";
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Hide details";
+        moreText.style.display = "inline";
+      }
+    }
+
+    function delphiha_readmore() {
+      var dots = document.getElementById("delphiha_dots");
+      var moreText = document.getElementById("delphiha_description");
+      var btnText = document.getElementById("delphiha_readmoreBtn");
 
       if (dots.style.display === "none") {
         dots.style.display = "inline";
@@ -429,17 +498,23 @@
                         </button>
                     </div>
 
+                    <div id="ftfha_description_header" style="display: none">
+                        Remember: In face-to-face groups with hidden agendas <span id ="ftfha_dots"> <b>...</b> </span>
+                        <br>
+                        <br>
+                    </div>
+
                     <div id="ftfha_description" style="display: none">
-                        Remember: In face-to-face groups with hidden agendas ...
-                        <br>
-                        <br>
                         Two out of four group members have a hidden agenda to <b>manipulate the judgment
                         either towards 0 or towards 100</b>. Whether it was one or the other direction was
-                        determined randomly for each task the group faced. Both group members had the same hidden
+                        determined randomly for each judgment task the group faced. Both group members had the same hidden
                         agenda. The more they managed to achieve their hidden agenda the higher their chance to
                         receive an <b> additional bonus</b>.
                         <br>
+                        <br>
                         Apart from that group interaction is the same as without hidden agendas ...
+                        <br>
+                        <br>
                         <ul>
                           <li>group members <b>discussed freely</b> in a <b>zoom video call</b> </li>
                           <li>the final group judgment was a <b>reported consensus</b> of all group members</li>
@@ -449,10 +524,19 @@
 
                     </div>
 
+                    <div id="ftfha_readmoreDiv" style="display: none">
+                        <button id="ftfha_readmoreBtn" type="button" onclick="ftfha_readmore()" class="btn btn-primary btn-large">
+                                See details again
+                        </button>
+                    </div>
+
+                    <div id="delphi_description_header" style="display: none">
+                        Remember: In delphi groups <span id ="delphi_dots"> <b>...</b> </span>
+                        <br>
+                        <br>
+                    </div>
+
                     <div id="delphi_description" style="display: none">
-                        Remember: In delphi groups ...
-                        <br>
-                        <br>
                         <ul>
                           <li>group members gave a first <b> individual judgment and reasoning</b> </li>
                           <li>then they <b>saw their group members' reports</b> and gave a second individual judgment</li>
@@ -462,13 +546,22 @@
                         </ul>
                     </div>
 
+                    <div id="delphi_readmoreDiv" style="display: none">
+                        <button id="delphi_readmoreBtn" type="button" onclick="delphi_readmore()" class="btn btn-primary btn-large">
+                                See details again
+                        </button>
+                    </div>
+
+                    <div id="delphiha_description_header" style="display: none">
+                        Remember: In delphi groups with hidden agendas <span id ="delphiha_dots"> <b>...</b> </span>
+                        <br>
+                        <br>
+                    </div>
+
                     <div id="delphiha_description" style="display: none">
-                        Remember: In delphi groups with hidden agendas ...
-                        <br>
-                        <br>
                         Two out of four group members have a hidden agenda to <b>manipulate the judgment
                         either towards 0 or towards 100</b>. Whether it was one or the other direction was
-                        determined randomly for each task the group faced. Both group members had the same hidden
+                        determined randomly for judgment each task the group faced. Both group members had the same hidden
                         agenda. The more they managed to achieve their hidden agenda the higher their chance to
                         receive an <b> additional bonus</b>.
                         <br>
@@ -483,6 +576,12 @@
                           <li>the <b>more accurate</b> the group's judgment the higher their chance to receive a
                               <b>bonus</b></li>
                         </ul>
+
+                    <div id="delphiha_readmoreDiv" style="display: none">
+                        <button id="delphiha_readmoreBtn" type="button" onclick="delphiha_readmore()" class="btn btn-primary btn-large">
+                                See details again
+                        </button>
+                    </div>
 
                     </div>
 
