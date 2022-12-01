@@ -156,11 +156,18 @@
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
     // Actual Rounds
-    {% elif player.round_displayed >= first_ftf_round && player.round_displayed <= last_ftf_round %}
+    {% elif player.round_displayed == first_ftf_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
+        document.getElementById("ftf_description_header").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
+    {% elif player.round_displayed > first_ftf_round && player.round_displayed <= last_ftf_round %}
+        document.getElementById("header").style.display = "block";
+        document.getElementById("ftf_header").style.display = "block";
+        document.getElementById("ftf_part1-tab").style.display = "block";
+        document.getElementById("ftf_description_header").style.display = "block";
+        document.getElementById("ftf_readmoreDiv").style.display = "block";
     {% elif player.round_displayed >= first_ftfha_round && player.round_displayed <= last_ftfha_round %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftfha_header").style.display = "block";
@@ -185,6 +192,23 @@
         document.getElementById("judgmentLower").value = judgmentLower_input;
         var judgmentUpper_input = document.getElementById("toSlider").value;
         document.getElementById("judgmentUpper").value = judgmentUpper_input;
+    }
+
+    <!-- Function to see more/less of group interaction description -->
+    function ftf_readmore() {
+      var dots = document.getElementById("ftf_dots");
+      var moreText = document.getElementById("ftf_description");
+      var btnText = document.getElementById("ftf_readmoreBtn");
+
+      if (dots.style.display === "none") {
+        dots.style.display = "inline";
+        btnText.innerHTML = "See details again";
+        moreText.style.display = "none";
+      } else {
+        dots.style.display = "none";
+        btnText.innerHTML = "Hide details";
+        moreText.style.display = "inline";
+      }
     }
 
     <!-- Function to make dual handle range sliders work -->
@@ -384,16 +408,25 @@
 
                 <div class="card-body">
 
+                    <div id="ftf_description_header" style="display: none">
+                        Remember: In face-to-face groups <span id ="ftf_dots"> <b>...</b> </span>
+                        <br>
+                        <br>
+                    </div>
+
                     <div id="ftf_description" style="display: none">
-                        Remember: In face-to-face groups ...
-                        <br>
-                        <br>
                         <ul>
                           <li>group members <b>discussed freely</b> in a <b>zoom video call</b> </li>
                           <li>the final group judgment was a <b>reported consensus</b> of all group members</li>
                           <li>the <b>more accurate</b> the group's judgment the higher their chance to receive a
                               <b>bonus</b></li>
                         </ul>
+                    </div>
+
+                    <div id="ftf_readmoreDiv" style="display: none">
+                        <button id="ftf_readmoreBtn" type="button" onclick="ftf_readmore()" class="btn btn-primary btn-large">
+                                See details again
+                        </button>
                     </div>
 
                     <div id="ftfha_description" style="display: none">
