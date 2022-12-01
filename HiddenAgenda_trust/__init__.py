@@ -389,6 +389,7 @@ class Task(Page):
         last_delphi_round = Constants.num_trial_rounds + 3*Constants.num_evaluations
         first_delphiha_round = Constants.num_trial_rounds + 3*Constants.num_evaluations + 1
         last_delphiha_round = Constants.num_trial_rounds + 4*Constants.num_evaluations
+        first_rounds = [first_ftf_round, first_ftfha_round, first_delphi_round, first_delphiha_round]
         judgment_counter = Constants.actual_judgments_counter[player.round_number - 1]
         return {"round_number": player.round_number,
                 "round_displayed": player.round_displayed,
@@ -407,6 +408,7 @@ class Task(Page):
                 "last_delphi_round": last_delphi_round,
                 "first_delphiha_round": first_delphiha_round,
                 "last_delphiha_round": last_delphiha_round,
+                "first_rounds": first_rounds,
                 }
 
     @staticmethod

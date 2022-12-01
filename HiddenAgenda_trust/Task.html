@@ -156,49 +156,49 @@
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
     // Actual Rounds
-    {% elif player.round_displayed == first_ftf_round %}
+    {% elif judgment_origin == 'ftf' && player.round_number in first_rounds %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description_header").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
-    {% elif player.round_displayed > first_ftf_round && player.round_displayed <= last_ftf_round %}
+    {% elif judgment_origin == 'ftf' %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description_header").style.display = "block";
         document.getElementById("ftf_readmoreDiv").style.display = "block";
-    {% elif player.round_displayed == first_ftfha_round && player.round_displayed <= last_ftfha_round %}
+    {% elif judgment_origin == 'ftf_ha' && player.round_number in first_rounds %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description_header").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
-    {% elif player.round_displayed > first_ftfha_round && player.round_displayed <= last_ftfha_round %}
+    {% elif judgment_origin == 'ftf_ha' %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description_header").style.display = "block";
         document.getElementById("ftfha_readmoreDiv").style.display = "block";
-    {% elif player.round_displayed == first_delphi_round && player.round_displayed <= last_delphi_round %}
+    {% elif judgment_origin == 'delphi' && player.round_number in first_rounds %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description_header").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
-    {% elif player.round_displayed > first_delphi_round && player.round_displayed <= last_delphi_round %}
+    {% elif judgment_origin == 'delphi' %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description_header").style.display = "block";
         document.getElementById("delphi_readmoreDiv").style.display = "block";
-    {% elif player.round_displayed >= first_delphiha_round && player.round_displayed <= last_delphiha_round %}
+    {% elif judgment_origin == 'delphi_ha' && player.round_number in first_rounds %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description_header").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
-    {% elif player.round_displayed >= first_delphiha_round && player.round_displayed <= last_delphiha_round %}
+    {% elif judgment_origin == 'delphi_ha' %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
@@ -581,12 +581,12 @@
                               <b>bonus</b></li>
                         </ul>
 
+                    </div>
+
                     <div id="delphiha_readmoreDiv" style="display: none">
                         <button id="delphiha_readmoreBtn" type="button" onclick="delphiha_readmore()" class="btn btn-primary btn-large">
                                 See details again
                         </button>
-                    </div>
-
                     </div>
 
                     <div>
