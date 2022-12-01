@@ -24,7 +24,7 @@
 {% block title %}
     <table class="table">
         <tr>
-            <td style="width:70%;border-color:transparent">Questions</td>
+            <td style="width:70%;border-color:transparent">Great job!</td>
             <td style="width:30%;border-color:transparent;text-align: right;">
                 <img src="{% static 'img/um_logo.jpg' %}" style="width:30%;">
             </td>
@@ -46,12 +46,6 @@
         <div class="card-header">
         <nav  role="navigation">
 
-             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                <li class="nav-item" >
-                    <a class="nav-link back-and-forth active" id="ftf_part1-tab" data-toggle="tab" href="#part1" role="tab" aria-controls="part1" style="display: block"> Got it? </a>
-                </li>
-            </ul>
-
         </nav>
         </div>
 
@@ -64,17 +58,14 @@
 
                 <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftf_header"
                      style="display: block; color:#0a78f5;">
-                    <p class="h4">Let's wait for all participants and then answer any open questions</p>
+                    <p class="h4">You completed all evaluations of judgments from {{ previous_interaction_format }}.</p>
                 </div>
 
                 <div class="card-body">
 
                     <p>
-                        Once we answered all questions you or the others may have, the experimenter will tell you the
-                        password, and you can continue the experiment.
+                        Click continue to move on to the next interaction format.
                     </p>
-
-                    {{ formfields }}
 
                 </div>
 

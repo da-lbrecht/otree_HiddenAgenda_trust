@@ -326,6 +326,41 @@ class TrialCompleted(Page):
         if values['password'] != '1984':
             return 'Password incorrect'
 
+class NewInteraction(Page):
+    form_model = 'player'
+
+    @staticmethod
+    def is_displayed(player: Player):
+        if(
+                player.round_number == Constants.num_trial_rounds + 1*Constants.num_evaluations + 1 or
+                player.round_number == Constants.num_trial_rounds + 2*Constants.num_evaluations + 1 or
+                player.round_number == Constants.num_trial_rounds + 3*Constants.num_evaluations + 1
+        ):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        previous_interaction_format = \
+            Constants.judgment_origins[player.in_round(player.round_number - 1).round_displayed - 1]
+        if previous_interaction_format == 'ftf':
+            return{
+                "previous_interaction_format": 'face-to-face groups'
+            }
+        elif previous_interaction_format == 'ftf_ha':
+            return{
+                "previous_interaction_format": 'face-to-face groups with hidden agendas'
+            }
+        elif previous_interaction_format == 'delphi':
+            return{
+                "previous_interaction_format": 'delphi groups'
+            }
+        elif previous_interaction_format == 'delphi_ha':
+            return{
+                "previous_interaction_format": 'delphi groups with hidden agendas'
+            }
+
 
 class Task(Page):
     form_model = 'player'
@@ -388,13 +423,14 @@ class Results(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return player.round_number == 8
+        return player.round_number == Constants.num_rounds
 
 
 page_sequence = [
     # Welcome,
     # TaskIntro,
     TrialCompleted,
+    NewInteraction,
     Task,
-    # Results
+    Results
 ]
