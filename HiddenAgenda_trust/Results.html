@@ -1,10 +1,362 @@
-{{ block title }}
-    Page title
-{{ endblock }}
 
-{{ block content }}
+{% block styles %}
+    <link href="{% static 'global/css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap-4/css/bootstrap.css' %}" rel="stylesheet">
 
-    {{ next_button }}
-{{ endblock }}
+<!--    Styling of dual handle range sliders-->
+<style>
+    .range_container {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      margin: 6% auto;
+    }
+
+    .sliders_control {
+      position: relative;
+      min-height: 50px;
+    }
+
+    .form_control {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      font-size: 24px;
+      color: #635a5a;
+    }
+
+    .judgment_info {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      font-size: 24px;
+      color: #011c3c;
+    }
+
+    [id$="Slider"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      height: 24px;
+      width: 10px;
+      border-radius: 22px;
+      background-color: #fff;
+      box-shadow: 0 0 0 1px #25daa5;
+      cursor: grab;
+    }
+
+    [id="judgment"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      width: 12px;
+      height: 12px;
+      background-color: #011c3c;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #011c3c;
+      cursor: none;
+    }
+
+/*    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #C6C6C6;
+      cursor: pointer;
+    }*/
+
+/*    input[type=range]::-moz-range-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #C6C6C6;
+      cursor: pointer;
+    }*/
+
+    input[type=range]::-webkit-slider-thumb:hover {
+      background: #f7f7f7;
+    }
+
+    input[type=range]::-webkit-slider-thumb:active {
+      box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+      -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+    }
+
+    input[type="number"] {
+      color: #8a8383;
+      width: 50px;
+      height: 30px;
+      font-size: 20px;
+      border: none;
+    }
+
+    input[type=number]::-webkit-inner-spin-button {
+    }
+    input[type=number]::-webkit-outer-spin-button {
+       opacity: 1;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 2px;
+      width: 100%;
+      position: absolute;
+      background-color: #C6C6C6;
+      pointer-events: none;
+    }
+
+    #fromSlider {
+      height: 0;
+      z-index: 1;
+    }
+
+</style>
+{% endblock %}
 
 
+
+
+{% block scripts %}
+    <script src="{% static 'global/js/basics.js' %}"></script>
+    <script src="{% static 'global/js/navbuttons.js' %}"></script>
+    <script src="{% static 'bootstrap-4/js/bootstrap.bundle.js' %}"></script>
+
+    <script>
+
+    <!-- Activate correct info on underlying interaction format and judgments -->
+        document.getElementById("judgment").value = {{ drawn_judgment }};
+        document.getElementById("judgmentInput").value = {{ drawn_judgment }};
+        document.getElementById("fromSlider").value = {{ drawn_lower_limit }};
+        document.getElementById("fromInput").value = {{ drawn_lower_limit }};
+        document.getElementById("toSlider").value = {{ drawn_upper_limit }};
+        document.getElementById("toInput").value = {{ drawn_upper_limit }};
+    <!-- Function to save time and other results at end of screen -->
+    function saveResults() {
+        document.getElementById("end_of_round_input").value = new Date().getTime();
+    }
+
+    <!-- Function to determine the decision that counts by random draw -->
+    function randomDraw() {
+        document.getElementById("decision_that_counts").style.display = "block";
+        document.getElementById("random_draw_button").style.display = "none";
+    }
+
+        <!-- Function to make dual handle range sliders work -->
+    function controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
+        const [from, to] = getParsed(fromInput, toInput);
+        document.getElementById("next_button").style.display = "block";
+        fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
+        if (from > to) {
+            fromSlider.value = to;
+            fromInput.value = to;
+        } else {
+            fromSlider.value = from;
+        }
+    }
+
+    function controlToInput(toSlider, fromInput, toInput, controlSlider) {
+        const [from, to] = getParsed(fromInput, toInput);
+        document.getElementById("next_button").style.display = "block";
+        fillSlider(fromInput, toInput, '#C6C6C6', '#25daa5', controlSlider);
+        setToggleAccessible(toInput);
+        if (from <= to) {
+            toSlider.value = to;
+            toInput.value = to;
+        } else {
+            toInput.value = from;
+        }
+    }
+
+    function controlFromSlider(fromSlider, toSlider, fromInput) {
+      const [from, to] = getParsed(fromSlider, toSlider);
+      document.getElementById("next_button").style.display = "block";
+      fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+      if (from > to) {
+        fromSlider.value = to;
+        fromInput.value = to;
+      } else {
+        fromInput.value = from;
+      }
+    }
+
+    function controlToSlider(fromSlider, toSlider, toInput) {
+      const [from, to] = getParsed(fromSlider, toSlider);
+      document.getElementById("next_button").style.display = "block";
+      fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+      setToggleAccessible(toSlider);
+      if (from <= to) {
+        toSlider.value = to;
+        toInput.value = to;
+      } else {
+        toInput.value = from;
+        toSlider.value = from;
+      }
+    }
+
+    function getParsed(currentFrom, currentTo) {
+      const from = parseInt(currentFrom.value, 10);
+      const to = parseInt(currentTo.value, 10);
+      return [from, to];
+    }
+
+    function fillSlider(from, to, sliderColor, rangeColor, controlSlider) {
+        const rangeDistance = to.max-to.min;
+        const fromPosition = from.value - to.min;
+        const toPosition = to.value - to.min;
+        controlSlider.style.background = `linear-gradient(
+          to right,
+          ${sliderColor} 0%,
+          ${sliderColor} ${(fromPosition)/(rangeDistance)*100}%,
+          ${rangeColor} ${((fromPosition)/(rangeDistance))*100}%,
+          ${rangeColor} ${(toPosition)/(rangeDistance)*100}%,
+          ${sliderColor} ${(toPosition)/(rangeDistance)*100}%,
+          ${sliderColor} 100%)`;
+    }
+
+    function setToggleAccessible(currentTarget) {
+      const toSlider = document.querySelector('#toSlider');
+      if (Number(currentTarget.value) <= 0 ) {
+        toSlider.style.zIndex = 2;
+      } else {
+        toSlider.style.zIndex = 0;
+      }
+    }
+
+    const fromSlider = document.querySelector('#fromSlider');
+    const toSlider = document.querySelector('#toSlider');
+    const fromInput = document.querySelector('#fromInput');
+    const toInput = document.querySelector('#toInput');
+    fillSlider(fromSlider, toSlider, '#C6C6C6', '#25daa5', toSlider);
+    setToggleAccessible(toSlider);
+
+    fromSlider.oninput = () => controlFromSlider(fromSlider, toSlider, fromInput);
+    toSlider.oninput = () => controlToSlider(fromSlider, toSlider, toInput);
+    fromInput.oninput = () => controlFromInput(fromSlider, fromInput, toInput, toSlider);
+    toInput.oninput = () => controlToInput(toSlider, fromInput, toInput, toSlider);
+    </script>
+
+{% endblock %}
+
+
+{% block title %}
+    <table class="table">
+        <tr>
+            <td style="width:70%;border-color:transparent">Done!</td>
+            <td style="width:30%;border-color:transparent;text-align: right;">
+                <img src="{% static 'img/um_logo.jpg' %}" style="width:30%;">
+            </td>
+        </tr>
+    </table>
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+<body>
+    <!-- Header <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist"> -->
+
+    <div class="card">
+        <div class="card-header">
+        <nav  role="navigation">
+
+        </nav>
+        </div>
+
+        <!-- Instructions -->
+
+        <div class="tab-content" id="myTabContent">
+
+            <!-- Part 1: WHATEVER FIRST TAB HERE -->
+            <div class="tab-pane show active" id="part1" role="tabpanel" aria-labelledby="part1-tab">
+
+                <div class="card-header bg-white border-bottom-0 sticky-top mt-3" id="ftf_header"
+                     style="display: block; color:#0a78f5;">
+                    <p class="h4">You completed the experiment</p>
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+                        All that is left to do, is to do the random draw of your decision that counts to determine your
+                        bonus.
+                    </p>
+
+                   <div id="random_draw_button" style="display: block">
+                        <button class="btn btn-primary btn-large" type="button" onclick="randomDraw()" class="btn btn-primary btn-large">
+                            Draw decision that counts
+                        </button>
+                        <p></p>
+                    </div>
+
+                    <div class="range_container" id="decision_that_counts" style="display: none">
+
+                        <p>
+                            Your evaluation of judgment {{ drawn_judgment_counter }} out of {{ num_evaluations }} from
+                            {{ drawn_judgment_origin }} has been chosen as decision that counts.
+                            <br>
+                            <br>
+                            The true value of the underlying judgment task was {{ drawn_true_value }}.
+                        </p>
+
+                        <div class="judgment_info">
+                            <div class="judgment_info_container">
+                                    group judgment <br>
+                                <input class="form_control_container__time__input" type="number" id="judgmentInput"
+                                       value="0" style="margin-bottom:18pt;" disabled="true"/>
+                            </div>
+                        </div>
+
+                        <div class="sliders_control">
+                            <input id="judgment" type="range" value="" disabled = "true"/>
+                            <input id="fromSlider" type="range" value="0" disabled = "true" min="0" max="100" step="1"/>
+                            <input id="toSlider" type="range" value="100" disabled = "true" min="0" max="100" step="1"/>
+                        </div>
+
+                        <div class="form_control">
+                            <div class="form_control_container">
+                                <div class="form_control_container__time">your <br> lower bound</div>
+                                <input class="form_control_container__time__input" type="number" id="fromInput" value="0" min="0" max="100" disabled="true"/>
+                            </div>
+                            <div class="form_control_container">
+                                <div class="form_control_container__time">
+                                    your <br> upper bound</div>
+                                <input class="form_control_container__time__input" type="number" id="toInput" value="100" min="0" max="100" disabled="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <!-- on Card Navigation  Arrows -->
+
+                    <!-- greyed out left arrow on first page -->
+                    <div class="row justify-content-md-center mt-5">
+
+                        <div class="col col-lg-2" id="next_button" style="display: block">
+                            <button class="btn btn-primary btn-large" onclick="saveResults()">
+                                Done!
+                            </button>
+                            <p></p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+{% endblock %}

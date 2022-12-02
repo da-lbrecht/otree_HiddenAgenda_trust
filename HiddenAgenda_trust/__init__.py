@@ -39,6 +39,7 @@ class Constants(BaseConstants):
     trial_judgments = [20, 40, 60, 80]
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
     actual_judgments = [11, 22, 33, 44, 55, 66, 77, 88]
+    true_values = [20, 40, 60, 80] + [11, 22, 33, 44, 55, 66, 77, 88]
     actual_judgments_counter = list(range(1,num_trial_rounds + 1)) + \
                                list(range(1,num_evaluations + 1)) + list(range(1,num_evaluations + 1)) + \
                                list(range(1,num_evaluations + 1)) + list(range(1,num_evaluations + 1))
@@ -123,6 +124,8 @@ class Player(BasePlayer):
     trialRound = models.BooleanField(doc="1/True if round was a trial, without consequences for payment")
     judgmentOrigin = models.StringField(doc="Description of treatment of estimation study, from which group judgment"
                                             "originates")
+    judgment = models.FloatField(doc="Group judgment to be evaluated.")
+    trueValue = models.FloatField(doc="true value underlying the group judgment.")
     judgmentLower = models.FloatField(doc="Lower bound of confidence interval on judgment from estimation study")
     judgmentUpper = models.FloatField(doc="Upper bound of confidence interval on judgment from estimation study")
 
@@ -241,7 +244,6 @@ def creating_session(subsession: Subsession):
             subsession_actual_temp_list[subsession_formats_temp_list[1]] + \
             subsession_actual_temp_list[subsession_formats_temp_list[2]] +  \
             subsession_actual_temp_list[subsession_formats_temp_list[3]]
-
             for i in list_of_round_ids:
                 player.in_round(i).round_displayed = temp_list[i - 1]
 
@@ -413,9 +415,13 @@ class Task(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
+        player.judgmentOrigin = Constants.judgment_origins[player.round_displayed - 1]
+        player.judgment = Constants.group_judgments[player.round_displayed - 1]
+        player.trueValue = Constants.true_values[player.round_displayed - 1]
         if player.round_number <= Constants.num_trial_rounds:
             player.trialRound = True
-            player.judgmentOrigin = Constants.judgment_origins[player.round_displayed - 1]
+        else:
+            player.trialRound = False
         if player.round_number == Constants.num_trial_rounds:
             player.end_of_trial = player.end_of_round
 
@@ -427,12 +433,48 @@ class Results(Page):
     def is_displayed(player: Player):
         return player.round_number == Constants.num_rounds
 
+    @staticmethod
+    def vars_for_template(player: Player):
+        random_draw = random.choice(list(range(Constants.num_trial_rounds + 1,
+                                               Constants.num_trial_rounds + 4*Constants.num_evaluations + 1)))
+        drawn_round_displayed = player.in_round(random_draw).round_displayed
+        if player.in_round(random_draw).judgmentOrigin == 'ftf':
+            drawn_judgment_origin = 'face-to-face groups'
+        elif player.in_round(random_draw).judgmentOrigin == 'ftf_ha':
+            drawn_judgment_origin = 'face-to-face groups with hidden agendas'
+        elif player.in_round(random_draw).judgmentOrigin == 'delphi':
+            drawn_judgment_origin = 'delphi groups'
+        elif player.in_round(random_draw).judgmentOrigin == 'delphi_ha':
+            drawn_judgment_origin = 'delphi groups with hidden agendas'
+        drawn_judgment = f'"{player.in_round(random_draw).judgment}"'
+        drawn_judgment_counter = Constants.actual_judgments_counter[player.in_round(random_draw).round_number - 1]
+        drawn_true_value = player.in_round(random_draw).trueValue
+        drawn_lower_limit = player.in_round(random_draw).judgmentLower
+        drawn_upper_limit = player.in_round(random_draw).judgmentUpper
+        hit = drawn_lower_limit <= drawn_true_value <= drawn_upper_limit
+        if hit:
+            bonus = 10*(1-(drawn_upper_limit-drawn_lower_limit)/100)
+        else:
+            bonus = 0
+        return {
+            "random_draw": random_draw,
+            "drawn_round_displayed": drawn_round_displayed,
+            "drawn_judgment_origin": drawn_judgment_origin,
+            "drawn_judgment": drawn_judgment,
+            "drawn_true_value": drawn_true_value,
+            "drawn_lower_limit": f'"{drawn_lower_limit}"',
+            "drawn_upper_limit": f'"{drawn_upper_limit}"',
+            "hit": hit,
+            "bonus": bonus,
+            "num_evaluations": Constants.num_evaluations,
+            "drawn_judgment_counter": drawn_judgment_counter,
+        }
 
 page_sequence = [
     # Welcome,
-    TaskIntro,
-    TrialCompleted,
-    NewInteraction,
+    # TaskIntro,
+    # TrialCompleted,
+    # NewInteraction,
     Task,
-    # Results
+    Results
 ]
