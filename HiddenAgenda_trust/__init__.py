@@ -23,26 +23,14 @@ class Constants(BaseConstants):
     num_interaction_formats = 4
     num_evaluations = 2  # number of evaluated judgments per interaction format
 
-    # Objective true probabilities
-    round_1_prob = 0.1
-    round_2_prob = 0.2
-    round_3_prob = 0.3
-    round_4_prob = 0.4
-    round_5_prob = 0.45
-    round_6_prob = 0.55
-    round_7_prob = 0.65
-    round_8_prob = 0.7
-    round_9_prop = 0.8
-    round_10_prob = 0.9
-
     # Group judgments for trial round
     trial_judgments = [20, 40, 60, 80]
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
     actual_judgments = [11, 22, 33, 44, 55, 66, 77, 88]
-    true_values = [20, 40, 60, 80] + [11, 22, 33, 44, 55, 66, 77, 88]
+    true_values = [20, 40, 60, 80] + [22, 33, 44, 55, 66, 77, 88, 99]
     actual_judgments_counter = list(range(1,num_trial_rounds + 1)) + \
-                               list(range(1,num_evaluations + 1)) + list(range(1,num_evaluations + 1)) + \
-                               list(range(1,num_evaluations + 1)) + list(range(1,num_evaluations + 1))
+                               list(range(1,num_evaluations + 1)) + list(range(1, num_evaluations + 1)) + \
+                               list(range(1,num_evaluations + 1)) + list(range(1, num_evaluations + 1))
     actual_judgment_origins = ['ftf' for i in range(num_evaluations)] + ['ftf_ha' for i in range(num_evaluations)] + \
                               ['delphi' for i in range(num_evaluations)] + ['delphi_ha' for i in range(num_evaluations)]
     group_judgments = trial_judgments + actual_judgments
@@ -451,21 +439,29 @@ class Results(Page):
         drawn_true_value = player.in_round(random_draw).trueValue
         drawn_lower_limit = player.in_round(random_draw).judgmentLower
         drawn_upper_limit = player.in_round(random_draw).judgmentUpper
-        hit = drawn_lower_limit <= drawn_true_value <= drawn_upper_limit
+        if drawn_lower_limit <= drawn_true_value <= drawn_upper_limit:
+            hit = 1
+        else:
+            hit = 0
+        interval = drawn_upper_limit-drawn_lower_limit
         if hit:
-            bonus = 10*(1-(drawn_upper_limit-drawn_lower_limit)/100)
+            bonus = round(2*(10*(1-(drawn_upper_limit-drawn_lower_limit)/100)))/2
         else:
             bonus = 0
+        player.payoff = bonus
+        total_payoff = bonus + player.session.config['participation_fee']
         return {
             "random_draw": random_draw,
             "drawn_round_displayed": drawn_round_displayed,
             "drawn_judgment_origin": drawn_judgment_origin,
             "drawn_judgment": drawn_judgment,
             "drawn_true_value": drawn_true_value,
-            "drawn_lower_limit": f'"{drawn_lower_limit}"',
-            "drawn_upper_limit": f'"{drawn_upper_limit}"',
+            "drawn_lower_limit": drawn_lower_limit,
+            "drawn_upper_limit": drawn_upper_limit,
+            "interval": interval,
             "hit": hit,
-            "bonus": bonus,
+            "bonus": cu(bonus),
+            "total_payoff": total_payoff,
             "num_evaluations": Constants.num_evaluations,
             "drawn_judgment_counter": drawn_judgment_counter,
         }
@@ -474,7 +470,7 @@ page_sequence = [
     # Welcome,
     # TaskIntro,
     # TrialCompleted,
-    # NewInteraction,
+    NewInteraction,
     Task,
     Results
 ]

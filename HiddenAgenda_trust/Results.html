@@ -57,6 +57,17 @@
       cursor: none;
     }
 
+    [id="true_value"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      pointer-events: all;
+      width: 12px;
+      height: 12px;
+      background-color: #004225;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px #004225;
+      cursor: none;
+    }
+
 /*    input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
       pointer-events: all;
@@ -132,6 +143,7 @@
 
     <!-- Activate correct info on underlying interaction format and judgments -->
         document.getElementById("judgment").value = {{ drawn_judgment }};
+        document.getElementById("true_value").value = {{ drawn_true_value }};
         document.getElementById("judgmentInput").value = {{ drawn_judgment }};
         document.getElementById("fromSlider").value = {{ drawn_lower_limit }};
         document.getElementById("fromInput").value = {{ drawn_lower_limit }};
@@ -144,8 +156,16 @@
 
     <!-- Function to determine the decision that counts by random draw -->
     function randomDraw() {
+        document.getElementById("random_draw_result").style.display = "block";
         document.getElementById("decision_that_counts").style.display = "block";
+        document.getElementById("random_draw_intro").style.display = "none";
         document.getElementById("random_draw_button").style.display = "none";
+        let hit = {{ hit }};
+        if ( hit == 1 ) {
+            document.getElementById("bonus_result").style.display = "block";
+        } else {
+            document.getElementById("no_bonus_result").style.display = "block";
+        }
     }
 
         <!-- Function to make dual handle range sliders work -->
@@ -287,10 +307,12 @@
 
                 <div class="card-body">
 
-                    <p>
-                        All that is left to do, is to do the random draw of your decision that counts to determine your
-                        bonus.
-                    </p>
+                    <div id="random_draw_intro" style="display: block">
+                        <p>
+                            All that is left to do, is to do the random draw of your decision that counts to determine your
+                            bonus.
+                        </p>
+                    </div>
 
                    <div id="random_draw_button" style="display: block">
                         <button class="btn btn-primary btn-large" type="button" onclick="randomDraw()" class="btn btn-primary btn-large">
@@ -299,15 +321,42 @@
                         <p></p>
                     </div>
 
-                    <div class="range_container" id="decision_that_counts" style="display: none">
-
+                    <div id="random_draw_result" style="display: none">
                         <p>
-                            Your evaluation of judgment {{ drawn_judgment_counter }} out of {{ num_evaluations }} from
-                            {{ drawn_judgment_origin }} has been chosen as decision that counts.
+                            Your evaluation of <b>judgment {{ drawn_judgment_counter }} out of {{ num_evaluations }} from
+                            {{ drawn_judgment_origin }}</b> has been chosen as <b>decision that counts</b>.
+                            Below you can see your input again.
                             <br>
                             <br>
-                            The true value of the underlying judgment task was {{ drawn_true_value }}.
+                            The <b>true value</b> of the underlying judgment task was {{ drawn_true_value }}.
                         </p>
+                    </div>
+
+                    <div id="bonus_result" style="display: none">
+                        <p>
+                            You earn a <b>bonus of {{ bonus }} based on this task</b>. The true value falls within the lower
+                            and upper bound chosen by you. The length of the range you chose is {{ interval }}. Your
+                            bonus calculates as (100 - {{ interval }}) * 0.1 and is rounded to the closest 0.5
+                            increment.
+                            <br>
+                            <br>
+                            <b>In total, you earned {{ total_payoff }}</b> for the participation in this experiment. You may
+                            leave the lab and collect your payment in the lab entrance area.
+                        </p>
+                    </div>
+
+                    <div id="no_bonus_result" style="display: none">
+                        <p>
+                            You earn <b>no bonus based on this task</b>. The true value does not fall within the lower
+                            and upper bound chosen by you.
+                            <br>
+                            <br>
+                            You still earn the flat <b>participation fee of {{ total_payoff }}</b> for this experiment. You may
+                            leave the lab and collect your payment in the lab entrance area.
+                        </p>
+                    </div>
+
+                    <div class="range_container" id="decision_that_counts" style="display: none">
 
                         <div class="judgment_info">
                             <div class="judgment_info_container">
@@ -319,6 +368,7 @@
 
                         <div class="sliders_control">
                             <input id="judgment" type="range" value="" disabled = "true"/>
+                            <input id="true_value" type="range" value="" disabled = "true"/>
                             <input id="fromSlider" type="range" value="0" disabled = "true" min="0" max="100" step="1"/>
                             <input id="toSlider" type="range" value="100" disabled = "true" min="0" max="100" step="1"/>
                         </div>
