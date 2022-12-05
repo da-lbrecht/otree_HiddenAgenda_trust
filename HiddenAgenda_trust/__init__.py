@@ -28,9 +28,9 @@ class Constants(BaseConstants):
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
     actual_judgments = [11, 22, 33, 44, 55, 66, 77, 88]
     true_values = [20, 40, 60, 80] + [22, 33, 44, 55, 66, 77, 88, 99]
-    actual_judgments_counter = list(range(1,num_trial_rounds + 1)) + \
-                               list(range(1,num_evaluations + 1)) + list(range(1, num_evaluations + 1)) + \
-                               list(range(1,num_evaluations + 1)) + list(range(1, num_evaluations + 1))
+    actual_judgments_counter = list(range(1, num_trial_rounds + 1)) + \
+                               list(range(1, num_evaluations + 1)) + list(range(1, num_evaluations + 1)) + \
+                               list(range(1, num_evaluations + 1)) + list(range(1, num_evaluations + 1))
     actual_judgment_origins = ['ftf' for i in range(num_evaluations)] + ['ftf_ha' for i in range(num_evaluations)] + \
                               ['delphi' for i in range(num_evaluations)] + ['delphi_ha' for i in range(num_evaluations)]
     group_judgments = trial_judgments + actual_judgments
@@ -193,6 +193,30 @@ class Player(BasePlayer):
                                         " it.(1: strongly disagree; 2;3;4; 5: strongly agree)"
                                     )
 
+    # Task related questions
+    understanding = models.IntegerField(doc="How would you rate your own understanding of the task you worked on "
+                                            "throughout today's experiment?"
+                                            "(1: very weak; 2;3;4; 5: very good)"
+                                        )
+    strategy = models.StringField(label="How did you come up with a range around the group judgments, based on the"
+                                        " information your were given?",
+                                  doc="How did you come up with a range around the group judgments, based on the"
+                                      " information your were given?",
+                                  blank=True
+                                  )
+    hidden_agendas = models.StringField(label="Did you evaluate group judgments from groups with hidden agendas "
+                                              "differently? How?",
+                                        doc="Did you evaluate group judgments from groups with hidden agendas "
+                                            "differently? How?",
+                                        blank=True
+                                        )
+    wish = models.StringField(label="If you wanted to get the judgment of a group of people, of which some have"
+                                    " a hidden agenda, how would you like that group to interact?",
+                              doc="If you wanted to get the judgment of a group of people, of which some have"
+                                    " a hidden agenda, how would you like that group to interact?",
+                              blank=True
+                              )
+
 
 # FUNCTIONS
 
@@ -202,14 +226,14 @@ def creating_session(subsession: Subsession):
         list_of_trial_round_ids = list(range(1, Constants.num_trial_rounds + 1))
         list_of_ftf_round_ids = list(range(Constants.num_trial_rounds + 1, Constants.num_trial_rounds +
                                            Constants.num_evaluations + 1))
-        list_of_ftf_ha_round_ids = list(range(Constants.num_trial_rounds + 1*Constants.num_evaluations + 1,
-                                              Constants.num_trial_rounds + 2*Constants.num_evaluations + 1))
-        list_of_delphi_round_ids = list(range(Constants.num_trial_rounds + 2*Constants.num_evaluations + 1,
-                                              Constants.num_trial_rounds + 3*Constants.num_evaluations + 1))
-        list_of_delphi_ha_round_ids = list(range(Constants.num_trial_rounds + 3*Constants.num_evaluations + 1,
-                                              Constants.num_trial_rounds + 4*Constants.num_evaluations + 1))
+        list_of_ftf_ha_round_ids = list(range(Constants.num_trial_rounds + 1 * Constants.num_evaluations + 1,
+                                              Constants.num_trial_rounds + 2 * Constants.num_evaluations + 1))
+        list_of_delphi_round_ids = list(range(Constants.num_trial_rounds + 2 * Constants.num_evaluations + 1,
+                                              Constants.num_trial_rounds + 3 * Constants.num_evaluations + 1))
+        list_of_delphi_ha_round_ids = list(range(Constants.num_trial_rounds + 3 * Constants.num_evaluations + 1,
+                                                 Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1))
 
-        list_of_round_ids = list(range(1, Constants.num_trial_rounds + 4*Constants.num_evaluations + 1))
+        list_of_round_ids = list(range(1, Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1))
 
         subsession_trial_temp_list = list_of_trial_round_ids
         subsession_ftf_temp_list = list_of_ftf_round_ids
@@ -229,9 +253,9 @@ def creating_session(subsession: Subsession):
                                        subsession_delphi_temp_list, subsession_delphi_ha_temp_list]
         for player in subsession.get_players():
             temp_list = subsession_trial_temp_list + subsession_actual_temp_list[subsession_formats_temp_list[0]] + \
-            subsession_actual_temp_list[subsession_formats_temp_list[1]] + \
-            subsession_actual_temp_list[subsession_formats_temp_list[2]] +  \
-            subsession_actual_temp_list[subsession_formats_temp_list[3]]
+                        subsession_actual_temp_list[subsession_formats_temp_list[1]] + \
+                        subsession_actual_temp_list[subsession_formats_temp_list[2]] + \
+                        subsession_actual_temp_list[subsession_formats_temp_list[3]]
             for i in list_of_round_ids:
                 player.in_round(i).round_displayed = temp_list[i - 1]
 
@@ -316,15 +340,16 @@ class TrialCompleted(Page):
         if values['password'] != '1984':
             return 'Password incorrect'
 
+
 class NewInteraction(Page):
     form_model = 'player'
 
     @staticmethod
     def is_displayed(player: Player):
-        if(
-                player.round_number == Constants.num_trial_rounds + 1*Constants.num_evaluations + 1 or
-                player.round_number == Constants.num_trial_rounds + 2*Constants.num_evaluations + 1 or
-                player.round_number == Constants.num_trial_rounds + 3*Constants.num_evaluations + 1
+        if (
+                player.round_number == Constants.num_trial_rounds + 1 * Constants.num_evaluations + 1 or
+                player.round_number == Constants.num_trial_rounds + 2 * Constants.num_evaluations + 1 or
+                player.round_number == Constants.num_trial_rounds + 3 * Constants.num_evaluations + 1
         ):
             return True
         else:
@@ -335,19 +360,19 @@ class NewInteraction(Page):
         previous_interaction_format = \
             Constants.judgment_origins[player.in_round(player.round_number - 1).round_displayed - 1]
         if previous_interaction_format == 'ftf':
-            return{
+            return {
                 "previous_interaction_format": 'face-to-face groups'
             }
         elif previous_interaction_format == 'ftf_ha':
-            return{
+            return {
                 "previous_interaction_format": 'face-to-face groups with hidden agendas'
             }
         elif previous_interaction_format == 'delphi':
-            return{
+            return {
                 "previous_interaction_format": 'delphi groups'
             }
         elif previous_interaction_format == 'delphi_ha':
-            return{
+            return {
                 "previous_interaction_format": 'delphi groups with hidden agendas'
             }
 
@@ -374,11 +399,11 @@ class Task(Page):
         first_ftf_round = Constants.num_trial_rounds + 1
         last_ftf_round = Constants.num_trial_rounds + Constants.num_evaluations
         first_ftfha_round = Constants.num_trial_rounds + Constants.num_evaluations + 1
-        last_ftfha_round = Constants.num_trial_rounds + 2*Constants.num_evaluations
-        first_delphi_round = Constants.num_trial_rounds + 2*Constants.num_evaluations + 1
-        last_delphi_round = Constants.num_trial_rounds + 3*Constants.num_evaluations
-        first_delphiha_round = Constants.num_trial_rounds + 3*Constants.num_evaluations + 1
-        last_delphiha_round = Constants.num_trial_rounds + 4*Constants.num_evaluations
+        last_ftfha_round = Constants.num_trial_rounds + 2 * Constants.num_evaluations
+        first_delphi_round = Constants.num_trial_rounds + 2 * Constants.num_evaluations + 1
+        last_delphi_round = Constants.num_trial_rounds + 3 * Constants.num_evaluations
+        first_delphiha_round = Constants.num_trial_rounds + 3 * Constants.num_evaluations + 1
+        last_delphiha_round = Constants.num_trial_rounds + 4 * Constants.num_evaluations
         first_rounds = [first_ftf_round, first_ftfha_round, first_delphi_round, first_delphiha_round]
         judgment_counter = Constants.actual_judgments_counter[player.round_number - 1]
         return {"round_number": player.round_number,
@@ -414,6 +439,18 @@ class Task(Page):
             player.end_of_trial = player.end_of_round
 
 
+class Questionnaire(Page):
+    form_model = 'player'
+    form_fields = ['gender', 'education', 'field_of_studies', 'years_of_working',
+                   'honesty_A', 'honesty_B', 'honesty_C', 'honesty_D', 'honesty_E', 'honesty_F', 'honesty_G',
+                   'honesty_H',
+                   'understanding', 'strategy', 'hidden_agendas', 'wish']
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == Constants.num_rounds
+
+
 class Results(Page):
     form_model = 'player'
 
@@ -424,7 +461,7 @@ class Results(Page):
     @staticmethod
     def vars_for_template(player: Player):
         random_draw = random.choice(list(range(Constants.num_trial_rounds + 1,
-                                               Constants.num_trial_rounds + 4*Constants.num_evaluations + 1)))
+                                               Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1)))
         drawn_round_displayed = player.in_round(random_draw).round_displayed
         if player.in_round(random_draw).judgmentOrigin == 'ftf':
             drawn_judgment_origin = 'face-to-face groups'
@@ -443,9 +480,9 @@ class Results(Page):
             hit = 1
         else:
             hit = 0
-        interval = drawn_upper_limit-drawn_lower_limit
+        interval = drawn_upper_limit - drawn_lower_limit
         if hit:
-            bonus = round(2*(10*(1-(drawn_upper_limit-drawn_lower_limit)/100)))/2
+            bonus = round(2 * (10 * (1 - (drawn_upper_limit - drawn_lower_limit) / 100))) / 2
         else:
             bonus = 0
         player.payoff = bonus
@@ -466,11 +503,13 @@ class Results(Page):
             "drawn_judgment_counter": drawn_judgment_counter,
         }
 
+
 page_sequence = [
     # Welcome,
     # TaskIntro,
     # TrialCompleted,
-    NewInteraction,
-    Task,
-    Results
+    # NewInteraction,
+    # Task,
+    Questionnaire,
+    # Results
 ]
