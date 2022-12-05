@@ -72,7 +72,7 @@
 
                         <p class="h4" style="color:grey;">
                             <br><br>
-                            Now, please read the following statement and indicate how much you agree with it.
+                            Now, please read the following statement and state how well it describes you as a person.
                             <br><br>
                         </p>
 
@@ -82,13 +82,19 @@
                         </p>
                         {{ formfield_errors 'trust' }}
                         <ul class="likert">
-                          <li> strongly disagree </li>
+                          <li> does not describe me at all </li>
+                          <li><input type="radio" name="trust" value="0" /></li>
                           <li><input type="radio" name="trust" value="1" /></li>
                           <li><input type="radio" name="trust" value="2" /></li>
                           <li><input type="radio" name="trust" value="3" /></li>
                           <li><input type="radio" name="trust" value="4" /></li>
                           <li><input type="radio" name="trust" value="5" /></li>
-                          <li> strongly agree </li>
+                          <li><input type="radio" name="trust" value="6" /></li>
+                          <li><input type="radio" name="trust" value="7" /></li>
+                          <li><input type="radio" name="trust" value="8" /></li>
+                          <li><input type="radio" name="trust" value="9" /></li>
+                          <li><input type="radio" name="trust" value="10" /></li>
+                          <li> describes me perfectly </li>
                         </ul>
 
                         <p>
@@ -96,7 +102,7 @@
                         </p>
 
                         <p class="h4" style="color:grey;"> <!--style="color:royalblue;"-->
-                            <br><br><br><br>
+                            <br><br>
                             Finally, please answer some questions about the task you worked on throughout today's
                             experiment.
                             <br><br>
