@@ -166,31 +166,9 @@ class Player(BasePlayer):
                                                " how long? (0: No I do not have professional working experience;"
                                                "1: 1 year; 2: 2 years; 3: 3 years; 4: 4 years; 5: 5 years or more; "
                                                "6: less than 1 year)")
-    # Honesty module
-    honesty_A = models.IntegerField(doc="If I want something from a person I dislike, I will act very nicely toward"
-                                        " that person in order to get it. (1: strongly disagree; 2;3;4; 5: strongly "
-                                        "agree)"
-                                    )
-    honesty_B = models.IntegerField(doc="If I knew that I could never get caught, I would be willing to steal a million"
-                                        " euro. (1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                    )
-    honesty_C = models.IntegerField(doc="I wouldn't use flattery to get a raise or promotion at work, even if I thought"
-                                        " it would succeed. (1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                    )
-    honesty_D = models.IntegerField(doc="I would be tempted to buy stolen property if I were financially tight."
-                                        "(1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                    )
-    honesty_E = models.IntegerField(doc="If I want something from someone, I will laugh at that person's worst jokes."
-                                        "(1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                    )
-    honesty_F = models.IntegerField(doc="I would never accept a bribe, even if it were very large."
-                                        "(1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                    )
-    honesty_G = models.IntegerField(doc="I wouldn't pretend to like someone just to get that person to do favors for "
-                                        "me. (1: strongly disagree; 2;3;4; 5: strongly agree)"
-                                    )
-    honesty_H = models.IntegerField(doc="I’d be tempted to use counterfeit money, if I were sure I could get away with"
-                                        " it.(1: strongly disagree; 2;3;4; 5: strongly agree)"
+    # Trust - GPS Question
+    trust = models.IntegerField(doc="As long as I am not convinced otherwise, I assume that people have only the best"
+                                "intentions."
                                     )
 
     # Task related questions
@@ -442,9 +420,7 @@ class Task(Page):
 class Questionnaire(Page):
     form_model = 'player'
     form_fields = ['gender', 'education', 'field_of_studies', 'years_of_working',
-                   'honesty_A', 'honesty_B', 'honesty_C', 'honesty_D', 'honesty_E', 'honesty_F', 'honesty_G',
-                   'honesty_H',
-                   'understanding', 'strategy', 'hidden_agendas', 'wish']
+                   'trust', 'understanding', 'strategy', 'hidden_agendas', 'wish']
 
     @staticmethod
     def is_displayed(player: Player):
