@@ -1,5 +1,6 @@
 from otree.api import *
 import random
+import pandas
 
 c = Currency
 
@@ -27,12 +28,18 @@ class Constants(BaseConstants):
     trial_judgments = [20, 40, 60, 80]
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
     actual_judgments = [11, 22, 33, 44, 55, 66, 77, 88]
+    actual_judgments_all = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_estim'])
+    trial_true_values = [20, 40, 60, 80]
+    actual_true_values = [22, 33, 44, 55, 66, 77, 88, 99]
+    actual_true_values_all = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['true_prob'])
     true_values = [20, 40, 60, 80] + [22, 33, 44, 55, 66, 77, 88, 99]
     actual_judgments_counter = list(range(1, num_trial_rounds + 1)) + \
                                list(range(1, num_evaluations + 1)) + list(range(1, num_evaluations + 1)) + \
                                list(range(1, num_evaluations + 1)) + list(range(1, num_evaluations + 1))
     actual_judgment_origins = ['ftf' for i in range(num_evaluations)] + ['ftf_ha' for i in range(num_evaluations)] + \
                               ['delphi' for i in range(num_evaluations)] + ['delphi_ha' for i in range(num_evaluations)]
+    actual_judgment_origins_all = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['treatment'])
+    actual_judgment_groups = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_id'])
     group_judgments = trial_judgments + actual_judgments
     judgment_origins = trial_judgment_origins + actual_judgment_origins
 
