@@ -1,0 +1,9 @@
+### To set up a session follow the steps below.
+
+On the otree admin page create a session with 50 participants, i.e. the total number of participants that are supposed
+to participate in the trust study. It is important to create 1 session for all 50 participants, in order to ensure that
+the randomization of judgments to participants happens in a balanced way.
+
+Just leave the server running until all (lab) sessions are done, i.e. until all 50 participants have gone through the
+lab. Start clients working your way chronologically through the list of links such that the final participant, will play
+on the 50th link.
