@@ -483,9 +483,9 @@ class Results(Page):
 page_sequence = [
     # Welcome,
     # TaskIntro,
-    # TrialCompleted,
-    # NewInteraction,
-    # Task,
-    Questionnaire,
-    # Results
+    TrialCompleted,
+    NewInteraction,
+    Task,
+    # Questionnaire,
+    Results
 ]
