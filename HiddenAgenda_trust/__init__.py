@@ -22,9 +22,11 @@ class Constants(BaseConstants):
     num_attention_checks = 5
     num_final_questions = 10
     num_interaction_formats = 4
-    num_evaluations = 2  # number of evaluated judgments per interaction format
+    num_groups = 13  # number of groups per interaction format
+    num_evaluations = 2  # number of evaluated judgments per interaction format by each group
+    total_num_evaluations = 520
 
-    # Group judgments for trial round
+    # Group judgments
     trial_judgments = [20, 40, 60, 80]
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
     actual_judgments = [11, 22, 33, 44, 55, 66, 77, 88]
@@ -42,6 +44,17 @@ class Constants(BaseConstants):
     actual_judgment_groups = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_id'])
     group_judgments = trial_judgments + actual_judgments
     judgment_origins = trial_judgment_origins + actual_judgment_origins
+
+    interaction_formats = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
+
+    # Actual Judgments
+    all_actual_judgments = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_estim'])
+
+    # Underlying true values
+    all_true_values = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_estim'])
+
+    # Underlying origin
+    all_origins = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['treatment'])
 
 
 class Subsession(BaseSubsession):
@@ -119,6 +132,10 @@ class Player(BasePlayer):
     trialRound = models.BooleanField(doc="1/True if round was a trial, without consequences for payment")
     judgmentOrigin = models.StringField(doc="Description of treatment of estimation study, from which group judgment"
                                             "originates")
+    shuffle = models.FloatField(doc="Randomization variable")
+    shuffled_judgment = models.FloatField(doc="Randomized group judgment to be evaluated")
+    shuffled_judgmentOrigin = models.StringField(doc="Description of treatment of estimation study, from which randomized"
+                                                     " group judgment originates")
     judgment = models.FloatField(doc="Group judgment to be evaluated.")
     trueValue = models.FloatField(doc="true value underlying the group judgment.")
     judgmentLower = models.FloatField(doc="Lower bound of confidence interval on judgment from estimation study")
@@ -236,6 +253,13 @@ def creating_session(subsession: Subsession):
         # Stack lists together
         subsession_actual_temp_list = [subsession_ftf_temp_list, subsession_ftf_ha_temp_list,
                                        subsession_delphi_temp_list, subsession_delphi_ha_temp_list]
+
+        # Create list of ids of all judgments
+        ftf_shuffle = list(range(1, 130+1))
+        ftfha_shuffle = list(range(131, 260 + 1))
+        delphi_shuffle = list(range(261, 390 + 1))
+        delphiha_shuffle = list(range(391, 520 + 1))
+        shuffle = ftf_shuffle + ftfha_shuffle + delphi_shuffle + delphiha_shuffle
         for player in subsession.get_players():
             temp_list = subsession_trial_temp_list + subsession_actual_temp_list[subsession_formats_temp_list[0]] + \
                         subsession_actual_temp_list[subsession_formats_temp_list[1]] + \
@@ -243,7 +267,24 @@ def creating_session(subsession: Subsession):
                         subsession_actual_temp_list[subsession_formats_temp_list[3]]
             for i in list_of_round_ids:
                 player.in_round(i).round_displayed = temp_list[i - 1]
-
+                if i <= 4:
+                    pass
+                elif 4 < i <= 6:
+                    player.in_round(i).shuffle = shuffle[i - 5]  # shuffle[player.id_in_group + i - 4]
+                    player.in_round(i).shuffled_judgment = Constants.all_actual_judgments[player.in_round(i).shuffle]
+                    player.in_round(i).shuffled_judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
+                elif i <= 8:
+                    player.in_round(i).shuffle = shuffle[i + 130 - 7]  # shuffle[player.id_in_group + i + 124]
+                    player.in_round(i).shuffled_judgment = Constants.all_actual_judgments[player.in_round(i).shuffle]
+                    player.in_round(i).shuffled_judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
+                elif i <= 10:
+                    player.in_round(i).shuffle = shuffle[i + 260 - 9]  # shuffle[player.id_in_group + i + 253]
+                    player.in_round(i).shuffled_judgment = Constants.all_actual_judgments[player.in_round(i).shuffle]
+                    player.in_round(i).shuffled_judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
+                elif i <= 12:
+                    player.in_round(i).shuffle = shuffle[i + 390 - 11]  # shuffle[player.id_in_group + i + 384]
+                    player.in_round(i).shuffled_judgment = Constants.all_actual_judgments[player.in_round(i).shuffle]
+                    player.in_round(i).shuffled_judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
 
 # PAGES
 class Welcome(Page):
