@@ -135,25 +135,25 @@
     // Trial Rounds
         document.getElementById("judgment").value = {{ group_judgment }};
         document.getElementById("judgmentInput").value = {{ group_judgment }};
-    {% if player.round_displayed == 1 %} // control which initial info each player sees
+    {% if player.round_number == 1 %} // control which initial info each player sees
         document.getElementById("header_trial").style.display = "block";
         document.getElementById("ftf_header_trial").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description_header").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
-    {% elif player.round_displayed == 2 %}
+    {% elif player.round_number == 2 %}
         document.getElementById("header_trial").style.display = "block";
         document.getElementById("ftfha_header_trial").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description_header").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
-    {% elif player.round_displayed == 3 %}
+    {% elif player.round_number == 3 %}
         document.getElementById("header_trial").style.display = "block";
         document.getElementById("delphi_header_trial").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description_header").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
-    {% elif player.round_displayed == 4 %}
+    {% elif player.round_number == 4 %}
         document.getElementById("header_trial").style.display = "block";
         document.getElementById("delphiha_header_trial").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";

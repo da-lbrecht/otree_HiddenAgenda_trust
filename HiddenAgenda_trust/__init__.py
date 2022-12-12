@@ -13,8 +13,8 @@ class Constants(BaseConstants):
     name_in_url = 'hiddenagenda_decisions'
     players_per_group = None
     num_trial_rounds = 4  # 1 round, i.e. judgment for trial evaluation from FTF, FTF+HA, Delphi and Delphi+HA each
-    num_actual_rounds = 8  # 10 rounds, i.e. judgment for actual evaluation form FTF, FTF+HA, Delphi and Delphi+HA each
-    num_rounds = 4 + 8
+    num_actual_rounds = 10  # 10 rounds, i.e. judgment for actual evaluation form FTF, FTF+HA, Delphi and Delphi+HA each
+    num_rounds = 4 + 40
 
     fixed_pay = cu(10)
     avg_pay = cu(15)
@@ -23,38 +23,32 @@ class Constants(BaseConstants):
     num_final_questions = 10
     num_interaction_formats = 4
     num_groups = 13  # number of groups per interaction format
-    num_evaluations = 2  # number of evaluated judgments per interaction format by each group
-    total_num_evaluations = 520
+    num_evaluations = 10  # number of evaluated judgments per interaction format by each group
+    total_num_evaluations = 600
 
     # Group judgments
     trial_judgments = [20, 40, 60, 80]
     trial_judgment_origins = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
-    actual_judgments = [11, 22, 33, 44, 55, 66, 77, 88]
-    actual_judgments_all = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_estim'])
     trial_true_values = [20, 40, 60, 80]
-    actual_true_values = [22, 33, 44, 55, 66, 77, 88, 99]
-    actual_true_values_all = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['true_prob'])
-    true_values = [20, 40, 60, 80] + [22, 33, 44, 55, 66, 77, 88, 99]
+
     actual_judgments_counter = list(range(1, num_trial_rounds + 1)) + \
                                list(range(1, num_evaluations + 1)) + list(range(1, num_evaluations + 1)) + \
                                list(range(1, num_evaluations + 1)) + list(range(1, num_evaluations + 1))
-    actual_judgment_origins = ['ftf' for i in range(num_evaluations)] + ['ftf_ha' for i in range(num_evaluations)] + \
-                              ['delphi' for i in range(num_evaluations)] + ['delphi_ha' for i in range(num_evaluations)]
-    actual_judgment_origins_all = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['treatment'])
-    actual_judgment_groups = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_id'])
-    group_judgments = trial_judgments + actual_judgments
-    judgment_origins = trial_judgment_origins + actual_judgment_origins
 
     interaction_formats = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
 
     # Actual Judgments
-    all_actual_judgments = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_estim'])
+    all_actual_judgments = list(pandas.read_csv("_static/data/judgments_artificial_trust_experiment(artificial600).csv")['group_estim'])
 
     # Underlying true values
-    all_true_values = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['group_estim'])
+    all_true_values = list(pandas.read_csv("_static/data/judgments_artificial_trust_experiment(artificial600).csv")['true_prob'])
 
     # Underlying origin
-    all_origins = list(pandas.read_csv("_static/data/judgments_trust_experiment.csv")['treatment'])
+    all_origins = list(pandas.read_csv("_static/data/judgments_artificial_trust_experiment(artificial600).csv")['treatment'])
+
+    # IDs of groups who conducted the judgment
+    all_groups = list(pandas.read_csv("_static/data/judgments_artificial_trust_experiment(artificial600).csv")['group_id'])
+
 
 
 class Subsession(BaseSubsession):
@@ -76,9 +70,6 @@ class Player(BasePlayer):
                                         doc="Starting time of a task round")
     end_of_round = models.StringField(initial=999,
                                       doc="Ending time of a task round")
-
-    round_displayed = models.IntegerField(doc="Randomized round displayed to participants, ranging from 1 to "
-                                              "num_rounds")
     password = models.StringField(doc="Password needed to continue to actual rounds of task")
 
     # Response variables for attention checks
@@ -132,10 +123,7 @@ class Player(BasePlayer):
     trialRound = models.BooleanField(doc="1/True if round was a trial, without consequences for payment")
     judgmentOrigin = models.StringField(doc="Description of treatment of estimation study, from which group judgment"
                                             "originates")
-    shuffle = models.FloatField(doc="Randomization variable")
-    shuffled_judgment = models.FloatField(doc="Randomized group judgment to be evaluated")
-    shuffled_judgmentOrigin = models.StringField(doc="Description of treatment of estimation study, from which randomized"
-                                                     " group judgment originates")
+    shuffle = models.IntegerField(doc="Randomization variable")
     judgment = models.FloatField(doc="Group judgment to be evaluated.")
     trueValue = models.FloatField(doc="true value underlying the group judgment.")
     judgmentLower = models.FloatField(doc="Lower bound of confidence interval on judgment from estimation study")
@@ -225,66 +213,40 @@ class Player(BasePlayer):
 # Randomization of task round display
 def creating_session(subsession: Subsession):
     if subsession.round_number == 1:
-        list_of_trial_round_ids = list(range(1, Constants.num_trial_rounds + 1))
-        list_of_ftf_round_ids = list(range(Constants.num_trial_rounds + 1, Constants.num_trial_rounds +
-                                           Constants.num_evaluations + 1))
-        list_of_ftf_ha_round_ids = list(range(Constants.num_trial_rounds + 1 * Constants.num_evaluations + 1,
-                                              Constants.num_trial_rounds + 2 * Constants.num_evaluations + 1))
-        list_of_delphi_round_ids = list(range(Constants.num_trial_rounds + 2 * Constants.num_evaluations + 1,
-                                              Constants.num_trial_rounds + 3 * Constants.num_evaluations + 1))
-        list_of_delphi_ha_round_ids = list(range(Constants.num_trial_rounds + 3 * Constants.num_evaluations + 1,
-                                                 Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1))
-
         list_of_round_ids = list(range(1, Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1))
 
-        subsession_trial_temp_list = list_of_trial_round_ids
-        subsession_ftf_temp_list = list_of_ftf_round_ids
-        subsession_ftf_ha_temp_list = list_of_ftf_ha_round_ids
-        subsession_delphi_temp_list = list_of_delphi_round_ids
-        subsession_delphi_ha_temp_list = list_of_delphi_ha_round_ids
-        subsession_formats_temp_list = list(range(0, Constants.num_interaction_formats))
-        # Randomizing
-        random.shuffle(subsession_trial_temp_list)
-        random.shuffle(subsession_ftf_temp_list)
-        random.shuffle(subsession_ftf_ha_temp_list)
-        random.shuffle(subsession_delphi_temp_list)
-        random.shuffle(subsession_delphi_ha_temp_list)
-        random.shuffle(subsession_formats_temp_list)
-        # Stack lists together
-        subsession_actual_temp_list = [subsession_ftf_temp_list, subsession_ftf_ha_temp_list,
-                                       subsession_delphi_temp_list, subsession_delphi_ha_temp_list]
-
         # Create list of ids of all judgments
-        ftf_shuffle = list(range(1, 130+1))
-        ftfha_shuffle = list(range(131, 260 + 1))
-        delphi_shuffle = list(range(261, 390 + 1))
-        delphiha_shuffle = list(range(391, 520 + 1))
+        ftf_shuffle = list(range(0, 150))
+        ftfha_shuffle = list(range(150, 300))
+        delphi_shuffle = list(range(300, 450))
+        delphiha_shuffle = list(range(450, 600))
+        # Randomize judgments within block
+        # random.shuffle(ftf_shuffle)
+        # random.shuffle(ftfha_shuffle)
+        # random.shuffle(delphi_shuffle)
+        # random.shuffle(delphiha_shuffle)
         shuffle = ftf_shuffle + ftfha_shuffle + delphi_shuffle + delphiha_shuffle
         for player in subsession.get_players():
-            temp_list = subsession_trial_temp_list + subsession_actual_temp_list[subsession_formats_temp_list[0]] + \
-                        subsession_actual_temp_list[subsession_formats_temp_list[1]] + \
-                        subsession_actual_temp_list[subsession_formats_temp_list[2]] + \
-                        subsession_actual_temp_list[subsession_formats_temp_list[3]]
             for i in list_of_round_ids:
-                player.in_round(i).round_displayed = temp_list[i - 1]
-                if i <= 4:
-                    pass
-                elif 4 < i <= 6:
-                    player.in_round(i).shuffle = shuffle[i - 5]  # shuffle[player.id_in_group + i - 4]
-                    player.in_round(i).shuffled_judgment = Constants.all_actual_judgments[player.in_round(i).shuffle]
-                    player.in_round(i).shuffled_judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
-                elif i <= 8:
-                    player.in_round(i).shuffle = shuffle[i + 130 - 7]  # shuffle[player.id_in_group + i + 124]
-                    player.in_round(i).shuffled_judgment = Constants.all_actual_judgments[player.in_round(i).shuffle]
-                    player.in_round(i).shuffled_judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
-                elif i <= 10:
-                    player.in_round(i).shuffle = shuffle[i + 260 - 9]  # shuffle[player.id_in_group + i + 253]
-                    player.in_round(i).shuffled_judgment = Constants.all_actual_judgments[player.in_round(i).shuffle]
-                    player.in_round(i).shuffled_judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
-                elif i <= 12:
-                    player.in_round(i).shuffle = shuffle[i + 390 - 11]  # shuffle[player.id_in_group + i + 384]
-                    player.in_round(i).shuffled_judgment = Constants.all_actual_judgments[player.in_round(i).shuffle]
-                    player.in_round(i).shuffled_judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
+                if i <= Constants.num_trial_rounds:
+                    player.in_round(i).shuffle = 999
+                elif Constants.num_trial_rounds < i <= Constants.num_trial_rounds + 1 * Constants.num_evaluations:
+                    player.in_round(i).shuffle = int(shuffle[i - 5] + round((player.id_in_group-1) * 2.55, 1))
+                elif i <= Constants.num_trial_rounds + 2 * Constants.num_evaluations:
+                    player.in_round(i).shuffle = int(shuffle[i + 150 - 15] + round((player.id_in_group-1) * 2.55, 1))
+                elif i <= Constants.num_trial_rounds + 3 * Constants.num_evaluations:
+                    player.in_round(i).shuffle = int(shuffle[i + 300 - 25] + round((player.id_in_group-1) * 2.55, 1))
+                elif i <= Constants.num_trial_rounds + 4 * Constants.num_evaluations:
+                    player.in_round(i).shuffle = int(shuffle[i + 450 - 35] + round((player.id_in_group-1) * 2.55, 1))
+                if i <= Constants.num_trial_rounds:
+                    player.in_round(i).judgment = Constants.trial_judgments[i-1]
+                    player.in_round(i).trueValue = Constants.trial_judgments[i-1]
+                    player.in_round(i).judgmentOrigin = Constants.trial_judgment_origins[i-1]
+                if i > Constants.num_trial_rounds:
+                    player.in_round(i).judgment = round(Constants.all_actual_judgments[player.in_round(i).shuffle]*100, 1)
+                    player.in_round(i).trueValue = round(Constants.all_true_values[player.in_round(i).shuffle]*100, 1)
+                    player.in_round(i).judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
+                    player.in_round(i).shuffled_judgmentGroup = Constants.all_groups[player.in_round(i).shuffle]
 
 # PAGES
 class Welcome(Page):
@@ -384,7 +346,7 @@ class NewInteraction(Page):
     @staticmethod
     def vars_for_template(player: Player):
         previous_interaction_format = \
-            Constants.judgment_origins[player.in_round(player.round_number - 1).round_displayed - 1]
+            player.in_round(player.round_number - 1).judgmentOrigin
         if previous_interaction_format == 'ftf':
             return {
                 "previous_interaction_format": 'face-to-face groups'
@@ -420,43 +382,29 @@ class Task(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        group_judgment = f'"{Constants.group_judgments[player.round_displayed - 1]}"'
-        judgment_origin = Constants.judgment_origins[player.round_displayed - 1]
-        first_ftf_round = Constants.num_trial_rounds + 1
-        last_ftf_round = Constants.num_trial_rounds + Constants.num_evaluations
-        first_ftfha_round = Constants.num_trial_rounds + Constants.num_evaluations + 1
-        last_ftfha_round = Constants.num_trial_rounds + 2 * Constants.num_evaluations
-        first_delphi_round = Constants.num_trial_rounds + 2 * Constants.num_evaluations + 1
-        last_delphi_round = Constants.num_trial_rounds + 3 * Constants.num_evaluations
-        first_delphiha_round = Constants.num_trial_rounds + 3 * Constants.num_evaluations + 1
-        last_delphiha_round = Constants.num_trial_rounds + 4 * Constants.num_evaluations
-        first_rounds = [first_ftf_round, first_ftfha_round, first_delphi_round, first_delphiha_round]
+        group_judgment = f'"{player.judgment}"'
+        true_value = player.trueValue
+        judgment_origin = player.judgmentOrigin
+        first_rounds = [
+            Constants.num_trial_rounds + 1,
+            Constants.num_trial_rounds + 1*Constants.num_evaluations + 1,
+            Constants.num_trial_rounds + 2*Constants.num_evaluations + 1,
+            Constants.num_trial_rounds + 3*Constants.num_evaluations + 1
+                        ]
         judgment_counter = Constants.actual_judgments_counter[player.round_number - 1]
         return {"round_number": player.round_number,
-                "round_displayed": player.round_displayed,
                 "group_judgment": group_judgment,
+                "true_value": true_value,
                 "judgment_origin": judgment_origin,
                 "num_trial_rounds": Constants.num_trial_rounds,
-                "judgments": Constants.group_judgments,
-                "judgment_origins": Constants.judgment_origins,
                 "judgment_counter": judgment_counter,
                 "num_evaluations": Constants.num_evaluations,
-                "first_ftf_round": first_ftf_round,
-                "last_ftf_round": last_ftf_round,
-                "first_ftfha_round": first_ftfha_round,
-                "last_ftfha_round": last_ftfha_round,
-                "first_delphi_round": first_delphi_round,
-                "last_delphi_round": last_delphi_round,
-                "first_delphiha_round": first_delphiha_round,
-                "last_delphiha_round": last_delphiha_round,
                 "first_rounds": first_rounds,
+                "shuffled_round": player.shuffle,
                 }
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        player.judgmentOrigin = Constants.judgment_origins[player.round_displayed - 1]
-        player.judgment = Constants.group_judgments[player.round_displayed - 1]
-        player.trueValue = Constants.true_values[player.round_displayed - 1]
         if player.round_number <= Constants.num_trial_rounds:
             player.trialRound = True
         else:
@@ -486,7 +434,6 @@ class Results(Page):
     def vars_for_template(player: Player):
         random_draw = random.choice(list(range(Constants.num_trial_rounds + 1,
                                                Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1)))
-        drawn_round_displayed = player.in_round(random_draw).round_displayed
         if player.in_round(random_draw).judgmentOrigin == 'ftf':
             drawn_judgment_origin = 'face-to-face groups'
         elif player.in_round(random_draw).judgmentOrigin == 'ftf_ha':
@@ -513,7 +460,6 @@ class Results(Page):
         total_payoff = bonus + player.session.config['participation_fee']
         return {
             "random_draw": random_draw,
-            "drawn_round_displayed": drawn_round_displayed,
             "drawn_judgment_origin": drawn_judgment_origin,
             "drawn_judgment": drawn_judgment,
             "drawn_true_value": drawn_true_value,
