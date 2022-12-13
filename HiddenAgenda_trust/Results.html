@@ -304,104 +304,102 @@
                      style="display: block; color:#0a78f5;">
                     <p class="h4">You completed the experiment</p>
                 </div>
+                    <div class="card-body">
 
-                <div class="card-body">
-
-                    <div id="random_draw_intro" style="display: block">
-                        <p>
-                            All that is left to do, is to do the random draw of your decision that counts to determine your
-                            bonus.
-                        </p>
-                    </div>
-
-                   <div id="random_draw_button" style="display: block">
-                        <button class="btn btn-primary btn-large" type="button" onclick="randomDraw()" class="btn btn-primary btn-large">
-                            Draw decision that counts
-                        </button>
-                        <p></p>
-                    </div>
-
-                    <div id="random_draw_result" style="display: none">
-                        <p>
-                            Your evaluation of <b>judgment {{ drawn_judgment_counter }} out of {{ num_evaluations }} from
-                            {{ drawn_judgment_origin }}</b> has been chosen as <b>decision that counts</b>.
-                            Below you can see your input again.
-                            <br>
-                            <br>
-                            The <b>true value</b> of the underlying judgment task was {{ drawn_true_value }}.
-                        </p>
-                    </div>
-
-                    <div id="bonus_result" style="display: none">
-                        <p>
-                            You earn a <b>bonus of {{ bonus }} based on this task</b>. The true value falls within the lower
-                            and upper bound chosen by you. The length of the range you chose is {{ interval }}. Your
-                            bonus calculates as (100 - {{ interval }}) * 0.1 and is rounded to the closest 0.5
-                            increment.
-                            <br>
-                            <br>
-                            <b>In total, you earned {{ total_payoff }}</b> for the participation in this experiment. You may
-                            leave the lab and collect your payment in the lab entrance area.
-                        </p>
-                    </div>
-
-                    <div id="no_bonus_result" style="display: none">
-                        <p>
-                            You earn <b>no bonus based on this task</b>. The true value does not fall within the lower
-                            and upper bound chosen by you.
-                            <br>
-                            <br>
-                            You still earn the flat <b>participation fee of {{ total_payoff }}</b> for this experiment. You may
-                            leave the lab and collect your payment in the lab entrance area.
-                        </p>
-                    </div>
-
-                    <div class="range_container" id="decision_that_counts" style="display: none">
-
-                        <div class="judgment_info">
-                            <div class="judgment_info_container">
-                                    group judgment <br>
-                                <input class="form_control_container__time__input" type="number" id="judgmentInput"
-                                       value="0" style="margin-bottom:18pt;" disabled="true"/>
-                            </div>
+                        <div id="random_draw_intro" style="display: block">
+                            <p>
+                                All that is left to do, is to do the random draw of your decision that counts to determine your
+                                bonus.
+                            </p>
                         </div>
 
-                        <div class="sliders_control">
-                            <input id="judgment" type="range" value="" disabled = "true"/>
-                            <input id="true_value" type="range" value="" disabled = "true"/>
-                            <input id="fromSlider" type="range" value="0" disabled = "true" min="0" max="100" step="1"/>
-                            <input id="toSlider" type="range" value="100" disabled = "true" min="0" max="100" step="1"/>
-                        </div>
-
-                        <div class="form_control">
-                            <div class="form_control_container">
-                                <div class="form_control_container__time">your <br> lower bound</div>
-                                <input class="form_control_container__time__input" type="number" id="fromInput" value="0" min="0" max="100" disabled="true"/>
-                            </div>
-                            <div class="form_control_container">
-                                <div class="form_control_container__time">
-                                    your <br> upper bound</div>
-                                <input class="form_control_container__time__input" type="number" id="toInput" value="100" min="0" max="100" disabled="true"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                    <!-- on Card Navigation  Arrows -->
-
-                    <!-- greyed out left arrow on first page -->
-                    <div class="row justify-content-md-center mt-5">
-
-                        <div class="col col-lg-2" id="next_button" style="display: block">
-                            <button class="btn btn-primary btn-large" onclick="saveResults()">
-                                Done!
+                       <div id="random_draw_button" style="display: block">
+                            <button class="btn btn-primary btn-large" type="button" onclick="randomDraw()" class="btn btn-primary btn-large">
+                                Draw decision that counts
                             </button>
                             <p></p>
                         </div>
 
-                    </div>
+                        <div id="random_draw_result" style="display: none">
+                            <p>
+                                Your evaluation of <b>judgment {{ drawn_judgment_counter }} out of {{ num_evaluations }} from
+                                {{ drawn_judgment_origin }}</b> has been chosen as <b>decision that counts</b>.
+                                Below you can see your input again.
+                                <br>
+                                <br>
+                                The <b>true value</b> of the underlying judgment task was {{ drawn_true_value }}.
+                            </p>
+                        </div>
 
+                        <div id="bonus_result" style="display: none">
+                            <p>
+                                You earn a <b>bonus of {{ bonus }} based on this task</b>. The true value falls within the lower
+                                and upper bound chosen by you. The length of the range you chose is {{ interval }}. Your
+                                bonus calculates as (100 - {{ interval }}) * 0.1 and is rounded to the closest 0.5
+                                increment.
+                                <br>
+                                <br>
+                                <b>In total, you earned {{ total_payoff }}</b> for the participation in this experiment. You may
+                                leave the lab and collect your payment in the lab entrance area.
+                            </p>
+                        </div>
+
+                        <div id="no_bonus_result" style="display: none">
+                            <p>
+                                You earn <b>no bonus based on this task</b>. The true value does not fall within the lower
+                                and upper bound chosen by you.
+                                <br>
+                                <br>
+                                You still earn the flat <b>participation fee of {{ total_payoff }}</b> for this experiment. You may
+                                leave the lab and collect your payment in the lab entrance area.
+                            </p>
+                        </div>
+
+                        <div class="range_container" id="decision_that_counts" style="display: none">
+
+                            <div class="judgment_info">
+                                <div class="judgment_info_container">
+                                        group judgment <br>
+                                    <input class="form_control_container__time__input" type="number" id="judgmentInput"
+                                           value="0" style="margin-bottom:18pt;" disabled="true"/>
+                                </div>
+                            </div>
+
+                            <div class="sliders_control">
+                                <input id="judgment" type="range" value="" disabled = "true"/>
+                                <input id="true_value" type="range" value="" disabled = "true"/>
+                                <input id="fromSlider" type="range" value="0" disabled = "true" min="0" max="100" step="1"/>
+                                <input id="toSlider" type="range" value="100" disabled = "true" min="0" max="100" step="1"/>
+                            </div>
+
+                            <div class="form_control">
+                                <div class="form_control_container">
+                                    <div class="form_control_container__time">your <br> lower bound</div>
+                                    <input class="form_control_container__time__input" type="number" id="fromInput" value="0" min="0" max="100" disabled="true"/>
+                                </div>
+                                <div class="form_control_container">
+                                    <div class="form_control_container__time">
+                                        your <br> upper bound</div>
+                                    <input class="form_control_container__time__input" type="number" id="toInput" value="100" min="0" max="100" disabled="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <!-- Final Button -->
+        <div class="row justify-content-md-center mt-5">
+            <div class="col col-lg-2" id="next_button" style="display: block">
+                <p>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                </p>
+                <button class="btn btn-primary btn-large" onclick="saveResults()">
+                    Close experiment!
+                </button>
+                <p></p>
             </div>
         </div>
     </div>

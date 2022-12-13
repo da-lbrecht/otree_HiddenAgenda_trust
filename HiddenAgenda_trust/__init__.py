@@ -210,6 +210,7 @@ class Player(BasePlayer):
                                     " a hidden agenda, how would you like that group to interact?",
                               blank=True
                               )
+    random_draw = models.IntegerField(doc="Randomly drawn decision that counts")
 
 
 # FUNCTIONS
@@ -247,6 +248,10 @@ def creating_session(subsession: Subsession):
         random.shuffle(delphiha_shuffle)
         
         for player in subsession.get_players():
+            # Randomize decision that counts
+            player.in_round(Constants.num_rounds).random_draw = random.choice(list(range(
+                Constants.num_trial_rounds + 1, Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1
+            )))
             for i in list_of_round_ids:
                 player.in_round(i).block_order = block_orders[player.id_in_group-1]
             if player.block_order == 'ftf, ftf_ha, delphi_ha, delphi':
@@ -484,8 +489,7 @@ class Results(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        random_draw = random.choice(list(range(Constants.num_trial_rounds + 1,
-                                               Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1)))
+        random_draw = player.random_draw
         if player.in_round(random_draw).judgmentOrigin == 'ftf':
             drawn_judgment_origin = 'face-to-face groups'
         elif player.in_round(random_draw).judgmentOrigin == 'ftf_ha':
@@ -529,8 +533,8 @@ class Results(Page):
 page_sequence = [
     # Welcome,
     # TaskIntro,
-    TrialCompleted,
-    NewInteraction,
+    # TrialCompleted,
+    # NewInteraction,
     Task,
     # Questionnaire,
     Results
