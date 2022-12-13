@@ -289,10 +289,12 @@ def creating_session(subsession: Subsession):
                                                              ]
                                                      )
                 if i <= Constants.num_trial_rounds:
+                    player.in_round(i).trialRound = True
                     player.in_round(i).judgment = Constants.trial_judgments[i-1]
                     player.in_round(i).trueValue = Constants.trial_judgments[i-1]
                     player.in_round(i).judgmentOrigin = Constants.trial_judgment_origins[i-1]
                 if i > Constants.num_trial_rounds:
+                    player.in_round(i).trialRound = False
                     player.in_round(i).judgment = round(Constants.all_actual_judgments[player.in_round(i).shuffle]*100, 1)
                     player.in_round(i).trueValue = round(Constants.all_true_values[player.in_round(i).shuffle]*100, 1)
                     player.in_round(i).judgmentOrigin = Constants.all_origins[player.in_round(i).shuffle]
