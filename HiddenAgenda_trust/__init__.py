@@ -221,23 +221,35 @@ def creating_session(subsession: Subsession):
         delphi_shuffle = list(range(300, 450))
         delphiha_shuffle = list(range(450, 600))
         # Randomize judgments within block
-        # random.shuffle(ftf_shuffle)
-        # random.shuffle(ftfha_shuffle)
-        # random.shuffle(delphi_shuffle)
-        # random.shuffle(delphiha_shuffle)
+        random.shuffle(ftf_shuffle)
+        random.shuffle(ftfha_shuffle)
+        random.shuffle(delphi_shuffle)
+        random.shuffle(delphiha_shuffle)
         shuffle = ftf_shuffle + ftfha_shuffle + delphi_shuffle + delphiha_shuffle
         for player in subsession.get_players():
             for i in list_of_round_ids:
                 if i <= Constants.num_trial_rounds:
                     player.in_round(i).shuffle = 999
                 elif Constants.num_trial_rounds < i <= Constants.num_trial_rounds + 1 * Constants.num_evaluations:
-                    player.in_round(i).shuffle = int(shuffle[i - 5] + round((player.id_in_group-1) * 2.55, 1))
+                    player.in_round(i).shuffle = int(shuffle[
+                                                         int(i - 5 + round(round((player.id_in_group-2)/3, 0) * 7.8, 0))
+                                                             ]
+                                                     )
                 elif i <= Constants.num_trial_rounds + 2 * Constants.num_evaluations:
-                    player.in_round(i).shuffle = int(shuffle[i + 150 - 15] + round((player.id_in_group-1) * 2.55, 1))
+                    player.in_round(i).shuffle = int(shuffle[
+                                                         int(i + 150 - 15 + round(round((player.id_in_group-2)/3, 0) * 7.8, 0))
+                                                             ]
+                                                     )
                 elif i <= Constants.num_trial_rounds + 3 * Constants.num_evaluations:
-                    player.in_round(i).shuffle = int(shuffle[i + 300 - 25] + round((player.id_in_group-1) * 2.55, 1))
+                    player.in_round(i).shuffle = int(shuffle[
+                                                         int(i + 300 - 25 + round(round((player.id_in_group-2)/3, 0) * 7.8, 0))
+                                                             ]
+                                                     )
                 elif i <= Constants.num_trial_rounds + 4 * Constants.num_evaluations:
-                    player.in_round(i).shuffle = int(shuffle[i + 450 - 35] + round((player.id_in_group-1) * 2.55, 1))
+                    player.in_round(i).shuffle = int(shuffle[
+                                                         int(i + 450 - 35 + round(round((player.id_in_group-2)/3, 0) * 7.8, 0))
+                                                             ]
+                                                     )
                 if i <= Constants.num_trial_rounds:
                     player.in_round(i).judgment = Constants.trial_judgments[i-1]
                     player.in_round(i).trueValue = Constants.trial_judgments[i-1]
