@@ -119,6 +119,10 @@ class Player(BasePlayer):
     attention_check_tries = models.IntegerField(initial=1,
                                                 doc="Number of attempts needed to pass attention check questions")
 
+    # Block order shown, stores (randomized) order of blocks of 10 judgments of the same origin, seen by participants
+    block_order = models.StringField(doc="Block order shown, stores (randomized) order of blocks of 10 judgments of the same origin,"
+                                   " seen by participants")
+
     # Response variables for elicitation of trust in estimates
     trialRound = models.BooleanField(doc="1/True if round was a trial, without consequences for payment")
     judgmentOrigin = models.StringField(doc="Description of treatment of estimation study, from which group judgment"
@@ -213,6 +217,7 @@ class Player(BasePlayer):
 # Randomization of task round display
 def creating_session(subsession: Subsession):
     if subsession.round_number == 1:
+        # Create list of all round ids
         list_of_round_ids = list(range(1, Constants.num_trial_rounds + 4 * Constants.num_evaluations + 1))
 
         # Create list of ids of all judgments
@@ -220,13 +225,46 @@ def creating_session(subsession: Subsession):
         ftfha_shuffle = list(range(150, 300))
         delphi_shuffle = list(range(300, 450))
         delphiha_shuffle = list(range(450, 600))
+
+        # Randomize blocks (i.e. order of blocks of 10 judgments of the same origin, seen by participants)
+        block_orders = [
+            'ftf, ftf_ha, delphi_ha, delphi',
+            'ftf, delphi, delphi_ha, ftf_ha',
+            'ftf_ha, delphi_ha, delphi, ftf',
+            'ftf_ha, ftf, delphi, delphi_ha',
+            'delphi_ha, delphi, ftf, ftf_ha',
+            'delphi_ha, ftf_ha, ftf, delphi',
+            'delphi, ftf, ftf_ha, delphi_ha',
+            'delphi, delphi_ha, ftf_ha, ftf'
+        ]
+        block_orders = [ele for ele in block_orders for i in range(7)]
+        random.shuffle(block_orders)
+
         # Randomize judgments within block
         random.shuffle(ftf_shuffle)
         random.shuffle(ftfha_shuffle)
         random.shuffle(delphi_shuffle)
         random.shuffle(delphiha_shuffle)
-        shuffle = ftf_shuffle + ftfha_shuffle + delphi_shuffle + delphiha_shuffle
+        
         for player in subsession.get_players():
+            for i in list_of_round_ids:
+                player.in_round(i).block_order = block_orders[player.id_in_group-1]
+            if player.block_order == 'ftf, ftf_ha, delphi_ha, delphi':
+                shuffle = ftf_shuffle + ftfha_shuffle + delphiha_shuffle + delphi_shuffle
+            elif player.block_order == 'ftf, delphi, delphi_ha, ftf_ha':
+                shuffle = ftf_shuffle + delphi_shuffle + delphiha_shuffle + ftfha_shuffle
+            elif player.block_order == 'ftf_ha, delphi_ha, delphi, ftf':
+                shuffle = ftfha_shuffle + delphiha_shuffle + delphi_shuffle + ftf_shuffle
+            elif player.block_order == 'ftf_ha, ftf, delphi, delphi_ha':
+                shuffle = ftfha_shuffle + ftf_shuffle + delphi_shuffle + delphiha_shuffle
+            elif player.block_order == 'delphi_ha, delphi, ftf, ftf_ha':
+                shuffle = delphiha_shuffle + delphi_shuffle + ftf_shuffle + ftfha_shuffle
+            elif player.block_order == 'delphi_ha, ftf_ha, ftf, delphi':
+                shuffle = delphiha_shuffle + ftfha_shuffle + ftf_shuffle + delphi_shuffle
+            elif player.block_order == 'delphi, ftf, ftf_ha, delphi_ha':
+                shuffle = delphi_shuffle + ftf_shuffle + ftfha_shuffle + delphiha_shuffle
+            elif player.block_order == 'delphi, delphi_ha, ftf_ha, ftf':
+                shuffle = delphi_shuffle + delphiha_shuffle + ftfha_shuffle + ftf_shuffle
             for i in list_of_round_ids:
                 if i <= Constants.num_trial_rounds:
                     player.in_round(i).shuffle = 999
