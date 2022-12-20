@@ -141,24 +141,28 @@
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description_header").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
+        document.getElementById("ftf_slider_reminder").style.display = "block";
     {% elif player.round_number == 2 %}
         document.getElementById("header_trial").style.display = "block";
         document.getElementById("ftfha_header_trial").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description_header").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
+        document.getElementById("ftfha_slider_reminder").style.display = "block";
     {% elif player.round_number == 3 %}
         document.getElementById("header_trial").style.display = "block";
         document.getElementById("delphi_header_trial").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description_header").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
+        document.getElementById("delphi_slider_reminder").style.display = "block";
     {% elif player.round_number == 4 %}
         document.getElementById("header_trial").style.display = "block";
         document.getElementById("delphiha_header_trial").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description_header").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
+        document.getElementById("delphiha_slider_reminder").style.display = "block";
     // Actual Rounds
     {% elif judgment_origin == 'ftf' && player.round_number in first_rounds %}
         document.getElementById("header").style.display = "block";
@@ -166,48 +170,56 @@
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description_header").style.display = "block";
         document.getElementById("ftf_description").style.display = "block";
+        document.getElementById("ftf_slider_reminder").style.display = "block";
     {% elif judgment_origin == 'ftf' %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftf_header").style.display = "block";
         document.getElementById("ftf_part1-tab").style.display = "block";
         document.getElementById("ftf_description_header").style.display = "block";
         document.getElementById("ftf_readmoreDiv").style.display = "block";
+        document.getElementById("ftf_slider_reminder").style.display = "block";
     {% elif judgment_origin == 'ftf_ha' && player.round_number in first_rounds %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description_header").style.display = "block";
         document.getElementById("ftfha_description").style.display = "block";
+        document.getElementById("ftfha_slider_reminder").style.display = "block";
     {% elif judgment_origin == 'ftf_ha' %}
         document.getElementById("header").style.display = "block";
         document.getElementById("ftfha_header").style.display = "block";
         document.getElementById("ftfha_part1-tab").style.display = "block";
         document.getElementById("ftfha_description_header").style.display = "block";
         document.getElementById("ftfha_readmoreDiv").style.display = "block";
+        document.getElementById("ftfha_slider_reminder").style.display = "block";
     {% elif judgment_origin == 'delphi' && player.round_number in first_rounds %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description_header").style.display = "block";
         document.getElementById("delphi_description").style.display = "block";
+        document.getElementById("delphi_slider_reminder").style.display = "block";
     {% elif judgment_origin == 'delphi' %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphi_header").style.display = "block";
         document.getElementById("delphi_part1-tab").style.display = "block";
         document.getElementById("delphi_description_header").style.display = "block";
         document.getElementById("delphi_readmoreDiv").style.display = "block";
+        document.getElementById("delphi_slider_reminder").style.display = "block";
     {% elif judgment_origin == 'delphi_ha' && player.round_number in first_rounds %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description_header").style.display = "block";
         document.getElementById("delphiha_description").style.display = "block";
+        document.getElementById("delphiha_slider_reminder").style.display = "block";
     {% elif judgment_origin == 'delphi_ha' %}
         document.getElementById("header").style.display = "block";
         document.getElementById("delphiha_header").style.display = "block";
         document.getElementById("delphiha_part1-tab").style.display = "block";
         document.getElementById("delphiha_description_header").style.display = "block";
         document.getElementById("delphiha_readmoreDiv").style.display = "block";
+        document.getElementById("delphiha_slider_reminder").style.display = "block";
     {% endif %}
 
     <!-- Function to save time and other results at end of screen -->
@@ -604,7 +616,16 @@
                         <div class="range_container">
                             <div class="judgment_info">
                                 <div class="judgment_info_container">
-                                        group judgment <br>
+                                        group judgment
+                                    <br>
+                                    <div id="ftf_slider_reminder" style="font-size: medium; display: none">
+                                        (face-to-face)</div>
+                                    <div id="ftfha_slider_reminder" style="font-size: medium; display: none">
+                                        (face-to-face + hidden agendas)</div>
+                                    <div id="delphi_slider_reminder" style="font-size: medium; display: none">
+                                        (delphi)</div>
+                                    <div id="delphiha_slider_reminder" style="font-size: medium; display: none">
+                                        (delphi + hidden agendas)</div>
                                     <input class="form_control_container__time__input" type="number" id="judgmentInput"
                                            value="0" style="margin-bottom:18pt;" disabled="true"/>
                                 </div>
