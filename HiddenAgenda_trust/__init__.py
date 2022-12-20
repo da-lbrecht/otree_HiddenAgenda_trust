@@ -547,11 +547,11 @@ class Results(Page):
 
 
 page_sequence = [
-    # Welcome,
-    # TaskIntro,
-    # TrialCompleted,
-    # NewInteraction,
+    Welcome,
+    TaskIntro,
+    TrialCompleted,
+    NewInteraction,
     Task,
-    # Questionnaire,
+    Questionnaire,
     Results
 ]
