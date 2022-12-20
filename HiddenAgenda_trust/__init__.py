@@ -511,9 +511,9 @@ class Results(Page):
         elif player.in_round(random_draw).judgmentOrigin == 'ftf_ha':
             drawn_judgment_origin = 'face-to-face groups with hidden agendas'
         elif player.in_round(random_draw).judgmentOrigin == 'delphi':
-            drawn_judgment_origin = 'delphi groups'
+            drawn_judgment_origin = 'Delphi groups'
         elif player.in_round(random_draw).judgmentOrigin == 'delphi_ha':
-            drawn_judgment_origin = 'delphi groups with hidden agendas'
+            drawn_judgment_origin = 'Delphi groups with hidden agendas'
         drawn_judgment = f'"{player.in_round(random_draw).judgment}"'
         drawn_judgment_counter = Constants.actual_judgments_counter[player.in_round(random_draw).round_number - 1]
         drawn_true_value = player.in_round(random_draw).trueValue
