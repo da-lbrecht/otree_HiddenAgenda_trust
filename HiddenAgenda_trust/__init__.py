@@ -1,6 +1,7 @@
 from otree.api import *
 import random
 import pandas
+import numpy as np
 
 c = Currency
 
@@ -74,43 +75,58 @@ class Player(BasePlayer):
 
     # Response variables for attention checks
     attention_check_1 = models.FloatField(initial=999,
-                                          label="Q1: ...?",
-                                          doc="Attention check: ...)")
+                                          label="Q1: What is your task in this experiment?",
+                                          doc="Attention check: What is your task in this experiment?)"
+                                              "(1: to redo the task that has been done by groups in the previous "
+                                              "experiment"
+                                              " 2: to state a range of probabilities that you think contains the true"
+                                              "probability, estimated by groups in the previous experiment"
+                                              " 3: to rate whether groups in the previous experiment did a good a job)"
+                                          )
     attention_check_2 = models.FloatField(initial=999,
-                                          label="Q2: ...?",
-                                          doc="Attention check: ..."
-                                              "(1: ... "
-                                              " 2: ... "
-                                              " 3: ...)"
+                                          label="Q2: What is NOT true about the bonus you may earn based on your task?",
+                                          doc="Attention check: What is NOT true about the bonus you may earn based on"
+                                              " your task?"
+                                              "(1: the bonus depends on one of your choices which will be drawn"
+                                              " randomly at the end of the experiment"
+                                              " 2: if you choose wider ranges you will always earn larger bonuses"
+                                              " 3: if the true value is not included in the range you choose, you will"
+                                              " earn no bonus)"
                                           )
     attention_check_3 = models.FloatField(initial=999,
-                                          label="Q3: ...?",
-                                          doc="Attention check: ..."
-                                              "(1: ... "
-                                              " 2: ... "
-                                              " 3: ...)"
+                                          label="Q3: Which feature was NOT part of face-to-face interaction?",
+                                          doc="Attention check: Which feature was NOT part of face-to-face interaction?"
+                                              "(1: the group interacted in a zoom video call"
+                                              " 2: the final group judgment was reached by consensus of all group"
+                                              "members"
+                                              " 3: the final group judgment was reached by averaging the final "
+                                              "individual judgments of the group members)"
                                           )
     attention_check_4 = models.FloatField(initial=999,
-                                          label="Q4: ...?",
-                                          doc="Attention check: ..."
-                                              "(1: ... "
-                                              " 2: ... "
-                                              " 3: ...)"
+                                          label="Q4: Which feature was NOT part of Delphi interaction?",
+                                          doc="Attention check: Which feature was NOT part of Delphi interaction"
+                                              "(1: the group interacted through a chat like computer interface"
+                                              " 2: the final group judgment was reached by consensus of all group"
+                                              "members"
+                                              " 3: the final group judgment was reached by averaging the final "
+                                              "individual judgments of the group members)"
                                           )
     attention_check_5 = models.FloatField(initial=999,
-                                          label="Q5: ...?",
-                                          doc="Attention check: ..."
-                                              "(1: ... "
-                                              " 2: ... "
-                                              " 3: ...)"
+                                          label="Q5: Which feature varied from one judgment task to the next solved by "
+                                                "a particular group?",
+                                          doc="Attention check: Which feature varied from one judgment task to the next"
+                                              " solved by a particular group?"
+                                              "(1: the interaction format "
+                                              " 2: the roles of group members: having or not having a hidden agenda"
+                                              " 3: the underlying true probability)"
                                           )
     attention_check_6 = models.FloatField(inital=999,
-                                          label="Q6: What does the bonus you can earn by solving the task"
-                                                " depend on?",
-                                          doc="Attention check: ..."
-                                              "(1: ... "
-                                              " 2: ... "
-                                              " 3: ...)"
+                                          label="Q6: For groups with hidden agendas, the hidden agenda was... ",
+                                          doc="Attention check: For groups with hidden agendas, the hidden agenda ... "
+                                              "(1: always to drive the group judgment as close as possible to 100 "
+                                              " 2: different for both group members with hidden agenda "
+                                              " 3: to drive the group judgment as close as possible to 0 for some, "
+                                              "and 100 for other judgment tasks)"
                                           )
 
     failed_attention_check = models.BooleanField(initial=False,
@@ -343,12 +359,12 @@ class TaskIntro(Page):
             player.attention_check_6 = data["answer_q6"]
 
         if (
-                data["answer_q1"] == 2 and
-                data["answer_q2"] == 3 and
-                data["answer_q3"] == 1 and
-                data["answer_q4"] == 1 and
+                data["answer_q1"] == 1 and
+                data["answer_q2"] == 2 and
+                data["answer_q3"] == 3 and
+                data["answer_q4"] == 2 and
                 data["answer_q5"] == 3 and
-                data["answer_q6"] == 2
+                data["answer_q6"] == 3
         ):
             return {
                 player.id_in_group: {"information_type": "no_error", "no_error": "Yeah!"},
@@ -357,12 +373,12 @@ class TaskIntro(Page):
             player.failed_attention_check = True
             player.attention_check_tries = player.attention_check_tries + 1
             incorrect_answers = np.array([
-                data["answer_q1"] != 2,
-                data["answer_q2"] != 3,
-                data["answer_q3"] != 1,
-                data["answer_q4"] != 1,
+                data["answer_q1"] != 1,
+                data["answer_q2"] != 2,
+                data["answer_q3"] != 3,
+                data["answer_q4"] != 2,
                 data["answer_q5"] != 3,
-                data["answer_q6"] != 2,
+                data["answer_q6"] != 3,
             ], dtype=bool)
             # incorrect_answers.np.astype(int)
             questions = ' and '.join(np.array(['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'])[incorrect_answers])
@@ -531,7 +547,7 @@ class Results(Page):
 
 
 page_sequence = [
-    Welcome,
+    # Welcome,
     TaskIntro,
     # TrialCompleted,
     # NewInteraction,
