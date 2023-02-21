@@ -39,16 +39,16 @@ class Constants(BaseConstants):
     interaction_formats = ["ftf", "ftf_ha", "delphi", "delphi_ha"]
 
     # Actual Judgments
-    all_actual_judgments = list(pandas.read_csv("_static/data/judgments_artificial_trust_experiment(artificial600).csv")['group_estim'])
+    all_actual_judgments = list(pandas.read_csv("_static/data/judgments_trust_experiment(600).csv")['group_estim'])
 
     # Underlying true values
-    all_true_values = list(pandas.read_csv("_static/data/judgments_artificial_trust_experiment(artificial600).csv")['true_prob'])
+    all_true_values = list(pandas.read_csv("_static/data/judgments_trust_experiment(600).csv")['true_prob'])
 
     # Underlying origin
-    all_origins = list(pandas.read_csv("_static/data/judgments_artificial_trust_experiment(artificial600).csv")['treatment'])
+    all_origins = list(pandas.read_csv("_static/data/judgments_trust_experiment(600).csv")['treatment'])
 
     # IDs of groups who conducted the judgment
-    all_groups = list(pandas.read_csv("_static/data/judgments_artificial_trust_experiment(artificial600).csv")['group_id'])
+    all_groups = list(pandas.read_csv("_static/data/judgments_trust_experiment(600).csv")['group_id'])
 
 
 
