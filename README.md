@@ -13,7 +13,7 @@ Now open up the new folder (`otree_HiddenAgenda_trust`) with your favorite code 
 ## Python
 Make sure you have Python installed (https://otree.readthedocs.io/en/latest/install.html). **Note:** pip is also installed with Python.
 
-Open a terminal in the `economy_game` folder and run the command `pip install -r requirements.txt`
+Open a terminal in the `otree_HiddenAgenda_trust` folder and run the command `pip install -r requirements.txt`
 
 ## Running locally (for demo purposes)
 From here you can run `otree  devserver` in the console which will run a development server on http://localhost:8000/
