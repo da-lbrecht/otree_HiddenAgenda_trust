@@ -1,84 +1,80 @@
-# oTree Trust Experiment: Hidden Agendas in Group Judgments
+# Mitigating Manipulation in Committees: Experiment Codebase
 
-This repository contains the full oTree implementation of one experiment from the research project:
+This repository contains the oTree implementation of the **decision experiment** used in my research project:
 
-**Albrecht, David — _Mitigating Manipulation in Committees: Just let them talk!_**  
-Working Paper (SSRN): https://ssrn.com/abstract=5994274
+**Albrecht, David. _Mitigating manipulation in committees: Just let them talk!_**  
+Working paper (SSRN): https://ssrn.com/abstract=5994274
 
-Specifically, this code implements the **decision experiment** that measures the **perceived trustworthiness** of group judgments generated in a prior estimation experiment.
+## Research context
 
-## Why this project matters
+Many high-stakes decisions are made by small groups (committees, boards, and teams). This project studies how group interaction format and strategic manipulation incentives affect:
 
-Many high-stakes decisions are made by small groups (committees, boards, teams). Some members may have hidden agendas and strategically manipulate outcomes. This project operationalizes a behavioral experiment that quantifies:
+- objective judgment accuracy,
+- information sharing,
+- and perceived trustworthiness.
 
-- how interaction format affects group-judgment accuracy under manipulation,
-- how participants perceive trustworthiness of those judgments,
-- and where objective accuracy and perceived trust diverge.
+The broader paper compares two interaction formats:
 
-In this second-stage decision experiment, participants evaluate judgments produced under four treatment conditions:
+1. **Face-to-face (FTF)** interaction in video calls.
+2. **Delphi-style** structured, pseudonymous interaction.
 
-- face-to-face (`ftf`)
-- face-to-face with hidden agendas (`ftf_ha`)
-- Delphi (`delphi`)
-- Delphi with hidden agendas (`delphi_ha`)
+Both are tested with and without **hidden agendas** (private side-payment incentives for manipulation).
 
-## What this code does
+## What this repository implements
 
-The app runs a complete participant workflow for eliciting confidence intervals around historical group judgments.
+This repository implements the **second experimental part** (decision experiment):
 
-### Participant flow
+- Individual participants evaluate previously generated group judgments
+- **4 trial rounds** (one per treatment condition)
+- **40 payoff-relevant rounds** (10 judgments per condition)
+- Incentivized confidence-interval elicitation around group judgments
+- A **2x2 treatment design** inherited from the estimation experiment (interaction format × hidden agenda incentives)
 
-1. **Welcome, data policy, consent** (`Welcome`)
-2. **Instruction phase with video and live attention checks** (`TaskIntro`)
-3. **Short transition page before incentivized rounds** (`TrialCompleted`)
-4. **4 trial rounds** (one per interaction format; unpaid)
-5. **40 incentivized rounds** (`Task`)  
-	 - 10 judgments per treatment condition
-	 - treatment blocks randomized across participants
-	 - judgment order randomized within blocks
-6. **Transition pages between treatment blocks** (`NewInteraction`)
-7. **Closing survey** (`Questionnaire`)
-8. **Payoff feedback with randomly selected paying round** (`Results`)
+### Treatment conditions represented in data
 
-### Incentive mechanism
+- `ftf`: Face-to-face, no hidden agenda incentives
+- `ftf_ha`: Face-to-face, with hidden agenda incentives
+- `delphi`: Delphi-style structured interaction, no hidden agenda incentives
+- `delphi_ha`: Delphi-style structured interaction, with hidden agenda incentives
 
-Participants submit a lower and upper bound around each displayed group judgment (0–100 scale). One incentivized round is randomly selected for payment.
+## Experimental flow (implemented)
 
-- If the true value lies **inside** the interval, bonus increases as interval width decreases.
-- If the true value lies **outside** the interval, bonus is 0.
-- Total payment = fixed participation fee + bonus.
+Participants complete:
 
-## Data pipeline used in the app
+1. Welcome, data policy, and informed consent
+2. Instruction phase with video and comprehension checks
+3. Trial block with 4 practice evaluations (not payoff-relevant)
+4. 40 randomized evaluation rounds across all treatment conditions
+5. Post-experiment questionnaire (demographics, work experience, trust item, strategy reflections)
+6. Payoff screen with one randomly drawn paying round
 
-The app loads a precompiled dataset of group judgments:
+### Key design mechanics reflected in code
 
-- file: `_static/data/judgments_trust_experiment_(600).csv`
-- observations: **600**
-- treatment balance: **150 observations** per treatment (`ftf`, `ftf_ha`, `delphi`, `delphi_ha`)
-- key fields used by the app:
-	- `group_estim` (group judgment)
-	- `true_prob` (underlying true value)
-	- `treatment`
-	- `group_id`
+- **Balanced randomization**: treatment block order is randomized per participant while preserving balance across the lab session.
+- **Within-block randomization**: judgments are shuffled within each treatment block.
+- **Live comprehension checks**: instruction checks are validated in real time, including retry feedback.
+- **Incentive-compatible scoring**: participants report lower/upper bounds around judgments; narrower correct intervals earn higher bonuses.
+- **Linked two-stage design**: all evaluated judgments come from the first-stage group estimation experiment.
+
+## Data used by this app
+
+The app reads evaluation targets from `_static/data/judgments_trust_experiment_(600).csv`:
+
+- **600 observations** total
+- **150 observations per condition** (`ftf`, `ftf_ha`, `delphi`, `delphi_ha`)
+- Core fields used in runtime logic:
+  - `group_estim` (group judgment)
+  - `true_prob` (underlying true value)
+  - `treatment`
+  - `group_id`
 
 ## Technical implementation highlights
 
-This project showcases applied research engineering in an experimental-economics setting:
-
-- **oTree-based experiment orchestration** with multi-page workflow and round logic
-- **Within-subject treatment randomization** with balanced block-order assignment
-- **Incentive-compatible payoff computation** in server-side logic
-- **Live validation of comprehension checks** via `live_method`
-- **Comprehensive response logging** (timing, choices, survey responses)
-- **Custom participant UI** (Bootstrap + custom JS slider interaction)
-
-## Repository structure
-
-- `HiddenAgenda_trust/__init__.py` — core app logic (models, randomization, payoff, page sequence)
-- `HiddenAgenda_trust/*.html` — participant-facing pages (instructions, task, survey, results)
-- `_static/data/judgments_trust_experiment_(600).csv` — judgments evaluated in this experiment
-- `settings.py` — oTree session/app configuration
-- `Creating a session` — operational note for lab deployment
+- Built with **oTree 5.4.1**.
+- Implements multi-page workflow logic in `HiddenAgenda_trust/__init__.py`.
+- Uses **live page methods** for attention-check validation and participant feedback.
+- Captures rich process data (timing, round-level interval choices, questionnaire responses, payoff components).
+- Uses custom HTML/CSS/JavaScript UI for interval elicitation and treatment-specific instruction framing.
 
 ## Local setup
 
@@ -89,7 +85,7 @@ git clone git@github.com:da-lbrecht/otree_HiddenAgenda_trust.git
 cd otree_HiddenAgenda_trust
 ```
 
-### 2) Create environment and install dependencies
+### 2) Python environment and dependencies
 
 ```bash
 python3 -m venv venv
@@ -103,28 +99,20 @@ pip install -r requirements.txt
 otree devserver
 ```
 
-Then open `http://localhost:8000/`.
+Then open: http://localhost:8000/
 
-## Running sessions (lab operations)
+## Configuration notes
 
-Operational note from `Creating a session`:
-
-- create one session with 50 participants,
-- keep the server running across lab waves,
-- assign participant links chronologically to preserve balanced randomization.
-
-## Research context
-
-This code corresponds to the decision study that elicits perceived trustworthiness of judgments generated in the estimation study. The design compares judgments from face-to-face and Delphi groups, each with and without hidden agendas, allowing analysis of how manipulation and communication format affect trust and accuracy.
+- Session configuration is defined in `settings.py` (`HiddenAgenda_trust` app sequence).
+- `OTREE_ADMIN_PASSWORD` should be set via environment variable for admin access.
+- The file `Creating a session` documents lab operations for balanced assignment (single session, 50 participants, chronological link usage).
 
 ## Citation
 
-If you use this repository or build on this experiment design, please cite:
+If you use this codebase for academic work, please cite:
 
-> Albrecht, David. _Mitigating Manipulation in Committees: Just let them talk!_ Working Paper. SSRN: https://ssrn.com/abstract=5994274
+Albrecht, David. _Mitigating manipulation in committees: Just let them talk!_ Working paper. SSRN: https://ssrn.com/abstract=5994274
 
 ## License
 
-This project is licensed under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
-
-See [LICENSE](LICENSE) and [LICENSE.md](LICENSE.md).
+This project is licensed under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license. See `LICENSE`.
